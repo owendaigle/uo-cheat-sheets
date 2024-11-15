@@ -21,7 +21,7 @@
 %\titlespacing*{\section}{0pt}{0.1\baselineskip}{0.2\baselineskip}
 
 % changes font
-\renewcommand{\familydefault}{\sfdefault}
+%\renewcommand{\familydefault}{\sfdefault}
 
 % adds header and footer
 \pagestyle{fancy}
@@ -189,7 +189,10 @@
 		\nabla f = \lambda \nabla g + \mu \nabla h
 	\end{align*}
 	
-	\section{Double Integrals in Rectangular Regions [L6, L7]}
+	\section{Double Integrals}
+	This is just 2 integrals put together. We just solve the first one first, and then the second one. 
+	
+	\subsection{Double Integrals in Rectangular Regions [L6, L7]}
 	It is easy to integrate a rectangular region of $R = [a,b] \times [c,d]$ by doing:
 	\begin{align*}
 		V = \int^b_a \int^d_c f(x,y) dxdy
@@ -206,7 +209,7 @@
 		\end{align*}
 	\end{mdframed}
 	
-	\section{Double Integrals in General Regions [L8]}
+	\subsection{Double Integrals in General Regions [L8]}
 	This is very similar to double integrals in rectangular regions except that $dxdy \ne dydx$.
 	
 	To determine whether to do dxdy or dydx, we check if it is a type 1 or type 2 integral.
@@ -229,7 +232,7 @@
 		\int_a^b \int_{h_1}^{h_2} f(x,y) dxdy
 	\end{align*}
 	
-	\section{Polar Coordinates [L8, L9, L10]}
+	\subsection{Polar Coordinates [L8, L9, L10]}
 	When we are working with polar coordinates, rather than using the x and y, we use r and $\theta$ where r is the radius, and $\theta$ is the angle from the positive x axis. 
 	
 	To convert from cartesian to polar, we use:
@@ -258,6 +261,25 @@
 	
 	We analyse 4 applications in this course.
 	
+	\subsection{Charge}
+	We are given the charge density $\sigma (x,y)$ on a domain $D$ and we can calculate it by simply integrating the sigma function.
+	
+	\begin{mdframed}[]
+	\textbf{Ex. } The triangular region bounded by $y=1-x, y=1, x=1$ has charge density $\sigma=xy$. Find the charge density.
+	
+	The only real hard part is finding the bounds for the integral that we will use. 
+	
+	We can draw out the area and get:
+	\begin{center}
+		\includegraphics[width=0.2\linewidth]{ex}
+	\end{center}
+	Now we can see that if we start integrating vertically, at any point we go from $1-x$ to 1. Then if we do the horizontal part, we go from 0 to 1.
+	\begin{align*}
+		\int^1_0\int^1_{1-x} xy dxdy = \int^1_0 \left(2x^2-x^3\right) dy = \frac{5}{24}
+	\end{align*}
+	
+	\end{mdframed}
+	
 	\subsection{Finding Mass from Density}
 	Generally we are given a density function $\rho (x,y)$ and we need to find the mass of a domain $D$ from that, we use the following integral:
 	\begin{align*}
@@ -273,12 +295,38 @@
 	\begin{align*}
 		\overline{x} = \frac{M_y}{m} \qquad \overline{y} = \frac{M_x}{m}
 	\end{align*}
+
+	\begin{mdframed}[]
+	\textbf{Ex. } Find the center of mass of a triangular region with vertices (0,0), (1,0), (0,2) with $\rho (x,y) = 1+3x+y$
+	
+	Like always, the hardest part is finding the correct bounds for the integral.
+	
+	Here we need to draw the triangle where we get:
+	\begin{center}
+		\includegraphics[width=0.2\linewidth]{ex2}
+	\end{center}
+	The line is just gotten by calculating the slope between the 2 points. 
+	
+	Firstly we need the mass:
+	\begin{align*}
+		0\ge y \ge 2-2x \qquad 0\ge x\ge 1\\
+		m = \int ^0_1 \int^{2-2x}_0 1+3x+y dydx = ... = \frac{8}{3}
+	\end{align*}
+	Now we have the mass, so we can then find the center of mass using their respective equations.
+	
+	\begin{align*}
+		\overline{x}= \frac{M_y}{m} = \frac{\int^1_0 \int^{2-2x}_0 x (1+3x+y) dydx}{8/3} = \frac{3}{8} \int^1_0 \int^{2-2x}_0 \left(x+3x^2 +xy\right) dydx = ... = \frac{8}{3} \\
+		\overline{y} = \frac{M_x}{m} = \frac{\int^1_0 \int^{2-2x}_0 y (1+3x+y) dydx}{8/3} = \frac{3}{8} \int^1_0 \int^{2-2x}_0 \left(y+3xy +y^2\right) dydx = ... = \frac{11}{16}	
+	\end{align*}
+	
+	\end{mdframed}
 	
 	\subsection{Inertia}
 	This is very similar to the center of mass:
 	\begin{align*}
 		I_x = \iint\limits_D y^2 \rho(x,y) dA \qquad I_y = \iint\limits_D x^2 \rho(x,y)dA \qquad I = \iint\limits_D \left(x^2 + y^2 \right) \rho(x,y) dA
 	\end{align*}
+	It is just a case of finding the correct bounds of the integrals (using the domain given) and then simply solving the integral.
 	
 	
 	\section{Surface Area [L12]}
@@ -287,6 +335,22 @@
 		A(s) =  \iint\limits_D \sqrt{\left(\frac{\partial f}{\partial x} \right)^2 + \left(\frac{\partial f}{\partial y}\right)^2 + 1} dA
 	\end{align*}
 
+	\begin{mdframed}[]
+	\textbf{Ex. } Find the surface area of $f(x,y)=x^2+y^2$ in $D={(x,y) | x^2+y^2\le 9}$.
+	
+	We know the domain, which looks like we can use polar coordinates with a radius of 3, and angle of 0 to $2\pi$. 
+	
+	Using the surface area formula, we need the partial derivatives. 
+	\begin{align*}
+		\frac{\partial f}{\partial x} = 2x \qquad \frac{\partial f}{\partial y} = 2y
+	\end{align*}	
+	Now I can just sub into the equation and convert to polar coordinates. 
+	\begin{align*}
+		A(s) = \iint \limits_D \sqrt{(2x)^2 + (2y)^2 + 1} dA = \int_0^{2\pi} \int^3_0 \sqrt{\left(4r^2\left(\cos^2 (\theta) + \sin^2(\theta)\right)+1\right)}r \cdot drd\theta \\= ...=\frac{\pi}{6} (37\sqrt{37}-1)
+	\end{align*}
+	
+	\end{mdframed}
+
 	\section{Change of Variables [L13]}
 	Whenever we perform a transformation on a function (such as rectangular coordinates to polar coordinates), we need to multiply by a factor known as the \textbf{Jacobian}
 	
@@ -294,8 +358,21 @@
 	\begin{align*}
 		J = \frac{\partial (x,y) }{\partial (u,v)} = \left|\begin{array}{cc} \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\ \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \end{array}\right|
 	\end{align*}
+	Note that the matrix in this equation is the determinant.
+	
+	\begin{mdframed}[]
+	\textbf{Ex. } Find the jacobian for the polar coordinates ($x=r\cos\theta, y=r\sin\theta$).
+	
+	We need to find the 4 partial derivatives. 
+	\begin{align*}
+		J = \frac{\partial (x,y) }{\partial (r,\theta)} = \left|\begin{array}{cc} \frac{\partial x}{\partial r} & \frac{\partial x}{\partial \theta} \\ \frac{\partial y}{\partial r} & \frac{\partial y}{\partial \theta} \end{array}\right| = \left|\begin{array}{cc} \cos\theta & -r\sin\theta \\ \sin\theta & r\cos\theta \end{array}\right| = r\cos^2\theta - (-r\sin^2\theta) = r
+	\end{align*}
+	And we know this is true since we always add the $r$ factor when converting to polar.
+	\end{mdframed}
 	
 	\section{Triple Integrals [L14]}
+	Just like double integrals, if we are integrating over a rectangular area, then the bounds are interchangeable. This does not apply over a general area.
+	
 	We have 3 types of triple integrals:
 	
 	\begin{figure}[H]
@@ -303,7 +380,7 @@
 		\includegraphics[width=0.7\linewidth]{screenshot001}
 	\end{figure}
 	
-	\section{Triple Integrals in Cylindrical Coordinates [L15, L16]}
+	\subsection{Triple Integrals in Cylindrical Coordinates [L15, L16]}
 	In cylindrical coordinates, we convert $(x,y,z) \to (r,\theta, z)$ where:
 	\begin{align*}
 		x = r\cdot \cos(\theta) \qquad y = r\cdot \sin(\theta) \qquad z = z
@@ -312,7 +389,29 @@
 	
 	We can use logic to reason that $r =\sqrt{x^2+y^2}$, and $\theta = \arctan\left(\frac{x}{y}\right)$.
 	
-	\section{Triple Integrals in Sperical Coordinates [L15, L16]}
+	\begin{mdframed}[]
+	\textbf{Ex.} We have a cylindrical shell that is 20m tall, with inner radius 6m, and outer radius 7m. Write the inequalities we would use for the integral.
+	
+	This is a very simple question. 
+	
+	We know that z goes from \textit{0 to 20}. 
+	
+	the radius is just the end of the inner, to the outer, so \textit{6 to 7}.
+	
+	Since it is a whole (rather than a half, or quarter) cylinder, we integrate theta from \textit{0 to $2\pi$}.
+	\end{mdframed}
+
+	\begin{mdframed}[]
+		\textbf{Ex. } Find the volume of $\sqrt{x^2+y^2}$ that lies inside the cylinder $x^2 + y^2 = 16$ and between the planes $z=-5, z=4$.
+		
+		This is a very simple question. We have the function to integrate ($\sqrt{x^2+y^2}$), the z bounds (-5, 4) and the radius (4). We know it is a full cylinder so also $0, 2\pi$.
+		\begin{align*}
+			\int_0^{2\pi}\int^4_{-5}\int^4_0 \sqrt{r^2\cos^2\theta + r^2\sin^2\theta} \cdot r\cdot dr dz d\theta = \int_0^{2\pi}\int^4_{-5}\int^4_0 r^2 \cdot dr dz d\theta = ... = 384\pi
+		\end{align*}
+		An important thing to remember is to use the jacobian. Recall the jacobian is just $r$ for cylindrical and polar coordinates. 
+	\end{mdframed}
+	
+	\subsection{Triple Integrals in Sperical Coordinates [L15, L16]}
 	In spherical coordinates we convert $(x,y,z) \to (\rho, \theta, \phi)$ where:
 	\begin{align*}
 		x = \rho \cos(\theta) \sin(\phi) \qquad y = \rho \sin(\theta) \sin(\phi) \qquad z = \rho \cos(\phi)
@@ -321,6 +420,17 @@
 	
 	Then we can reason that $x^2 + y^2 + z^2 = \rho ^2$.
 	
-	
+	\begin{mdframed}[]
+		\textbf{Ex. } Set up the integral to calculate $\iiint \limits_B \left(x^2+y^2+z^2\right)^{\frac{3}{2}} dV$ where B is the ball of radius 1.
+		
+		Here we know it is a \textbf{ball} which should scream SPHERICAL COORDINATES since we know r (0,1), we know $\theta$ (0,$2\pi$), and we know $\phi$ (0,$\pi$)
+		
+		Then we just need to convert the actual function to spherical coordinates. 
+		
+		Recall that $\rho^2 = x^2 + y^2 + z^2$ so we sub that into the integral as well as the jacobian which is just $J=\rho ^2 \cdot \sin\phi$ to get:
+		\begin{align*}
+			\int_0^{2\pi}\int_0^{\pi}\int_0^1\left(\rho^2\right)^{\frac{3}{2}} \cdot \rho^2\sin\phi \cdot d\rho d\phi d\theta = \text{CALC}
+		\end{align*}
+	\end{mdframed}
 	
 \end{document}
