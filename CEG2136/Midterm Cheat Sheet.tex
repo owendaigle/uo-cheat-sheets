@@ -3,7 +3,7 @@
 
 % Extra Preamble
 \usepackage{fancyhdr} \usepackage{enumitem} \usepackage{float} \usepackage{soul}
-\usepackage{multicol} \usepackage[compact]{titlesec}
+\usepackage{multicol} \usepackage[compact]{titlesec} \usepackage{listings}
 
 
 % frames with display breaks
@@ -21,7 +21,7 @@
 %\titlespacing*{\section}{0pt}{0.1\baselineskip}{0.2\baselineskip}
 
 % changes font
-\renewcommand{\familydefault}{\sfdefault}
+%\renewcommand{\familydefault}{\sfdefault}
 
 % adds header and footer
 \pagestyle{fancy}
@@ -197,6 +197,217 @@
 		An arithmetic shift will shift everything left or right and the spare bit if right will be the same as the original MSB, and if left will be 0.
 		
 		Right Arithmetic shift is division, and Left Arithmetic shift is multiplication.
+		
+		\section {Chapter 5}
+		For this entire chapter (and course) we consider a computer to have 16 bits. So each instruction has 16 bits, and each register can hold at most 16 bits (some are less though).
+		
+			\subsection{Instruction Codes}
+			Each instruction is a group of 16 bits that instruct the computer what to do. 
+			
+			An instruction is divided into the \textbf{opcode }(\textit{First 4 bits}) and the \textbf{address }(\textit{Last 12 bits})
+			
+			The CU receives the instruction from memory, interprets the \textbf{opcode}, then issues a sequence of control signals to some of the registers, and maybe the ALU. 
+			\begin{center}
+				\includegraphics[width=0.3\linewidth]{opcode}
+			\end{center}
+			
+			
+				\subsubsection{MRI}
+				Memory Reference Instructions (MRI) specify a \textbf{memory location using bits 0-11}. 
+				
+				For example, ADD \_\_\_ adds the content of the accumulator to the specified memory location. 
+				
+				\subsubsection{RRI}
+				Register Reference Instructions (RRI) start with a 7 using bits 12-15, and then for bits 0-11, it uses those to also choose the instruction rather than a memory location.
+				
+				For example CMA will complement the accumulator, it uses\textbf{ no external memory address}, just the accumulator.
+				
+				\subsubsection{IOI}
+				Input Output Instructions (IOI) work similar to RRI, but these are for input and outputs. 
+			
+			\subsection{Registers and BUS}
+			The computer has the following registers:
+			
+			\begin{itemize}[noitemsep]
+				\item AR: Address Register stores the memory address from bits 0-11 of the instruction
+				\item PC: Program Counter stores the memory address of the next instructions
+				\item DR: Data Register stores some data we want to use with the ALU
+				\item AC: Accumulator which is the main register since it is the output of the ALU
+				\item IR: Stores the current instruction code
+				\item TR: Temporary Register is sometimes used for temporary storage
+				\item OUTR/INPR: Holds Input or Output character.
+			\end{itemize}
+			
+			\begin{center}
+				\includegraphics[width=0.4\linewidth]{registers}
+			\end{center}
+		
+			Most of these registers can connect to the bus assuming the bus has that register selected. 
+			
+			\begin{mdframed}[]
+			\textbf{Ex. } What is the state of the computer to send data from memory location 100 (in AR) to the DR?
+			
+			First we need to get the information into the bus. To do this, we need to set S2, S1, S0 to be 7, so 111. 
+			
+			The memory will read from the AR \textit{only if READ=1}, so we set READ to 1. 
+			
+			Now we load the DR (set LD of DR to 1).
+			
+			If we wanted, next cycle we could get it into the AC
+			
+			\end{mdframed}
+			
+			\subsection{Direct vs Indirect}
+			If we say M[100], this means get the data located \textbf{in memory at location 100}. This is direct. 
+			
+			If we say M[M[100]], this means go to memory at location 100, and there will be a memory address. We want the \textbf{data at the memory address located at M[100]}. This is indirect.
+			
+			\subsection{Basic Computer Instructions}
+			We have the following instruction list for the basic computer. 
+			
+			The first part are MRI, the second part RRI, the third part IOI.
+
+			Note that I refers to indirect (1) or direct (0). 
+			\begin{center}
+				\includegraphics[width=0.4\linewidth]{instructions}
+			\end{center}
+			
+			
+				\subsubsection{ISZ}
+				ISZ \_\_\_ will increment the memory location by 1, and then if it is 0, it will skip the next instruction.
+				
+				\subsubsection{BSA/BUN}
+				BUN \_\_\_ will set the PC to the given memory location.
+				
+				BSA \_\_\_ will set the PC to the given memory location and save the current PC to memory location 0.
+			
+			\subsection{Timing}
+			For timing stuff, we are working inside of the CU.
+			
+			Note that the CU works off of lots of binary bits such as\textbf{ T0-T15 (timing states), D0-7 (decoded opcode), IR0-IR11 (address of instruction)} and it outputs all the control signals for the bus, and registers (such as \textbf{DR Load, Memory READ}).
+			
+			We have a state counter (SC) which has 16 states and starts at 0, and each clock cycle increments. 
+			
+			\begin{center}
+				\includegraphics[width=0.6\linewidth]{cu}
+			\end{center}
+		
+			The instruction cycle has the following 4 phases:
+			\begin{enumerate}[]
+				\item Fetch instruction from memory T0, T1
+				\item Decode the instruction T2
+				\item Read the address from memory if indirect address
+				\item Execute the instruction
+			\end{enumerate}
+		
+			We have the following instruction cycle. 
+			
+			\begin{center}
+				\includegraphics[width=0.7\linewidth]{instruction_cycle}
+			\end{center}
+		
+			Note how at the bottom of each column, it says "execute the instruction". We have a table with the exact instructions for each of these operations, or we can come up with it logically. 
+			
+			\begin{center}
+				\includegraphics[width=0.7\linewidth]{instructionsss}
+			\end{center}
+		
+			We also have one for RRI and IOI.
+			
+			\subsection{Interrupt}
+			The ION and IOF instructions will enable and disable the interrupt (IEN register) respectively. 
+			
+			When the interrupt is on (IEN=1), we use a \textbf{flag} called R (just a flip flop).
+			
+			R is checked at the\textbf{ start of each instruction cycle}. If it is 1, then we branch to M[0] and execute the \textbf{interrupt sequence} stored there. 
+		
+		
+		
+		
+		\section{Chapter 6}
+		Machine language is a sequence of commands representing the exact content in memory. 
+		
+		Assembly is like machine language but there are comments, and variables. 
+		
+			\subsection{Assembly Syntax}
+			In assembly, we have 3 columns.
+			
+			\begin{tabular}{|c|c|c|}
+				\hline
+				Label & Instruction & Comment \\
+				\hline
+				Optional & Mandatory & Optional \\
+				\hline
+			\end{tabular}
+		
+			\begin{mdframed}[]
+				This is an example of assembly code with comments
+			\begin{lstlisting}
+     ORG 100 /sets origin of program (here) to 100
+     LDA HEX A2 /loads hex value A2 into AC
+CTR, DEC -2 /creates counter variable with decimal value -2
+LOP, ISZ CTR /increments CTR, skips next line if 0 (will be -1)
+     BUN LOP /branches to the line with LOP (the ISZ)
+     HLT /halts the computer				
+			\end{lstlisting}
+				This code will loop twice before getting 0 in CTR, then it will skip the BUN line, and HLT the computer.
+			\end{mdframed}
+		
+			The \textit{label }can be a string up to 3 letters, that cannot start with a number. 
+			
+			The \textit{instruction} can be any RRI, MRI, or IOI instruction, or a psudocode (ORG, END, DEC, HEX).
+			
+			To use \textbf{indirect addressing}, we put an I at the end of the instruction.
+			\begin{mdframed}[]
+				\begin{lstlisting}
+ORG 100 /sets origin of program (here) to 100
+LDA x I /loads M[M[x]]
+x, HEX 111	
+END				
+				\end{lstlisting}
+			\end{mdframed}
+			
+			\subsection{Assembler}
+			The assembler converts assembly to binary that the computer can handle. 
+			
+			The first pass generates the address symbol table which maps the variables to their binary equivalent. 
+			
+			The second pass translates everything else to binary.
+			
+			\subsection{Double Precision}
+			When we want to add 2 numbers which have double precision (2 memory locations for each number), we need to be careful.
+			
+			\begin{enumerate}
+				\item Add the lower halves together
+				\item Save result
+				\item Get the carry from E into AC (using CLA, then CIL)
+				\item Add both upper halves to the carry
+				\item Save result 
+			\end{enumerate}
+			
+			\subsection{Subroutines}
+			A subroutine is called using the \textbf{BSA} instruction. We will BSA to the \textbf{address of the subroutine} (which \textit{saves the current address at the address of subroutine}), and then at the end of the subroutine, BUN back to the main code (BUN to \textit{start of subroutine} indirectly). 
+			
+			To pass data from the main to subroutine, we can either store it in a register, or/and store it after the BSA call. 
+			
+			\begin{mdframed}[]
+			
+			\begin{lstlisting}[]
+    ORG 100
+    BSA SUB /call subroutine
+    HEX 123 /parameter passed into subroutine
+    HLT /program done
+SUB HEX 0 /start of subroutine, will store location to after BSA
+    LDA SUB /since SUB now has HEX 123, loads that
+    ISZ BSA /we do not want to return to 123, but to HLT
+    BUN BSA /this returns to the HLT line
+
+			\end{lstlisting}
+			\end{mdframed}
+		
+		
+		
+		
 		
 		
 		
