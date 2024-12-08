@@ -434,18 +434,119 @@
 	\end{mdframed}
 
 	\section{Vector Fields [L17]}
+	A Vector Field if a function F that assigns each input to a vector. 
 	
 	\section{Line Integrals [L17, L18, L19, L20]}
+	We are used to integrating along an area, but we can also integrate on a line. This line can be piecewise. 
 	
-	\subsection{Mass and Center of Mass [L18]}
+	If C is a curve given by $r(t) = x(t) \hat{i} + y(t) \hat{j}$, then:
+	\begin{align*}
+		\int_C f(x,y) dS = \int_a^b f(x(t),y(t)) \sqrt{\left(\frac{dx}{dt}\right)^2 + \left(\frac{dy}{dt}\right)^2}dt
+	\end{align*}
+
+	\begin{mdframed}[]
+	\textbf{Ex. } Evaluage the following line integral where C is the arc of the parabola $y=x^2$ from $(0,0)$ to $(\pi,\pi^2)$
+	\begin{align*}
+		\int_C (x^2y+\sin x)dy
+	\end{align*}
+	We need to find a parameterization to get this into 1 variable. 
 	
-	\subsection{Work [L18]}
+	I will choose $x=t$ and therefore $y=t^2$.
+	\begin{center}
+		\includegraphics[width=0.2\linewidth]{ex3}
+	\end{center}
+	We see that since x=t, x goes from 0 to pi. So those are the bounds of the curve. 
+	
+	Now we set up the integral. NOTE: We do not use the square root part at the end as this is for dS. So we just do dy which is 2t.
+	\begin{align*}
+		\int_0^\pi (t^4+\sin(t) )\cdot 2t= ... = 326.75
+	\end{align*}
+	
+	\end{mdframed}
+	
+	\begin{mdframed}[]
+	\textbf{Ex. } Find the mass of a wire with the shape $x^2+y^2=1$ above the x axis with $\rho = 1-y$.
+	
+	We already know how to solve this if it was the disk we wanted, but we want the bounds. For this we need the line integral.
+	
+	Since it is a circle, we use $x=\cos(t), y=\sin(t)$. 
+	
+	We see it goes from $0, 2\pi$. 
+	\begin{align*}
+		m = \int^\pi_0 (1-\sin t) \sqrt{(-\sin t)^2 + \cos^2 t} dt = \int _0^\pi 1-\sin t dt = CALC
+	\end{align*}
+	We could also get the center of mass by doing for example:
+	\begin{align*}
+		\overline{x} = \frac{\int^\pi_0 \cos(t) (1-\sin(t)) dt}{m} \qquad \overline{y} = \frac{\int^\pi_0 \sin(t) (1-\sin(t)) dt}{m}
+	\end{align*}
+	\end{mdframed}
 	
 	\subsection{Fundamental Theorum of Line Integrals [L19]}
+	This theorum states that if C is a curve paremetrized by $r(t), t\in[a,b]$ then: 
+	\begin{align*}
+		\int_C \nabla F dr = f(r(b))-f(r(a))
+	\end{align*}
+
+	We can relate an area D to the bounds of that area (a line for line integrals) C. C is always in the CCW direction. 
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{curve}
+	\end{center}
 	
 	\subsection{Green Theorum [L19]}
+	The Green theorum is a very useful theorum. 
+	
+	It states that if C is a positively oriented piecewise smooth curve, and P and Q have continuous partial derivatives, then:
+	\begin{align*}
+		\int_C Pdx + Qdy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)dA
+	\end{align*}
+
+	\begin{mdframed}[]
+	\textbf{Ex. } green thm ex
+	\end{mdframed}
 	
 	\subsection{Curl and Divergence [L20]}
+	We define the gradient of a vector to be:
+	\begin{align*}
+		\nabla = \hat{i} \frac{\partial }{\partial x} + \hat{j} \frac{\partial }{\partial y} + \hat{k} \frac{\partial }{\partial z}
+	\end{align*}
+
+	Then we define the curl of F to be the cross product of F and $\nabla$:
+	\begin{align*}
+		curl F = \nabla \times F
+	\end{align*}
+	Similarly we define the divergence of F to be the dot product of F and $\nabla$.
+	\begin{align*}
+		div F = \nabla \cdot F
+	\end{align*}
+
+	\begin{mdframed}[]
+	\textbf{Ex. } Find the div and curl of $F=\left<e^x \sin y, e^y \sin z, e^z \sin x\right>$.
+	
+	Since the curl is just the cros product, we need to remember how to do that. This graphic helps. 
+	
+	We cover the part we are finding (cover x to find $\hat{i}$ part) and then do a cross. 
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{"cross product"}
+	\end{center}
+	Here P, Q, R represent the $\hat{i}$, $\hat{j}$, and $\hat{k}$ components respectively.
+	
+	For $\hat{i}$, we do:
+	\begin{align*}
+		\frac{\partial e^z \sin x}{\partial y} - \frac{\partial e^y \sin z}{\partial z} = 0 - e^y \cos z
+	\end{align*}	
+	Then that can be repeated for the $\hat{j}$ and $\hat{k}$ components to get:
+	\begin{align*}
+		curl F = \left<-e^y \cos z, -e^z \cos x, -e^x \cos y\right>
+	\end{align*}
+
+	The divergence is easier. It is just the dot product. 
+	\begin{align*}
+		div F = F \cdot \nabla = \left<\frac{\partial }{\partial x}, \frac{\partial }{\partial y}, \frac{\partial }{\partial z}\right> \cdot \left<e^x \sin y, e^y \sin z, e^z \sin x\right> = \left<\frac{\partial e^x \sin y}{\partial x}, \frac{\partial  e^y \sin z}{\partial y}, \frac{\partial  e^z \sin x}{\partial z}\right> \\
+		=  \left<e^x \sin y, e^y \sin z, e^z \sin x\right>
+	\end{align*}
+	\end{mdframed}
+
+	We call a vector field F with continuous partial derivatives that exist conservative \textbf{iff} $curl F = 0$.
 	
 	\section{Surface Integrals [L20, L21]}
 	
