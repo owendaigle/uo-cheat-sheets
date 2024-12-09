@@ -72,7 +72,7 @@
 	We can extend this to the next dimension by just adding a third value to each of those formulas ($\frac{df}{dz}$ and $z$).
 	
 	\begin{mdframed}[]
-		\textbf{Ex. } Find the directional derivative of $f(x,y) = x^2y^3 - 4y$ in the durection of $v=\left<2,5\right>$ at $(2,1)$.
+		\textbf{Ex. } Find the directional derivative of $f(x,y) = x^2y^3 - 4y$ in the direction of $v=\left<2,5\right>$ at $(2,1)$.
 		
 		We need to get the gradient vector, and the unit vector $u$. 
 		\begin{align*}
@@ -168,7 +168,7 @@
 		\begin{align*}
 			2x+4=0 \implies x=-2 \qquad 2y-4 = 0 \implies y=2
 		\end{align*}
-		We have a point $(0,0)$.
+		We have a point $(-2,2)$.
 		
 		Now we need to use lagrange multiplyers. 
 		\begin{align*}
@@ -499,9 +499,18 @@
 	\begin{align*}
 		\int_C Pdx + Qdy = \iint_D \left(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y}\right)dA
 	\end{align*}
+	This relates a domain to its bounds.
 
 	\begin{mdframed}[]
-	\textbf{Ex. } green thm ex
+	\textbf{Ex. } Evaluate $\int_C x^4 dx + xy dy$ where C is the triangle connecting (0,0), (1,0), (0,1).
+	
+	We will use the Green theorum since we have a dx and dy seperated. 
+	
+	We get:
+	\begin{align*}
+		\iint_D \left(\frac{\partial (xy)}{\partial x} - \frac{\partial x^4}{\partial y}\right) dxdy = \iint_D y dxdy
+	\end{align*}
+	Now we can get D using the three points we have, and solve. 
 	\end{mdframed}
 	
 	\subsection{Curl and Divergence [L20]}
@@ -549,9 +558,89 @@
 	We call a vector field F with continuous partial derivatives that exist conservative \textbf{iff} $curl F = 0$.
 	
 	\section{Surface Integrals [L20, L21]}
+	The FLUX going through a surface S is defined as:
+	\begin{align*}
+		\iint_S F \mathrm{d}S = \iint_S F \cdot n \mathrm{d}S = \iint_D F \cdot (r_u \times r_v) \mathrm{d}A
+	\end{align*}
+	Here, r(u,v) is a parameterization of the surface S. F is the FLUX vector field. We are 
+	
+	\begin{mdframed}[]
+	\textbf{Ex.} Find the Flux $F(x,y,z) = z \hat{i} + y \hat j + x \hat k$ where S is the unit sphere.
+	
+	This is asking for $\iint_S Fds$. We need to get a parametrization r(u,v) to work with the double integral. 
+	
+	We also need to get the $r_v \times r_u$ which is just the partial derivatives of r in the cross product. 
+	
+	Finally we take the dot product of both of those, and integrate. 
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{ex4}
+	\end{center}
+	
+	\end{mdframed}
 	
 	\subsection{Stokes Theorum [L22]}
+	If S is a surface, and C is a boundry of x, then:
+	\begin{align*}
+		\iint_C Fdr = \iint_S curl F \mathrm{d}s
+	\end{align*}
+	This relates a curve to a surface.
+	
+	\begin{mdframed}[]
+	\textbf{Ex. } Find $\int_C Fdr$ where $F(x,y,z) = \left<-y^2, x, z^2\right>$ and C is the intersection of the plane $y+z=2$ and $x^2+y^2=1$.
+	
+	We know that this is the intersection between a cylinder and a plane. We can find the curl for this, so we will use stokes theorum.
+	\begin{align*}
+		curl F = F\times \nabla = ... = (1+2y) \hat k
+	\end{align*}
+	Now we need the bounds of the Surface S. We use the disk at the top of the cylinder with radius 1. Polar coordinates help.
+	\begin{align*}
+		\iint_D 1+2y = \int_0^{2\pi} \int_0^1 (1+2r\sin\theta)r\mathrm{d}r\mathrm{d}\theta = ... = \pi
+	\end{align*}
+
+	\end{mdframed}
+
+	\begin{mdframed}[]
+	\textbf{Ex. } Find $\iint_S curl F \mathrm{d}S$ where $F(x,y,z) = \left<xz,yz,xy\right>$ and $S$ is the part of the sphere with radius 2 that lies inside the cylinder $x^2 + y^2 = 1$ and above the xy plane. 
+	
+	Here we need to solve for the other side of the equation. This means we need to get r(t). 
+	
+	We will pick the boundary curve C. This is the intersection between the cylander and sphere.
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{ex5}
+	\end{center}
+	\begin{align*}
+		x^2 + y^2 + z^2 = 4 \implies x^2 + y^2 = 4-z^2 \implies 1 = 4-z^2 \implies z=\sqrt 3
+	\end{align*}
+	Now I can create r(t) for the curve C around the disk at the top of the structure. 
+	\begin{align*}
+		r(t) = \left<\cos t, \sin t, \sqrt 3\right> \qquad r'(t) = \left<-\sin t, \cos t, 0\right> \qquad F(r(t)) = \left<\sqrt 3 \cos t, \sqrt 3 \sin t, \cos t \sin t\right>
+	\end{align*}
+	Now I sub into the equation and solve. 
+	\begin{align*}
+		\iint_S curl F \mathrm{d}S = \int_C F \mathrm{d}r = \int _0^{2\pi} \left<\sqrt 3 \cos t, \sqrt 3 \sin t, \cos t \sin t\right> \cdot \left<-\sin t, \cos t, 0\right> \mathrm{d}t = 0
+	\end{align*}
+	\end{mdframed}
 	
 	\subsection{Divergence Theorum [L22]}
+	If S is a surface, and E is a volume, then: 
+	\begin{align*}
+		\iint_S Fds = \iiint_E div F dV
+	\end{align*}
+	This relates a surface to a volume.
+	
+	\begin{mdframed}[]
+	\textbf{Ex. } Find the FLUX of the vector field $F(x,y,z) = \left<z, y, x\right>$ over the unit ball. 
+	
+	Recall that the flux is just $\iint_S F\mathrm{d}$. 
+	
+	We know that the unit ball is $E = {(x,y,z) | x^2 + y^2 + z^2 \le 1}$.
+	
+	So we will use the divergence theorum to get the FLUX from the volume. 
+	\begin{align*}
+		div F = \nabla \cdot  F = ... = 1\\
+		\iint_S F\mathrm{d} = \iiint_E div F \mathrm{d} V = \iiint_E 1 \mathrm d V = \frac{4\pi}{3}
+	\end{align*}
+	E is just the bounds of the unit ball.
+	\end{mdframed} 
 	
 \end{document}
