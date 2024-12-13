@@ -166,7 +166,7 @@
 	\textbf{All operations have O(1) except search which depends on the height of the tree}
 	
 	\subsection{AVL}
-	An AVL tree is a BST where each internal node's subtrees heights can differ by at most 1. This means the height is O(logn).
+	An AVL tree is a BST where each\textbf{ internal node's subtrees heights can differ by at most 1}. This means the \textbf{height is O(logn).}
 	
 	To insert or delete, we do the same thing as with a BST, except if any change renders the tree unbalanced, we need to rebalance the tree. 
 	
@@ -197,14 +197,14 @@
 	\end{mdframed}
 	
 	\subsection{2-4 Trees}
-	A 2-4 tree is a non binary search tree where each node has 2, 3, or 4 children (and therefore 1, 2, or 3 keys) and all external nodes have the same depth. 
+	A 2-4 tree is a\textbf{ non binary search tree} where each node has 2, 3, or 4 children (and therefore 1, 2, or 3 keys) and all \textbf{external nodes have the same depth. }
 	
 	When we insert, we go down the tree to find where in the key should go. If this causes 5 keys in a node, we split (usually using the third key which gets sent to the parent).
 	
 	When we delete, we remove the item to delete and replace with inorder successor. If this causes an underflow, we borrow from the parent and fuse the two children together or if the sibling has extra, we take from the sibling, put into the parent, and then steal from the parent. 
 	
 	\section{Hash Maps}
-	We take a problem using a very large table, and use a function to map all data points to a smaller table. 
+	We take a problem using a very large table, and use a \textbf{function} to map all data points to a smaller table. 
 	
 	To resolve collisions, we have a few methods:
 	\begin{enumerate}[noitemsep]
@@ -217,7 +217,7 @@
 	When we are using any of the methods 2-4, and we delete an item, we cannot just delete the item since we need a record that there was an item there. So we change it to AVAILABLE. This means not to stop searching for a key (since the key could be further along), but we can put a new key there.
 	
 	\section{Graphs}
-	A graph has a set V of all vertices, and a set E of pairs of vertices called edges.
+	A graph has a set V of all \textbf{vertices}, and a set E of pairs of vertices called \textbf{edges}.
 	
 	We know that:
 	\begin{align*}
@@ -228,24 +228,108 @@
 	A graph is connected if one can get from any vertex to any other vertex along the edges. Basically the graph does not have multiple isolated parts. 
 	
 	\subsection{DFS}
+\textbf{	Depth First Search} is a graph traversial algorithm. 
+	
+	We start at a random vertex, and then go to the next vertex, then the next one, then the next one, then when we reach the end, we \textbf{backtrack} to visit all the ones we missed. 
+	
+	We can use a \textbf{stack} to implement this. We go to the first vertex, get all edges, and push to the stack. Then we pop and follow that edge. 
+	
+	If that edge goes to a new vertex, we then repeat. If it leads to an already visited vertex, we then pop the next edge. Do this until the stack isEmpty.
+	
+	Its complexity is $O(m+n)$ where the number of edges m can be up to $n^2$ if the graph is an adjacency list. If it is an adjacency matrix, it is always $O(n^2)$.
 	
 	\subsection{BFS}
+\textbf{	Breadth First Search} is a graph traversial algorithm.
+	
+	We start at a random vertex and then visit \textbf{all adjacent nodes}. Then of all the adjacent nodes visited, we visit all of their adjacent nodes. This creates a \textbf{layer} structure. 
+	
+	We use a \textbf{queue} to implement this. We go to the first vertex and add all edges to a queue, then we dequeue, go to that vertex, and if not visited, queue all of its edges. Then we dequeue the next edge and repeat. 
+	
+	Its complexity is the same as DFS.
 	
 	\subsection{Shortest Path}
+	A weighted graph is a graph where all edges have a weight assigned to them. 
+	
+	\subsection{Dijkstra Algorithm}
+	All vertices start with \textbf{distance of infinity}. We start at a vertex A and assign distance 0. 
+	
+	Then we take all of its incident edges and their weights, and then update all adjacent vertices with their new weights if new weights are better (weight of edge + weight of current verticy).
+	
+	Now that vertex is in the cloud (done with it). Then we take the smallest weight edge of the entire graph. 
+	
+	We are done once all vertices are in the cloud. 
+	
+	We use a priority queue for this (min heap).
+	
+	This is O(mlogn) for a heap, or $O(n^2)$ for an unsorted sequence.  
 	
 	\subsection{MST}
 	
+	\subsubsection{PrimJarnik}
+	This is almost identical to Dijkstra except rather than keeping track of the whole shotest distance at each vertex, we will just check at vertex V going to K, if VK is shorter than the weight of K. (just weight of edge, do not consider weight of current vertex).
+	
+	Runs in O(mlogn).
+	
+	\subsubsection{Kruskal Algorithm}
+	With Kruskal, initially each vertex is its own cluster. Then we pick the lowest weight edge and check if each vertex it connects are in different clusters, if so, connect them, if not, move on.
+	
+	We do this until we run out of edges. 
+	
+	This works in O((n+m)logn)
+	
 	\section{Sort}
+	These are lots of sorting algorithms:
+	
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Type & Worst Case & Best Case & Average Case \\
+		\hline
+		Selection & O(n²) &  O(n²)  &  O(n²)  \\
+		\hline
+		Insertion &  O(n²)  &  O(n)  &  O(n²)  \\
+		\hline
+		Bubble &  O(n²)  &  O(n)  &  \\
+		\hline
+		Heap &  O(nlogn)  &  O(nlogn)  &  O(nlogn)  \\
+		\hline
+		Merge &  O(nlogn)  &  O(nlogn)  &  O(nlogn)  \\
+		\hline
+		Quick &  O(n²)  &  &  O(nlogn)  \\
+		\hline
+	\end{tabular}
 	
 	\subsection{Mergesort}
+	Mergesort is a\textbf{ non in place algorithm} that breaks up the array into 2 parts, each of which gets sorted, and then merges them together. 
+	
+	This is a recursive algorithm. It gets broken down until there is just 1 element in each side, then it \textbf{merges} those 2 together. 
 	
 	\subsection{Quicksort}
+	Quick sort will choose a \textbf{pivot}, then sort the array by putting all elements \textbf{smaller than the pivot on one side}, and all \textbf{bigger than pivot on the other side}. Then we quicksort each side, finally we put both sides together. 
+	
+	This can be \textbf{in place}.
 	
 	\subsection{Bucket Sort}
+	Bucket sort puts all items into a \textbf{fixed number of buckets} such as sorting by first letter of the name, there are 26 buckets. 
+	
+	If there are 2 things that go in the same bucket, we need to ensure to keep the same relative order. This is because Bucket Sort is a \textbf{stable} algorithm. 
+	
+	If we have n items and N buckets, it takes O(n+N).
 	
 	\subsection{Radix Sort}
+	Radix sort is a bucket sort that can run more than one time. If we are sorting abc, aac, bba, aad, 
+	
+	We sort once by the first letter to get: abc, aac, aad, bba
+	
+	Then we sort by the second letter to get: aac, aad, abc, bba
+	
+	Then by the third letter to get: aac, aad, abc, bba
 	
 	\subsection{Quadratic Sorts}
+	Insertion sort has a sorted part of the array, and then inserts an element from the unsorted part into the sorted part by comparing with each sorted element. 
+	
+	Selection sort looks for the minimum value then puts into index 0. Then looks for the minimum value from 1-n and puts that into 1, then looks for minimum of 2-n and puts into 2...
+	
+	Bubble sort goes though the array and swaps while the lower valus is smaller than the higher value. This means each iteration the max goes to the last spot in the array.
 	
 	
 	
