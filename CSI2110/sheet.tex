@@ -61,7 +61,7 @@
 	\section{Stacks}
 	A stack is a first in last out data type.
 	
-	We can \verb|push()|, \verb|pop()| to add or remove to the top of the stack. There is also \verb|isEmpty()|, \verb|pek()| (returns but does not remove the top) and \verb|size()|.
+	We can \verb|push()|, \verb|pop()| to add or remove to the top of the stack. There is also \verb|isEmpty()|, \verb|peek()| (returns but does not remove the top) and \verb|size()|.
 	
 	\section{Queues}
 	Queues are first in first out data types. 
@@ -163,7 +163,7 @@
 	\end{align*}
 	These do NOT apply to a general binary tree.
 	
-	\textbf{All operations have O(1) except search which depends on the height of the tree}
+	\textbf{All operations (delete, insert) have O(1) except search which depends on the height of the tree}
 	
 	\subsection{AVL}
 	An AVL tree is a BST where each\textbf{ internal node's subtrees heights can differ by at most 1}. This means the \textbf{height is O(logn).}
@@ -255,7 +255,7 @@
 	
 	Then we take all of its incident edges and their weights, and then update all adjacent vertices with their new weights if new weights are better (weight of edge + weight of current verticy).
 	
-	Now that vertex is in the cloud (done with it). Then we take the smallest weight edge of the entire graph. 
+	Now that vertex is in the cloud (done with it). Then we take the smallest weight edge of the entire graph and repeat the previous line. 
 	
 	We are done once all vertices are in the cloud. 
 	
