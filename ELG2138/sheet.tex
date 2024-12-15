@@ -187,7 +187,7 @@
 	\end{enumerate}
 
 	\begin{mdframed}
-		\textbf{Ex. } put mca ex here
+		\textbf{Ex. } Example found in Module 5.2
 	\end{mdframed}
 	
 	\section{Circuit Theorums}
@@ -232,17 +232,173 @@
 	\section{Energy Storage Elements}
 	
 	\subsection{Capacitors and Inductors}
+	\textbf{Capacitors and Inductors} are circuit elements that we usually work with in the complex domain. For this module though, we only work in the real domain. 
+	
+	A capacitor has a \textbf{capacitance C} which is measured in Farads, and an inductor has an \textbf{inductance L} measured in Henrys. 
+	
+	The current and voltage through a capacitor is:
+	\begin{align*}
+		i(t)=C\frac{\mathrm{d}V}{\mathrm{d}t}\qquad v(t)=v(t_0) + \frac{1}{C}\int^t_{t_0} i(\tau) \mathrm{d}\tau
+	\end{align*}
+	
+	The current and voltage through an inductor is: 
+	\begin{align*}
+		v(t)=L\frac{\mathrm{d}i}{\mathrm{d}t}\qquad i(t)=i(t_0) + \frac{1}{L}\int^t_{t_0} v(\tau) \mathrm{d}\tau
+	\end{align*}
+
+	\textbf{Inductors} are added together similar to \textbf{resistors} (sum in series, inverse sum in //) while \textbf{capacitors} are added together the \textbf{opposite of resistors }(sum in //, inverse sum in series).
+	
+	The current in the inductor and voltage in the capacitor can \textbf{never} change instantly.
 	
 	\subsection{Switches and Initial Conditions}
+	A \textbf{switching circuit} has a switch that changes at a certain time. We say that before the switch changes, the circuit has been \textbf{stable} for a very long time (infinity).
+	
+	When working with switching circuits, we use the following procedure:
+	\begin{enumerate}[noitemsep]
+		\item Before the switch changes
+		\subitem Capacitor is an \textbf{open circuit }and inductor is a \textbf{short circuit}
+		\subitem Find the voltage across the capacitor or/and the current through the inductor.
+		\item Right after the switch changes
+		\subitem Voltage across the capacitor and current in inductor are the same as before.
+		\subitem Solve for what we need treating the capacitor as voltage source and inductor as current source.
+		\item (Optional) At time is infinity, consider capacitor as open circuit, and inductor as closed circuit. 
+	\end{enumerate}
+
+	\begin{mdframed}[]
+	\textbf{Ex. } Find $v_1(t^+), v_1(t^-)$ in the following circuit.
+	\begin{center}
+		\includegraphics[width=0.45\linewidth]{ex3}
+	\end{center}
+	When looking before the switch is closed, we draw the capacitor as an OC and indurcot as SC.
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{ex3-2}
+	\end{center}
+	We can cancel out the 10 $\Omega$ resistor since only one side is connected. This means that the voltage across is is 0. $v_1(0^-)=0$.
+	
+	The voltage across the capacitor is the same as the voltage across the 15 $\Omega$ resistor.
+	
+	So I will do a KVL across the whole loop: $-24+30i+15i +15i \implies i=0.4 A$
+	
+	Then I will use Ohms law to get the voltage across the 15 Ohm resistor: $v=14\cdot 0.4=6$
+	
+	So we know that $v_c(0^-)=v_c(0^+)=6V$
+	
+	Also the current in the inductor is: $i_l(t^-)=i_l(t^+)=0.4A$
+	
+	Now we look at the circuit after the switch is clicked. 
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{ex3-3}
+	\end{center}
+
+	Now this is a simple circuit if we consider the cap a voltage source, and the inductor a current source. I will use the mesh current analysis to solve. 
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{ex3-4}
+	\end{center}
+	We know that i2 is 0.4A due to the current source in that mesh.
+	
+	Do a KVL for mesh 1.
+	\begin{align*}
+		-24+10(i_1-0.4)+15i_1 = 0 \implies i_1 = 1.12 A
+	\end{align*}
+	Do a KVL for mesh 2.
+	\begin{align*}
+		30i_3+6=0 \implies i_3 = -0.2
+	\end{align*}
+	
+	Now that we know the currents, we can find the voltage across the 10 Ohm resistor is just $V=iR=(i_2-i_1)10=7.2 V$
+	
+	The circuit was verified using multisim as found in Appendix B.
+	\end{mdframed}
 	
 	\section{Complete Responce of RL and RC}
+	This module is very similar to module 5 except we find the v(t) or i(t) for any t using an equation. 
+	
+	We follow the same steps of: 
+	\begin{enumerate}[noitemsep]
+		\item \textbf{Before} the switch changes
+		\subitem Capacitor is an \textbf{open circuit }and inductor is a \textbf{short circuit}
+		\subitem Find the voltage across the capacitor or/and the current through the inductor.
+		\item \textbf{Right after} the switch changes
+		\subitem Voltage across the capacitor and current in inductor are the same as before.
+		\subitem Solve for Norton and Thevanin circuits treating the capacitor as voltage source and inductor as current source.
+		\item Sub values into the current or voltage in inductor or capacitor equation.
+	\end{enumerate}
 	
 	\subsection{RC Circuits (Resistance and Capacitor)}
+	We use the formula:
+	\begin{align*}
+		v_c(t)=V_{OC}+(v_c(0^+)-V_{OC})e^{-\frac{t}{R_tC}}
+	\end{align*}
 	
 	\subsection{RL Circuits (Resistor and Inductor)}
+	We use the formula:
+	\begin{align*}
+		i_l(t)=I_{SC}+(i_l(0^+)-I_{SC})e^{-\frac{tR_t}{L}}
+	\end{align*}
+
+	\subsection{Multiple Periods}
+	We can have \textbf{multiple periods where we need a different equation.}
+	
+	This is very simple in that there is a seperate $I_{SC}$ or $V_{OC}$ for each time period, and the initial part ($v_c(0^+)$ or $i_l(0^+)$) is just the final of the previous time period. 
 	
 	\section{AC Analysis of RLC Circuits using Phasors}
+	When working in the complex domain, we say we are working in the \textbf{phasor domain or frequency domain}. 
+	
+	We are given the voltage source as a sinusoidial in the form of $v(t)=A\cos(\omega t+\phi)$ where A is the amplitude of the voltage, $\omega$ is the period, and $\phi$ is the phase angle. We can also write this in \textbf{phasor form} as $v(t)=A\angle \phi$
+	
+	To work in the phasor domain, we do the following steps:
+	\begin{enumerate}[noitemsep]
+		\item Represent all independant sources in their phasor form.
+		\item Represent all unknown currents and voltages as phasors (Inductors, Capacitors, Resistors, etc.)
+		\item Treat the circuit as a convential circuit and solve using conventional means such as KVL, KCL, Source Transformations, NVA, etc. 
+		\item Once we have the piece of information we want, \textbf{put it back into the time domain.}
+	\end{enumerate}
+
+	\subsection{Inductance}
+
+	In the phasor domain, resistors still are measured in Ohms. We do not have to change anything. 
+	
+	Capacitors need to be converted into their \textbf{impedance} (complex form of resistance) using the equation: 
+	\begin{align*}
+		Z=\frac{1}{\jmath\omega C}\Omega = \frac{-\jmath}{\omega C}\Omega
+	\end{align*}
+
+	Inductors also have to be converted into their \textbf{impedance} using the equation:
+	\begin{align*}
+		Z=j\omega L \Omega
+	\end{align*}
+	
+	\subsection{Admittance}
+	The admittance $Y$ is just the inverse of the impedance $Z$. 
+	\begin{align*}
+		Y=Z^{-1}=\frac{1}{Z}
+	\end{align*}
 	
 	\section{Power Calculations in AC Circuits}
+	This module mostly just has to do with using the correct equations and subbing in the correct values. These equations are located on the formula sheet in Appendix A.
+	
+	\newpage
+	\appendix
+	\begin{center}
+		\Large\textbf{Appendix} \\
+		\vspace{0.5em}
+	\end{center}
+	
+	\section{Formula Sheet}
+	\begin{center}
+		\includegraphics[width=0.99\linewidth]{formulaside1}
+	\end{center}
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{formulaside2}
+	\end{center}
+	
+	
+	\section{Multisim Verification for 5.2}
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{ex3-5}
+	\end{center}
+	
+	
+	
 	
 \end{document}
