@@ -1,0 +1,55 @@
+% Crucial Preamble
+\documentclass[12pt,letterpaper]{article} \usepackage{amsmath} \usepackage{graphicx} \usepackage[margin=1in]{geometry} \usepackage{longtable}  \usepackage{amssymb}
+
+% Extra Preamble
+\usepackage{fancyhdr} \usepackage{enumitem} \usepackage{float} \usepackage{soul}
+\usepackage{multicol} \usepackage[compact]{titlesec}
+
+
+% frames with display breaks
+\usepackage{mdframed}
+\allowdisplaybreaks
+
+% change spacing
+\usepackage{setspace}
+\setlength{\parskip}{0.4\baselineskip}
+
+% Remove paragraph indentation
+\setlength{\parindent}{0pt}
+
+% Reduce space before and after section headings
+%\titlespacing*{\section}{0pt}{0.1\baselineskip}{0.2\baselineskip}
+
+% changes font
+%\renewcommand{\familydefault}{\sfdefault}
+
+% adds header and footer
+\pagestyle{fancy}
+\fancyhead{} \fancyhead[C]{PHY 2323 Cheat Sheet} \fancyhead[L]{PHY2323} \fancyhead[R]{Owen Daigle}
+\fancyfoot{} \fancyfoot[C]{\thepage}
+
+
+\begin{document}
+	
+	\begin{center}
+		\Large\textbf{PHY 2323 Cheat Sheet} \\
+		\vspace{0.5em}
+	\end{center}
+
+	\section{Chapter 1, 2: Math Review}
+	
+	\subsection{Coordinate Systems}
+	
+	\section{Chapter 3: Electrostatics}
+	
+	\subsection{Coulombs Law}
+	\begin{align*}
+		\vec E (\vec r) = \frac{1}{4\pi \epsilon_0} \int_S \frac{\rho(\vec r\prime)(\vec r - \vec r\prime)}{|\vec r - \vec r\prime | ^3}\mathrm d l
+	\end{align*}
+	This can also be extended to a surface with $\mathrm ds$ and 2 integrals, or volume with $\mathrm dv$
+	
+	\subsection{Gausses Law}
+	
+	
+	
+\end{document}
