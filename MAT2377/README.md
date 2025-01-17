@@ -1,1 +1,1 @@
-This class has official cheat sheets for each of the 3 midterms.
+A formula sheet as well as (later probably) a whole year chet sheet
