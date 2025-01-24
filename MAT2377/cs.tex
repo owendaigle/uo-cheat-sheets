@@ -1,0 +1,70 @@
+% Crucial Preamble
+\documentclass[12pt,letterpaper]{article} \usepackage{amsmath} \usepackage{graphicx} \usepackage[margin=1in]{geometry} \usepackage{longtable}  \usepackage{amssymb}
+
+% Extra Preamble
+\usepackage{fancyhdr} \usepackage{enumitem} \usepackage{float} \usepackage{soul}
+\usepackage{multicol} \usepackage[compact]{titlesec}
+
+
+% frames with display breaks
+\usepackage{mdframed}
+\allowdisplaybreaks
+
+% change spacing
+\usepackage{setspace}
+\setlength{\parskip}{0.4\baselineskip}
+
+% Remove paragraph indentation
+\setlength{\parindent}{0pt}
+
+% Reduce space before and after section headings
+%\titlespacing*{\section}{0pt}{0.1\baselineskip}{0.2\baselineskip}
+
+% changes font
+%\renewcommand{\familydefault}{\sfdefault}
+
+% adds header and footer
+\pagestyle{fancy}
+\fancyhead{} \fancyhead[C]{MAT 2377 Cheat Sheet} \fancyhead[L]{MAT2377} \fancyhead[R]{Owen Daigle}
+\fancyfoot{} \fancyfoot[C]{\thepage}
+
+
+\begin{document}
+	
+	\begin{center}
+		\Large\textbf{MAT 2377 Cheat Sheet} \\
+		\vspace{0.5em}
+	\end{center}
+	
+	\section{Chapter 1: Probabilities}
+	\subsection{Sample Spaces}
+	The \textbf{sample space} is the set of all possible outcomes. 
+	
+	An \textbf{event} is a collection of outcomes in the sample space. Usually this is what we are looking to work with. 
+	
+	\subsection{Counting Techniques}
+	We can count items using the $k$ stage procedure. 
+	
+	If we have $k$ stages, each with $n_1$, $n_2$, $n_3$, ... possibilities, then the total number of possiblilites is just $n_1\cdot n_2\cdot n_3\cdot ...\cdot n_k$.
+	
+	\subsection{Ordered Samples}
+	If we have an ordered sample, then we see that picking $1, 2, 3$ is different than picking in a different order $1, 3, 2$.
+	
+	If we draw r items from a bag of n items:
+	\begin{itemize}[]
+		\item If we replace each item after drawing, we have: $n\cdot n\cdot n\cdot ... = n^r$ possibilities
+		\item If we do NOT replace the items, we have: $n\cdot (n-1)\cdot (n-2)\cdot ...\cdot (n-r) = \frac{n!}{(n-r)!}= {}_nP_r$
+	\end{itemize}
+	
+	\subsection{Unordered Samples}
+	
+	
+	\subsection{Conditional Probabilities}
+	
+	\subsection{Law of Total Probability}
+	
+	\subsection{Bayes Theorum}
+	
+	\section{Chapter 2: Discrete Random Variables}
+	
+\end{document}
