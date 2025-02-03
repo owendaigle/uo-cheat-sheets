@@ -49,7 +49,54 @@
 	This can also be extended to a surface with $\mathrm ds$ and 2 integrals, or volume with $\mathrm dv$
 	
 	\subsection{Gausses Law}
+	Gausses Law can be used on a \textbf{closed surface} where we make a guassian surface (such as a sphere) at the point of interest. 
+	\begin{align*}
+		\int_S \vec E \mathrm d \vec s = \frac{Q_{enc}}{\epsilon}
+	\end{align*}
+
+	We also have the $\vec D$ field which is the \textit{Electric Flux Density}.
+	\begin{align*}
+		\int_S \vec D \mathrm d \vec s = Q_{enc}
+	\end{align*}
 	
+	Finally, we have the flux $\psi$, a scalar. 
+	\begin{align*}
+		\psi = \epsilon \int_s \vec E \mathrm d \vec s = \int \vec D \mathrm d \vec s
+	\end{align*}
+
+	This is useful in 3 main cases. 
+	\begin{enumerate}[]
+		\item Spherical Symmetry is present
+		\item Cylindrical symmetry is present (long line of charge with uniform $\rho$ or cylander with no angular dependance)
+		\item Planar Symmetry (Long 2D surface of charge)
+	\end{enumerate}
+	
+	\subsection{Electric Potential}
+	This is the potential energy per unit charge. AKA the voltage. This is a \textbf{scalar field}. This is \textit{independant of the path chosen}. 
+	\begin{align*}
+		V(\vec r) = \frac{1}{4\pi \epsilon _0} \int_{l\prime }\frac{\rho _l \mathrm d l\prime}{|\vec r-\vec r\prime| }
+	\end{align*}
+	This can be extended into 2d or 3d space by changing the $l\prime$ and $\mathrm d l\prime$ for $s\prime, \mathrm d s\prime$ or $v\prime, \mathrm d v\prime$.
+	
+	Then we can say also at a higher level that:
+	\begin{align*}
+		\vec E = -\nabla V \qquad \nabla V = -\int \vec E\cdot \mathrm d \vec l
+	\end{align*}
+
+	\subsection{Electric Dipole}
+	A \textbf{dipole} is a pair of equal and opposite charges that are very close to each other relative to the point of observation.
+	
+	This means that at the point of observation, they seem as one charge. 
+	
+	\subsection{Materials in Electric Fields}
+	There are 3 types of materials:
+	\begin{enumerate}[]
+		\item Conductors
+		\item Insulators
+		\item Semiconductors
+	\end{enumerate}
+
+	If we have 2 electric fields between 2 dielectric (insulators) surfaces, we have the following formulas for the D and E fields. 
 	
 	
 \end{document}
