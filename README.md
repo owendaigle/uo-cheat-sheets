@@ -1,5 +1,7 @@
 # uo-cheat-sheets
 
+> I should really change what these are called, since they are really not **cheat sheets** since I never have, never will, and don't think anyone ever should, cheat. They are really just summary sheets.
+
 just some cheat sheets I made for university, not all are here atm, but I hope to get all of mine as well as the source in this repo
 
 different courses are stored in different directories,
