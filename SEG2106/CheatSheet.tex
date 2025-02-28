@@ -71,6 +71,11 @@
 		\item Postcondition (What state the system is in after the use case. )
 	\end{itemize}
 
+	\begin{mdframed}
+		\textbf{Ex. } 
+		% put example of use case diagram
+	\end{mdframed}
+
 	\textbf{Functional Requirements} are things that the system is supposed to do. 
 	
 	\textbf{Non Functional Requirements} are more about how the system is supposed to do something. Such as the system "must complete action in less than 5 seconds" or the system "must store password as encrypted".
@@ -81,6 +86,11 @@
 	
 	\subsection{UML Activity Diagrams}
 	This is a diagram that models behaviour of a system. They are good to model concurrent behaviour. 
+	
+	\begin{mdframed}
+		\textbf{Ex. } 
+		% put ex of activity
+	\end{mdframed}
 	
 	\subsection{UML State Machines}
 	This is a high level diagram that models the states of a certain part of a system. It is good at working with a single object/part. 
@@ -94,6 +104,11 @@
 	
 	A petri net is \textbf{alive} if there is always at \textit{least one transition } that can be fired from any point. Conversely, if there is any reachable combination where the system cannot do anything else (it dies), the petri net is not alive. 
 	
+	\begin{mdframed}
+		\textbf{Ex. }
+		% put ex of petri with boundedness and aliveness calculation
+	\end{mdframed}
+	
 	\subsection{Specification and Description Language (SDL)}
 	SDL has 3 main hierarchical levels. System, Block, and Process. 
 	
@@ -105,6 +120,8 @@
 	This is one part of a compiler. It checks that all the words in the program are \textbf{part of the language. }
 	
 	For example, if the language is java, "print" is not a word, but "if" and "System.out" are words. 
+	
+	Regular Expressions are used to do this. 
 	
 	\subsection{Alphabet}
 	The \textbf{alphabet} are all the characters that we are working with. If a letter not in the alphabet is found, then the string is not accepted. 
@@ -130,9 +147,35 @@
 	Positive closure is like kleene closure but excludes the empty string. So, (aa)+ is the positive closure of (aa) which is "aa", "aaaa", ... Note the exclusion of "".
 	
 	\subsection{NFA}
+	Non-deterministic Finite Automata (NFA) are a type of machine that model a regular expression. These have multiple states that are connected to each other with transitions. These transitions can be either $\epsilon$ (the empty string) or any value in the alphabet. 
 	
+	We use the following rules to convert a regular expression (regex) into an NFA:
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{nfa-rules}
+	\end{center}
+
+	We can combine these together to model more complicated REGEX such as (a|b)* which is just the A* design, but instead of A, we substitute the A|B design.
+	
+	\begin{mdframed}
+		\textbf{Ex. } Find the NFA of \_\_\_\_\_
+		% fill in later
+	\end{mdframed}
 	
 	\subsection{DFA}
+	NFA is easy to get, but it is hard for the computer to interpret it. This is where the Deterministic Finite Automata (DFA) comes into play. We create this using the \textbf{subset construction algorithm} on a NFA. In worst case scenario, we could have $2^n$ states where $n$ is the number of states in NFA.
+	
+	We have 2 functions.
+	
+	$\epsilon$-closure(S) is the state of the system that is reached by all epsilon transitions from state S. 
+	
+	move(S,a) will be the state the system is in after starting in state S and then taking the transition a.
+	
+	Basically, we make a table with all the states of the system (up to $2^n$) as rows, and colums for each letter of the alphabet. Then we perform move for each row (S), and each column (a)
+	
+	\begin{mdframed}
+		\textbf{Ex. } Get the DFA of the following NFA through the subset construction algorithm:
+		% fill in later
+	\end{mdframed}
 	
 	\section{Syntax Analysis}
 	% for later
