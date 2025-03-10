@@ -85,6 +85,14 @@
 
 	Also, the $\vec D$ field is just the $\vec E$ field times a factor of $\epsilon$ ($\vec D = \epsilon \vec E$) 
 	
+	\subsection{Energy Stored in an Electric Field}
+	We say that $W$ is the energy stored in an electric field, or the energy required to assemble a charge distribution. 
+	
+	We can calculate this by summing up the product of the charge density and potential difference across a line/surface/volume.
+	\begin{align*}
+		W = \frac{1}{2}\int_{S\prime}\rho_s(\vec r\prime)*V(\vec r\prime) \mathrm d v\prime
+	\end{align*}
+	
 	\section{Electric Potential}
 	This is the potential energy per unit charge. AKA the voltage. This is a \textbf{scalar field}. This is \textit{independant of the path chosen}. 
 	\begin{align*}
@@ -146,9 +154,106 @@
 	\begin{align*}
 		E_{1t} = E_{2t} = 0 \qquad E_{n} = \frac{\rho_s}{\epsilon_0}
 	\end{align*}
+
+	\section{Laplace and Poisson Equations}
+	These equations will give us a general form of the equation for the solution, and then using 2 conditions (such as points) we can sub them into the form of the equation and solve the equation. 
 	
-	\section{Energy Stored in an Electric Field}
-	We say that $W$ is the energy stored in an electric field, or the energy required to assemble a charge distribution. 
+	The whole laplacian equation is very complicated, but we have 2 special cases of note:
+	\begin{align*}
+		\nabla^2 V = \frac{-\rho_v}{\epsilon} \qquad \text{ or if no charge density (charges on surface): } \nabla^2V=0
+	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex. } As a very general example, if we want to find the voltage in a conductor (charges just on surface)
+		
+		We start by using the laplace equation:
+		\begin{align*}
+			\nabla^2 V = 0 \implies \frac{\partial^2 V}{\partial x^2} + \frac{\partial^2 V}{\partial y^2} + \frac{\partial^2 V}{\partial z^2} = 0
+		\end{align*}
+		\textit{For simplicity, I will consider a situation where the V only exists in the $z$ direction, hence the $x$ and $y$ components will be 0.}
+		\begin{align*}
+			\frac{\partial^2 V}{\partial z^2} = 0
+		\end{align*}
+		Since $\frac{\partial^2 V}{\partial z^2}=0$, then we must say that $\frac{\partial V}{\partial z} = a$ where $a$ is a constant. We must then say that $V = az+b$ where $a$ and $b$ are constants.
+		
+		This is because integrating $\frac{\partial^2 V}{\partial z^2}=0$ once gives us $\frac{\partial V}{\partial z}=a$ and then $a$ second time gives $V=az+b$
+		
+		Then we must have some boundary conditions given such as when $z=0$, $V=0$, and when $z=1$, $V=5$. Then we can sub in and solve for $a$ and $b$.
+		
+		Then we have $V$ at any point.
+	\end{mdframed}
+
+	We can also do this for spherical or cylindrical coordinates, except for the laplacian ($\nabla^2$) is different.
+	
+	\section{Currents}
+	Current is just the rate of which charge travels with respect to time. Measured in either $\frac{C}{s}$ or $A$.
+	
+	By definition, the current density is just the amount of current passing through a cross sectional area. Note that this does NOT include parallel current since this current does not actually traverse \textbf{through} the cross sectional area.
+	\begin{align*}
+		\vec J=\frac{I}{A} \qquad I = \int_S \vec J \cdot \mathrm d \vec s
+	\end{align*}
+
+	\subsection{Resistance}
+	Resistance is defined as:
+	\begin{align*}
+		R = \frac{L}{\sigma A} = \frac{\rho L}{A}
+	\end{align*}
+	These are equivalent since $\sigma = \rho^{-1}$ where $\rho$ is the resistivity, and $\sigma$ is the conductivity.
+	
+	Those equations work fine for a single area, but if we need to sum up the areas, we have 2 techniques. The first is just by summing up the above equation. The second is based on Ohms law. 
+	\begin{align*}
+		 R = \frac{L}{\sigma A} = \int_l \frac{\mathrm d \vec l}{\iint_S \sigma \mathrm d \vec s} \qquad R = \frac{\Delta V}{I} = \frac{-\int_l \vec E \cdot \mathrm d \vec l}{\int_S \vec J \cdot \mathrm d \vec s} 
+	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
+	
+	\subsection{Equation of Continuity}
+	This basically says that if there is a current going out of an object, then there will be less charges in that object. 
+	\begin{align*}
+		\nabla \cdot \vec J = -\frac{\partial \rho_v}{\partial t}
+	\end{align*}
+
+	The relaxation time is the amount of time it takes for electrons to settle into their equilibrium. This ($\tau$) is: $\tau = \frac{\epsilon}{\sigma}$
+	
+	\section{Magnetic Fields}
+	Similarly to electric fields, we have 2 fields seperated by a constant $\mu_0$. There is the $\vec B$ field (Magnetic Flux Density) and the $\vec H$ field (Magnetic Field). $\vec H = \ \frac{\vec B}{\mu_0}$
+	
+	\subsection{Biot-Savard}
+	This law is how we calculate the magnetic field. This is similar to coulombs law (for electric fields) but for magnetic fields. Although, the versions for L, S, and V are slightly different (Line uses I, Surface and Sphere use $J_S$ and $J_V$.)
+	\begin{align*}
+		\vec B = \frac{\mu_0}{4\pi}\int_{l\prime}\frac{I\mathrm d \vec l\prime \times (\vec r - \vec r\prime)}{|\vec r - \vec r\prime |^3} \qquad \vec B = \frac{\mu_0}{4\pi}\int_{S\prime}\frac{J_s\mathrm \times (\vec r - \vec r\prime)d \vec S\prime}{|\vec r - \vec r\prime |^3} \qquad \vec B = \frac{\mu_0}{4\pi}\int_{V\prime}\frac{J_V\mathrm \times (\vec r - \vec r\prime)d \vec V\prime}{|\vec r - \vec r\prime |^3}
+	\end{align*}
+
+	We can use the right hand rule to see the direction of the generated field due to the cross product inside the calculation. 
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{rhr}
+	\end{center}
+
+	This direction will be perpendicular to both the current, and the $\vec r-\vec r\prime$ vector. 
+	
+	\subsection{Amperes Law}
+	This is just like gausses law for electric fields in that it allows us to simplify the calculations for magnetic fields, but only under specific curcumstances. 
+	
+	Basically, we create an amperian loop (path) that when taken the dot product with the H field creates a nice math situation.
+	\begin{align*}
+		\oint \vec H \cdot \mathrm d \vec l = I_{enclosed}
+	\end{align*}
+	\begin{enumerate}[noitemsep]
+		\item Predict Direction of $\vec H$
+		\item Choose amperian path
+		\item Calculate
+	\end{enumerate}
+
+	\subsection{Magnetic Forces}
+	We say that the magnetic force produced by a wire 1 on another wire 2 is: 
+	\begin{align*}
+		\vec F_2 = \int I_2\mathrm d \vec l_2 \times \vec B_1
+	\end{align*}
+	So basically we need to get $\vec B$ using probably amperes law, and then assuming we know I, we can calculate the magnetic force $\vec F_m$.
+	
+	
 	
 	
 	
