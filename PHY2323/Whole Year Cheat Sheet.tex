@@ -36,13 +36,25 @@
 		\vspace{0.5em}
 	\end{center}
 	
-	\section{Coordinate Systems}
+	\section{Math Introduction}
 	There are 3 main coordinate systems:
 	\begin{enumerate}[]
 		\item Cartesian ($x,y,z$)
 		\item Cylindrical ($\rho, \phi, z$)
 		\item Spherical ($r,\phi, \theta$)
 	\end{enumerate}
+
+	We have a few charts to help us convert between the systems:
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{trans}
+	\end{center}
+
+	When integrating, the differential line/surface/volume elements can be found in the following chart:
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{differential_surfaces}
+	\end{center}
+	
+	
 	
 	\section{Electric Fields}
 	
@@ -206,7 +218,36 @@
 	\end{align*}
 
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. } We have a long cable (length = L) made of 2 materials. The inner one is copper, and the outer one is aluminium. They have outer radius of $r_o$ and inner radius of $r_i$. It carries current I. We want to find the resistance. 
+		
+		First we can draw a diagram of the situation. 
+		\begin{center}
+			\includegraphics[width=0.6\linewidth]{ex}
+		\end{center}
+		We will break this up into cross sectional disks, and then sum them all up along the length. I need to do this for each material. For the outer material Al, I need to subtract the inner part since that does not exist. Then we can add up both materials (Al + Cu).
+		\begin{align*}
+			R_{Cu} = \int_l \frac{\mathrm d \vec l}{\iint_s \sigma \mathrm d \vec s} = \int_0^L \frac{\mathrm d l}{\sigma_{cu}\pi r_i^2} = \frac{L}{\sigma_{cu}\pi r_i^2}
+		\end{align*}
+		We do not really have to do the bottom integral since the density is constant, and each slice has the same area of $\pi r^2$. However if we wanted to, we could take the integral of the disk to get $\int_0^{2\pi}\int_0^{r_i} \rho \mathrm d \rho \mathrm d \phi = 2\pi \left(\frac{\rho^2}{2}\right)^{r_i}_0=\pi r_i^2$
+		
+		To get the resistance for the Al part, we need to integrate both the radius from 0 to $r_o$, and from 0 to $r_i$, and then subtract the inner component. 
+		\begin{align*}
+			R_{Al} = \int_0^L \frac{\mathrm d l}{\sigma_{Al}\pi r_o^2} - \int_0^L \frac{\mathrm d l}{\sigma_{Al}\pi r_i^2} = \frac{L}{\sigma_{Al}\pi (r_o^2-r_i^2)}
+		\end{align*}
+		Then the entire resistance would be the inverse sum of both of thse since they are in parallel. 
+		\begin{align*}
+			R_{tot} = \frac{1}{\frac{1}{R_{Al}}+\frac{1}{R_{Cu}}}
+		\end{align*}
+		If we want the current say through the Cu part, we can just use a current dividor by doing:
+		\begin{align*}
+			I_{Cu} = I\cdot \frac{R_{Al}}{R_{Al}+R_{Cu}}
+		\end{align*}
+		If we want the current density through this Copper part, we just do the current over the area:
+		\begin{align*}
+			J_{Cu} = \frac{I}{A} = \frac{I_{Cu}}{\pi r_i^2}
+		\end{align*}
+		
+		
 	\end{mdframed}
 	
 	\subsection{Equation of Continuity}
@@ -232,6 +273,23 @@
 	\end{center}
 
 	This direction will be perpendicular to both the current, and the $\vec r-\vec r\prime$ vector. 
+	
+	\begin{mdframed}
+		\textbf{Ex. } We have a solenoid with radius b and length L with N turns of tightly wound wire. This wire carries current I. We want the $\vec B$ field anywhere on the z axis. 
+		\begin{center}
+			\includegraphics[width=0.34\linewidth]{ex2}
+		\end{center}
+		We will use the biot savart law, although we could also use Amperes law with no problem. 
+		
+		We need to use the 2D version of this since we have a surface of charge (the wire can be treated as a solid surface since the wire is \textbf{tightly wound})
+		\begin{align*}
+			\vec B = \frac{\mu_0}{4\pi}\int_{S\prime}\frac{J_s\mathrm \times (\vec r - \vec r\prime)d \vec S\prime}{|\vec r - \vec r\prime |^3} \qquad \vec r = z \hat z \qquad \vec r\prime = b\hat \rho + z\prime \hat z \qquad \mathrm d s\prime = \rho \mathrm d \phi \mathrm d z
+		\end{align*}
+		Since the field is going in the $\rho$ direction, we use that differential surface element which is $\rho \mathrm d \phi \mathrm d z$.
+		
+		Then we can plug all this into the B-S equation and solve. 
+		
+	\end{mdframed}
 	
 	\subsection{Amperes Law}
 	This is just like gausses law for electric fields in that it allows us to simplify the calculations for magnetic fields, but only under specific curcumstances. 
