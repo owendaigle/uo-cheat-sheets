@@ -283,11 +283,21 @@
 		
 		We need to use the 2D version of this since we have a surface of charge (the wire can be treated as a solid surface since the wire is \textbf{tightly wound})
 		\begin{align*}
-			\vec B = \frac{\mu_0}{4\pi}\int_{S\prime}\frac{J_s\mathrm \times (\vec r - \vec r\prime)d \vec S\prime}{|\vec r - \vec r\prime |^3} \qquad \vec r = z \hat z \qquad \vec r\prime = b\hat \rho + z\prime \hat z \qquad \mathrm d s\prime = \rho \mathrm d \phi \mathrm d z
+			\vec B = \frac{\mu_0}{4\pi}\int_{S\prime}\frac{J_s\mathrm \times (\vec r - \vec r\prime)d \vec S\prime}{|\vec r - \vec r\prime |^3} \qquad \vec r = z \hat z \qquad \vec r\prime = b\hat \rho + z\prime \hat z \qquad \mathrm d s\prime = b \mathrm d \phi \mathrm d z 
 		\end{align*}
 		Since the field is going in the $\rho$ direction, we use that differential surface element which is $\rho \mathrm d \phi \mathrm d z$.
 		
+		We also need to get $J_S$ which is just $NIL^{-1}$ in the $\hat \phi$ direction since it is the product of the number of turns, the current going through the wire, and all that divided by the length. 
+		
 		Then we can plug all this into the B-S equation and solve. 
+		\begin{align*}
+			\vec B = \frac{\mu_o}{4\pi} 
+			\frac{NI}{L}\int_0^{2\pi} \int_0^{L}\frac{\hat \phi\times (z-z\prime)\hat z -b\hat\rho}{(b^2+(z+z\prime)^2)^{3/2}}\mathrm d z \mathrm d \phi
+		\end{align*}
+		Doing the cross prouct we get $(z-z\prime) \hat \rho + b \hat z$. Since the resulting field is only in the z direction, then $\rho$ goes to 0. 
+		\begin{align*}
+			\vec B = \frac{\mu_o NI b}{4\pi L}\int_0^{2\pi} \int_0^{L}\frac{\mathrm d z \mathrm d \phi}{(b^2+(z+z\prime)^2)^{3/2}} \hat z = \text{CALC}
+		\end{align*}
 		
 	\end{mdframed}
 	
@@ -303,6 +313,30 @@
 		\item Choose amperian path
 		\item Calculate
 	\end{enumerate}
+
+	\subsection{Magnetic Flux}
+	Magnetic flux going through a surface is simply defined as:
+	\begin{align*}
+		\text{FLUX} = \Phi = \oint \vec B \cdot \mathrm d \vec s
+	\end{align*}
+	
+	\begin{mdframed}
+		\textbf{Ex. } We have a long straight thin wire carrying current I. We want to find the flux going through a plane with rardius going from 1m to 10m, and height going from 5m to 50m. 
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{ex3}
+		\end{center}
+		I know the flux formula is $\Phi = \oint \vec B \cdot \mathrm d \vec s$. So I need to get the magnetic field $\vec B$. Since the flux is just through the surface, it will be $\mathrm d \rho \mathrm d z$.
+
+		I will use Amperes Law to find the B field with an amperian loop around the current wire. 
+		\begin{align*}
+			\int \vec H \mathrm d l = I_{enc} \implies \int \vec B \mathrm d l = I_{enc} \mu_o \implies H_\phi \hat \phi \cdot 2\pi \rho = I\mu_o \implies \vec H = H_\phi = \frac{I\mu_o}{2\pi \rho} \hat \phi
+		\end{align*}
+		Now I need to get the flux:
+		\begin{align*}
+			\Phi = \oint \vec B \cdot \mathrm d \vec s = \int_1^{10}\int_5^{50} \frac{I\mu_o \hat \phi \cdot \mathrm d\rho \mathrm d z \hat\phi}{2\pi\rho} = \frac{I\mu_o}{2\pi}\int_1^{10}\int_5^{50}\frac{\mathrm d \rho \mathrm d z}{\rho} = \text{CALC}
+		\end{align*}
+		
+	\end{mdframed}
 
 	\subsection{Magnetic Forces}
 	We say that the magnetic force produced by a wire 1 on another wire 2 is: 
