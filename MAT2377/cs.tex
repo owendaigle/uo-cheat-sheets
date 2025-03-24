@@ -114,4 +114,105 @@
 	\section{Chapter 3: Continuous Random Variables}
 	% need to fill this in, m2 did this chapter
 	
+	\section{Chapter 4: Descriptive Statistics and Sampling}
+	% midterm 3 content
+	To describe a dataset, we have measures of central tendancy such as mean and median, and measures of spread such as standard deviation, quartiles, and inter-quartile-range. 
+	
+	The median is just the middle value of a \textbf{sorted} dataset. If there are 2 middle values, we just take the mean of both of those. 
+	
+	The mean is just:
+	\begin{align*}
+		MEAN = \overline{x} = \frac{x_1 + x_2 + ... + x_n}{n}
+	\end{align*}
+
+	The median is often used since it is not heavily influenced by outliers unlike mean. 
+	
+	\subsection{Quartiles}
+	The quartile is like taking the median of the lower half of the data (under the true median). 
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{quartiles}
+	\end{center}
+	We call the \textbf{Inter Quartile Range (IQR)} as the difference between the third and first quartile $IQR = Q_3-Q_1$
+
+	We identify a datapoint $x$ as an outlier if:
+	\begin{align*}
+		x < Q_1 - 1.5IQR \qquad \text{or} \qquad x>Q_3 + 1.5IQR
+	\end{align*}
+
+	\subsection{Sample Statistics}
+	If we do not know the variance of a whole dataset (such as the entire earths population) then we can consider a sample of this population to estimate the population. 
+	
+	We have \textbf{sample standard deviation $s$} and \textbf{sample variance $s^2$}. These estimage the standard deviation $\sigma$ and variance $\sigma^2$ respectively. 
+	\begin{align*}
+		s^2 = \frac{1}{n-1}\sum^{n}_{i=1}(x_i - \overline x)^2
+	\end{align*}
+
+	\subsection{Skewness}
+	We call a dataset \textbf{left skewed} of the tail of the data is to the left (outliers on the left) or \textbf{right skewed} if the tail of the data is on the right (outliers on the right).
+	\begin{center}
+		\includegraphics[width=0.6\linewidth]{skew}
+	\end{center}
+
+	\subsection{Independant and Identically Distributed (IID) Case}
+	When all variables are independant and identically distributed we say the expected value and variance of the entire set is just the number of variables times the variance/expected value of one item.
+	\begin{align*}
+		\mathbb E\left[\sum_{i=1}^{n}X_i\right]=n\mu \qquad \text{Var}\left[\sum_{i=1}^{n}X_i\right]=n\sigma^2
+	\end{align*}
+	Then we say that if we are considering a sample of these, we have:
+	\begin{align*}
+		\mathbb E [\overline X] = \mu \qquad \text{Var} [\overline X] = \frac{\sigma^2}{n}
+	\end{align*}
+	We can also use the normal distribution if the population is normally distributed to model $\sum_{i=1}^n X_i$ or $\overline X$.
+	
+	\subsection{Central Limit Theorum}
+	This states that as the number of runs of an experiment, it will start to reach a normal distribution. This is regardless of whether or not the experiment is normal or not. 
+	
+	\subsection{Difference between 2 Means}
+	We can work with 2 variables $X_1, X_2, ..., X_n$ with $\mu_1, \sigma^2_1$, and $Y_1, Y_2, ..., Y_m$ with $\mu_2, \sigma_2^2$ using the following formula:
+	\begin{align*}
+		Z = \frac{\overline X - \overline Y - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n}+\frac{\sigma^2_2}{m}}}
+	\end{align*}
+
+	\subsection{Other Distributions}
+	We have 2 other main distributions. The Chi squared ($\chi^2$) distribution, and Student's t distribution. Student's t distribution is used when the population variance is unknown, and we have to approximate using the sample variance (standard deviation). 
+	
+	Both of these distributions have the degrees of freedom which is just $n-1$. 
+	
+	\section{Chapter 5: Point and Interval Estimation} 
+	% midterm 3 content
+	This chapter is mostly about confidence intervals (CI). 
+	
+	We have 2 main confidence intervals that we use. Each of them has an $\alpha$ value where if we say the $n$ percent interval, we have $\alpha = 1-n$.
+	
+	So for the 95\% confidence interval, $\alpha = 0.05$. 
+	
+	The 2 main confidence intervals are the 95 percent, and 99 percent. 
+	
+	\subsection{CI When $\sigma$ is known}
+	We can use a normal distribution to model this since we know $\sigma$, $n$, and $\overline X$. 
+	
+	We use the equation:
+	\begin{align*}
+		CI = \overline X \pm Z_{\alpha/2} \frac{\sigma}{\sqrt n}
+	\end{align*}
+
+	Using the normal table we can get $Z_{\alpha/2}$. For $\alpha = 0.05$ we have $Z_{0.025} = 1.96$ and for $\alpha = 0.01$ we have $Z_{0.005} = 2.575$.
+	
+	\subsection{CI When $\sigma$ is unknown}
+	Here we have to find the sample variance $s$ and we know $n$, and $\overline X$.
+	
+	We use Student's t distribution with the equation:
+	\begin{align*}
+		CI = \overline X \pm t_{\alpha/2}(n-1) \frac{s}{\sqrt n}
+	\end{align*}
+	Recall that $n-1$ is the degrees of freedom for the t distribution.
+	
+	\subsection{CI For a Proportion}
+	When we are dealing with a proportion for a binomial distributions (2 options, either success of failure), we say that $P$ is the probability of success. 
+	
+	We can model this using the normal distribution using:
+	\begin{align*}
+		CI = P \pm z_{\alpha/2} \sqrt{\frac{P(1-P)}{n}}
+	\end{align*}
+	
 \end{document}
