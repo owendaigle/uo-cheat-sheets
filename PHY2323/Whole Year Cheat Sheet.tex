@@ -345,6 +345,35 @@
 	\end{align*}
 	So basically we need to get $\vec B$ using probably amperes law, and then assuming we know I, we can calculate the magnetic force $\vec F_m$.
 	
+	\subsection{Torques}
+	The torque caused on a magnetic field uses the magnetic dipole moment $\vec m$.
+	\begin{align*}
+		\vec m = I\int \mathrm d \vec s = IA\hat n
+	\end{align*}
+	This is in the direction perpendicular to the surface. Hence why it is a normal vector ($\hat n$).
+	\begin{align*}
+		\vec \tau = \vec m \times \vec B
+	\end{align*}
+	The torque $\vec \tau$ is just th ecross product between the magnetic field and the magnetic dipole moment vectors.
+	
+	\subsection{Boundary Conditions}
+	This is the same idea as boundary conditions for elecctric fields. If we have 2 magnetic fields at a boundary, we split it up into normal and tangential components. Then we apply the following conditions:
+	\begin{align*}
+		&B_{n1} = B_{n2} &H_{t1} - H_{t2} = J_s
+	\end{align*}
+	Note that $H = \frac{B}{\mu}$ and often $\mu_1 \ne \mu_2$. Also, often $J_S=0$ which means $H_{t1} = H_{t2}$
+	
+	\section{Dynamic Currents}
+	This section is about changing currents. These are currents that vary with time. 
+	
+	\subsection{EMF}
+	We call $\epsilon$ the Electromotive Force (EMF) which is not actually a force, but a voltage measured in volts. It is caused by motion in a field. 
+	\begin{align*}
+		&\epsilon = \int(\vec v \times \vec B)\cdot \mathrm d \vec l = -\frac{\mathrm d \Phi}{\mathrm d t} &\text{ Faraday's Law}
+	\end{align*}
+	Basically if we know the velocity and $\vec B$ field, we can find the EMF, or if we know the magnetic flux $\Phi$, we can derive it with respect to time and get the EMF. 
+	
+	The reason for the negative in front of the derivative is that the direction of the induced current will oppose the change in magnetic flux. This is known as Lenz's law.
 	
 	
 	
