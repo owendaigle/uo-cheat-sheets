@@ -54,9 +54,13 @@
 		\includegraphics[width=0.7\linewidth]{differential_surfaces}
 	\end{center}
 	
-	
+	Tables taken from PHY2323 Course Formula Sheet.
 	
 	\section{Electric Fields}
+	We have 2 ways to talk about electric fields. There is the \textbf{Electric Field} $\vec E$, and the \textbf{Elecric Flux Density }$\vec D$.
+	\begin{align*}
+		\vec D = \epsilon \vec E
+	\end{align*}
 	
 	\subsection{Coulombs Law}
 	Coulomb's law is used to sum up all the charges in a location which will give an electric field $E$.
@@ -67,8 +71,14 @@
 	
 	Note that anything with the $\prime$ means that it is related to the \textbf{surface of charge}, and anything without the prime is related to the \textbf{observation point.}
 	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
+	
 	\subsection{Gausses Law}
-	Gausses Law can be used on a \textbf{closed surface} where we make a guassian surface (such as a sphere, or cylander) at the point of interest. 
+	Gausses Law is basically a shorter way of finding the $\vec E$ field rather than using Coulomb's equation. It works well when there is \textbf{symmetry}.
+	
+	It can be used on a \textbf{closed surface} where we make a guassian surface (such as a sphere, or cylander) at the point of interest. 
 	\begin{align*}
 		\int_S \vec E \mathrm d \vec s = \frac{Q_{enc}}{\epsilon}
 	\end{align*}
@@ -90,15 +100,19 @@
 		\item Planar Symmetry (Long 2D surface of charge)
 	\end{enumerate}
 
-	A useful piece of information is if we want to find the $Q_{enc}$, we can often just integrate the charge density in a volume $V$.
+	A useful piece of information is if we want to find the $Q_{enc}$, we can often just integrate the charge density in a volume $V$ (or surface $S$).
 	\begin{align*}
 		Q_{enc} = \iiint_V \rho \mathrm d V
 	\end{align*}
 
 	Also, the $\vec D$ field is just the $\vec E$ field times a factor of $\epsilon$ ($\vec D = \epsilon \vec E$) 
 	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
+	
 	\subsection{Energy Stored in an Electric Field}
-	We say that $W$ is the energy stored in an electric field, or the energy required to assemble a charge distribution. 
+	We say that $W$ is the energy stored in an electric field, or the \textbf{energy required to assemble a charge distribution}. 
 	
 	We can calculate this by summing up the product of the charge density and potential difference across a line/surface/volume.
 	\begin{align*}
@@ -116,11 +130,15 @@
 	\begin{align*}
 		\vec E = -\nabla V \qquad \nabla V = -\int \vec E\cdot \mathrm d \vec l
 	\end{align*}
+	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
 
 	\subsection{Electric Dipole}
 	A \textbf{dipole} is a pair of equal and opposite charges that are very close to each other relative to the point of observation.
 	
-	This means that at the point of observation, they seem as one charge. 
+	This means that at the point of observation, they \textbf{seem} as though they are only one charge. 
 	
 	We have an equation that relates the charge of each end of the dipole $q$, the distance between the charges $d$, and the vector between the dipole and the observation point $\vec r$. This vector must be large compared to $d$.
 	\begin{align*}
@@ -128,7 +146,7 @@
 	\end{align*}
 
 	\subsection{Capacitors}
-	The capacitence $C$ can be calculated using the following formula:
+	The \textbf{capacitence} $C$ can be calculated using the following formula:
 	\begin{align*}
 		C=\frac{Q}{\Delta V}
 	\end{align*}
@@ -138,6 +156,10 @@
 		\item Find $\Delta V$
 		\item Find $C$ using $C=\frac{Q}{\Delta V} $
 	\end{enumerate}
+
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
 	
 	\section{Materials in Electric Fields}
 	There are 3 types of materials:
@@ -147,9 +169,14 @@
 		\item Semiconductors
 	\end{enumerate}
 
-	We have rules concerning the normal and tangential part of the boundary between 2 materials. 
+	We have rules concerning the \textbf{normal} and \textbf{tangential} part of the boundary between 2 materials, so we need to break up the field into those two components. 
 	
-	To obtain the normal part, we take the unit vector of the boundary, and this is our normal vector ($\hat n = \frac{\vec n}{|n|}$).
+	\begin{center}
+		\includegraphics[width=0.55\linewidth]{../MAT2377/boundary-conditions-E}
+	\end{center}
+	
+	
+	To obtain the \textbf{normal direction}, we take the unit vector of the boundary, and this is our normal unit vector ($\hat n = \frac{\vec n}{|n|}$).
 	
 	If we then want to get the \textbf{normal part} of $E$, we dot product it with $\hat n$, then append $n$ to keep direction ($\vec E_n = (\vec E\cdot \hat n)\hat n$)
 	
@@ -167,8 +194,12 @@
 		E_{1t} = E_{2t} = 0 \qquad E_{n} = \frac{\rho_s}{\epsilon_0}
 	\end{align*}
 
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
+
 	\section{Laplace and Poisson Equations}
-	These equations will give us a general form of the equation for the solution, and then using 2 conditions (such as points) we can sub them into the form of the equation and solve the equation. 
+	These equations will give us a \textbf{general form of the equation} for the solution, and then using \textbf{2 conditions} (such as points) we can sub them into the form of the equation and solve the equation. 
 	
 	The whole laplacian equation is very complicated, but we have 2 special cases of note:
 	\begin{align*}
@@ -200,21 +231,26 @@
 	\section{Currents}
 	Current is just the rate of which charge travels with respect to time. Measured in either $\frac{C}{s}$ or $A$.
 	
-	By definition, the current density is just the amount of current passing through a cross sectional area. Note that this does NOT include parallel current since this current does not actually traverse \textbf{through} the cross sectional area.
+	By definition, the current density is just the \textbf{amount of current} passing through a \textbf{cross sectional area}. Note that this does NOT include parallel current since this current does not actually traverse \textbf{through} the cross sectional area.
 	\begin{align*}
 		\vec J=\frac{I}{A} \qquad I = \int_S \vec J \cdot \mathrm d \vec s
 	\end{align*}
+
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{../MAT2377/current-density-contirbutions}
+	\end{center}
+
 
 	\subsection{Resistance}
 	Resistance is defined as:
 	\begin{align*}
 		R = \frac{L}{\sigma A} = \frac{\rho L}{A}
 	\end{align*}
-	These are equivalent since $\sigma = \rho^{-1}$ where $\rho$ is the resistivity, and $\sigma$ is the conductivity.
+	These are equivalent since $\sigma = \rho^{-1}$ where $\rho$ is the \textbf{resistivity}, and $\sigma$ is the \textbf{conductivity}.
 	
-	Those equations work fine for a single area, but if we need to sum up the areas, we have 2 techniques. The first is just by summing up the above equation. The second is based on Ohms law. 
+	Those equations work fine for a single area, but if we need to sum up the areas, we have 2 techniques. The first is just by summing up the above equation using an integral. The second is based on Ohms law. 
 	\begin{align*}
-		 R = \frac{L}{\sigma A} = \int_l \frac{\mathrm d \vec l}{\iint_S \sigma \mathrm d \vec s} \qquad R = \frac{\Delta V}{I} = \frac{-\int_l \vec E \cdot \mathrm d \vec l}{\int_S \vec J \cdot \mathrm d \vec s} 
+		 &R = \frac{L}{\sigma A} = \int_l \frac{\mathrm d \vec l}{\iint_S \sigma \mathrm d \vec s} &R = \frac{\Delta V}{I} = \frac{-\int_l \vec E \cdot \mathrm d \vec l}{\int_S \vec J \cdot \mathrm d \vec s} 
 	\end{align*}
 
 	\begin{mdframed}
@@ -251,18 +287,18 @@
 	\end{mdframed}
 	
 	\subsection{Equation of Continuity}
-	This basically says that if there is a current going out of an object, then there will be less charges in that object. 
+	This basically says that if there is a current going \textbf{out of an object}, then there will be \textbf{less charges} in that object. 
 	\begin{align*}
 		\nabla \cdot \vec J = -\frac{\partial \rho_v}{\partial t}
 	\end{align*}
 
-	The relaxation time is the amount of time it takes for electrons to settle into their equilibrium. This ($\tau$) is: $\tau = \frac{\epsilon}{\sigma}$
+	The\textbf{ relaxation time }is the amount of time it takes for electrons to settle into their equilibrium. This ($\tau$) is: $\tau = \frac{\epsilon}{\sigma}$
 	
 	\section{Magnetic Fields}
-	Similarly to electric fields, we have 2 fields seperated by a constant $\mu_0$. There is the $\vec B$ field (Magnetic Flux Density) and the $\vec H$ field (Magnetic Field). $\vec H = \ \frac{\vec B}{\mu_0}$
+	Similarly to electric fields, we have 2 fields differentiated only by a constant $\mu_0$. There is the $\vec B$ field (\textbf{Magnetic Flux Density}) and the $\vec H$ field (\textbf{Magnetic Field}). $\vec H = \ \frac{\vec B}{\mu_0}$
 	
 	\subsection{Biot-Savard}
-	This law is how we calculate the magnetic field. This is similar to coulombs law (for electric fields) but for magnetic fields. Although, the versions for L, S, and V are slightly different (Line uses I, Surface and Sphere use $J_S$ and $J_V$.)
+	This law is how we calculate the magnetic field. This is \textbf{similar to coulombs law} (for electric fields) but for magnetic fields. Although, the versions for L, S, and V are slightly different (Line uses I, Surface and Sphere use $J_S$ and $J_V$.)
 	\begin{align*}
 		\vec B = \frac{\mu_0}{4\pi}\int_{l\prime}\frac{I\mathrm d \vec l\prime \times (\vec r - \vec r\prime)}{|\vec r - \vec r\prime |^3} \qquad \vec B = \frac{\mu_0}{4\pi}\int_{S\prime}\frac{J_s\mathrm \times (\vec r - \vec r\prime)d \vec S\prime}{|\vec r - \vec r\prime |^3} \qquad \vec B = \frac{\mu_0}{4\pi}\int_{V\prime}\frac{J_V\mathrm \times (\vec r - \vec r\prime)d \vec V\prime}{|\vec r - \vec r\prime |^3}
 	\end{align*}
@@ -304,7 +340,7 @@
 	\subsection{Amperes Law}
 	This is just like gausses law for electric fields in that it allows us to simplify the calculations for magnetic fields, but only under specific curcumstances. 
 	
-	Basically, we create an amperian loop (path) that when taken the dot product with the H field creates a nice math situation.
+	Basically, we create an \textbf{amperian loop} (path) that when taken the dot product with the $\vec H$ field creates a nice math situation.
 	\begin{align*}
 		\oint \vec H \cdot \mathrm d \vec l = I_{enclosed}
 	\end{align*}
@@ -315,7 +351,7 @@
 	\end{enumerate}
 
 	\subsection{Magnetic Flux}
-	Magnetic flux going through a surface is simply defined as:
+	The \textbf{magnetic flux} $\Phi$ going through a surface is simply defined as:
 	\begin{align*}
 		\text{FLUX} = \Phi = \oint \vec B \cdot \mathrm d \vec s
 	\end{align*}
@@ -339,43 +375,57 @@
 	\end{mdframed}
 
 	\subsection{Magnetic Forces}
-	We say that the magnetic force produced by a wire 1 on another wire 2 is: 
+	We say that the magnetic force produced by \textbf{a wire} $1$ on \textbf{another wire} $2$ is: 
 	\begin{align*}
 		\vec F_2 = \int I_2\mathrm d \vec l_2 \times \vec B_1
 	\end{align*}
 	So basically we need to get $\vec B$ using probably amperes law, and then assuming we know I, we can calculate the magnetic force $\vec F_m$.
 	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
+	
 	\subsection{Torques}
-	The torque caused on a magnetic field uses the magnetic dipole moment $\vec m$.
+	The torque caused on a magnetic field uses the \textbf{magnetic dipole moment} $\vec m$.
 	\begin{align*}
 		\vec m = I\int \mathrm d \vec s = IA\hat n
 	\end{align*}
-	This is in the direction perpendicular to the surface. Hence why it is a normal vector ($\hat n$).
+	This is in the direction \textbf{perpendicular to the surface}. Hence why it is a normal vector ($\hat n$).
 	\begin{align*}
 		\vec \tau = \vec m \times \vec B
 	\end{align*}
-	The torque $\vec \tau$ is just th ecross product between the magnetic field and the magnetic dipole moment vectors.
+	The torque $\vec \tau$ is just the cross product between the magnetic field and the magnetic dipole moment vectors.
+	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
 	
 	\subsection{Boundary Conditions}
-	This is the same idea as boundary conditions for elecctric fields. If we have 2 magnetic fields at a boundary, we split it up into normal and tangential components. Then we apply the following conditions:
+	This is the same idea as boundary conditions for elecctric fields. If we have 2 magnetic fields at a boundary, we split it up into \textbf{normal and tangential components}. Then we apply the following conditions:
 	\begin{align*}
 		&B_{n1} = B_{n2} &H_{t1} - H_{t2} = J_s
 	\end{align*}
 	Note that $H = \frac{B}{\mu}$ and often $\mu_1 \ne \mu_2$. Also, often $J_S=0$ which means $H_{t1} = H_{t2}$
 	
+	\begin{mdframed}
+		This is very similar to boundary conditions in Electric Fields, so an example can be found in that section.
+	\end{mdframed}
+	
 	\section{Dynamic Currents}
-	This section is about changing currents. These are currents that vary with time. 
+	This section is about \textbf{changing currents}. These are currents that vary with time. 
 	
 	\subsection{EMF}
-	We call $\epsilon$ the Electromotive Force (EMF) which is not actually a force, but a voltage measured in volts. It is caused by motion in a field. 
+	We call $\epsilon$ the Electromotive Force (EMF) which is not actually a force, but a \textbf{voltage} measured in volts. It is caused by motion in a field. 
 	\begin{align*}
 		&\epsilon = \int(\vec v \times \vec B)\cdot \mathrm d \vec l = -\frac{\mathrm d \Phi}{\mathrm d t} &\text{ Faraday's Law}
 	\end{align*}
 	Basically if we know the velocity and $\vec B$ field, we can find the EMF, or if we know the magnetic flux $\Phi$, we can derive it with respect to time and get the EMF. 
 	
-	The reason for the negative in front of the derivative is that the direction of the induced current will oppose the change in magnetic flux. This is known as Lenz's law.
+	The reason for the negative in front of the derivative is that the \textbf{direction of the induced current} will oppose the \textbf{change in magnetic flux}. This is known as Lenz's law.
 	
-	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
 	
 	
 \end{document}
