@@ -25,18 +25,19 @@
 
 % adds header and footer
 \pagestyle{fancy}
-\fancyhead{} \fancyhead[C]{MAT 2377 Cheat Sheet} \fancyhead[L]{MAT2377} \fancyhead[R]{Owen Daigle}
+\fancyhead{} \fancyhead[C]{MAT 2377 Summary Sheet} \fancyhead[L]{MAT2377} \fancyhead[R]{Owen Daigle}
 \fancyfoot{} \fancyfoot[C]{\thepage}
 
 
 \begin{document}
 	
 	\begin{center}
-		\Large\textbf{MAT 2377 Cheat Sheet} \\
+		\Large\textbf{MAT 2377 Summary Sheet} \\
 		\vspace{0.5em}
 	\end{center}
 	
 	\section{Chapter 1: Probabilities}
+	%m1 was this chapter
 	The \textbf{sample space} is the set of all possible outcomes. 
 	
 	An \textbf{event} is a collection of outcomes in the sample space. Usually this is what we are looking to work with. 
@@ -109,13 +110,13 @@
 	\end{align*}
 	
 	\section{Chapter 2: Discrete Random Variables}
-	% need to fill in, m2 included this chapter
+	%m2 included this chapter
 	A random variable is a variable (typically a capital letter) that associates a number to every outcome of an experiment. 
 	
 	We have 2 functions:
 	\begin{itemize}
-		\item Probability Distribution Function (PDF)
-		\item Cumulative Distribution Function (CDF)
+		\item Probability Distribution Function (PDF) ($f(x)$)
+		\item Cumulative Distribution Function (CDF) ($F(x)$)
 	\end{itemize}
 
 	The PDF specifies the probability of getting this specific value. 
@@ -124,30 +125,153 @@
 	\begin{center}
 		\includegraphics[width=0.7\linewidth]{pdf-vs-cdf}
 	\end{center}
+
+	\begin{mdframed}
+		\textbf{Ex. } We have a standard fair D6. 
+		
+		We know that the PDF is $\frac{1}{6}$ for each value. 
+		
+		The CDF is a bit more complex in that it is $\frac{1}{6}$ for 1, $\frac{2}{6}$ for 2, up to $\frac{6}{6} = 1$ for 6. 
+		
+		\begin{align*}
+			P(X=4) &= \frac{1}{6} &\text{Using PDF}\\
+			P(X\le 4) &= \frac{4}{6}  &\text {Using CDF}\\
+			P(3\le X\le 5) &= P(X\le 5) - P(X\le 3) = \frac{5}{6} - \frac{3}{6} + \frac {1}{6} &\text{Using CDF}
+		\end{align*}
+		For the third example, we need to add the extra $\frac{1}{6}$ since we are doing from 3 to 5 inclusively. So 3 or 4 or 5. Taking away $X\le 3$ also takes away 3, so we need to add it back.
+	\end{mdframed}
 	
+	Note that the sum of all PDFs is always 1. The highest CDF is also 1. 
 	
 	\subsection{Expectation}
+	The expectation of a random variable is basically the mean of the variable. We say that this is:
+	\begin{align*}
+		\mathbb E (u(x)) = \sum u(x)P(X=x)
+	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex. } The expectation of a fair D6 is:
+		\begin{align*}
+			\mathbb E (X) = \sum xP(X=x) = 1\cdot\frac{1}{6} + 2\cdot \frac{1}{6} + 3\cdot \frac{1}{6} + ... + 6\cdot \frac{1}{6} = 3.5
+		\end{align*}
+	\end{mdframed}
 	
 	\subsection{Variance}
+	While the mean shows the average of the data, the variance shows how close most of the data is to this average. This can be calculated using the expectation formula:
+	\begin{align*}
+		\text{Var}(X) = \mathbb E (X^2) - \mathbb E(X)^2
+	\end{align*}
+	We define the standard deviation as the square root of the variance. 
+	\begin{align*}
+		\text{SD}(X) = \sqrt{\text{Var}(X)}
+	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex.} Find the variance for the fair D6.
+		
+		This is very simple, we just use the variance formula. We already have $\mathbb E(X)$, so we can square that for the second term. $\mathbb E(X^2)$ is the more annoying one. 
+		\begin{align*}
+			\text{Var}(X) &= \mathbb E (X^2) - \mathbb E(X)^2 = \sum x^2 P(X=x) - 3.5^2\\
+			&= 1^2 \cdot \frac{1}{6} + 2^2 \cdot \frac{1}{6} + 3^2 \cdot \frac{1}{6} + ... + 6^2 \cdot \frac{1}{6} - 3.5^2 = CALC
+		\end{align*}
+	If we wanted standard deviation, this would just be square rooting the previous value. 
+	\end{mdframed}
 	
 	\subsection{Binomial Distribution}
+	A \textbf{Bernouille Trial} is an expreiment where there are only 2 outcomes: Success, and Failure. We say that $p$ is the probability of success. 
+	
+	A \textbf{Binomial Experiment} is a series of $n$ bernouille trials.
+	
+	If we have a random variable $X$ that follows a binomial distribution, then we have the following mean and variance:
+	\begin{align*}
+		&\mathbb E(X) = np &\text{Var}(X) = np(1-p)
+	\end{align*}
+	The PDF is:
+	\begin{align*}
+		P(X=x)= \binom{n}{x}p^x(1-p)^{n-x}
+	\end{align*}
 	
 	\subsection{Geometric Distribution}
+	This is a distribution where we want to know the number of steps before the first success occurs. Such as the average number of basketball throws needed to score the first point. 
 	
+	We have the following mean and variance:
+	\begin{align*}
+		&\mathbb E(X) = \frac{1}{p} &\text{Var}(X) = \frac{1-p}{p^2}
+	\end{align*}
+	The PDF is:
+	\begin{align*}
+		P(X=x)=(1-p)^{x-1}p
+	\end{align*}
+
+	The negative binomial distribution is similar except we change it to the number of steps before the \textbf{$r$th} success. 
+	\begin{align*}
+		&\mathbb E(X) = \frac{r}{p} &\text{Var}(X) = \frac{r(1-p) }{p^2}
+	\end{align*}
+	The PDF is:
+	\begin{align*}
+		P(X=x)=x \binom{x-1}{r-1} (1-p)^{x-r}p^r
+	\end{align*}
+
 	\subsection{Poisson Distribution}
+	The poisson distribution works off of a rate. We have the parameter $\lambda$ which is the number of arrivals in a fixed period of time. 
+	
+	We have the following mean and variance:
+	\begin{align*}
+		&\mathbb E(X) =\lambda &\text{Var}(X) = \lambda
+	\end{align*}
+
+	The PDF is:
+	\begin{align*}
+		P(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}
+	\end{align*}
 	
 	\section{Chapter 3: Continuous Random Variables}
-	% need to fill this in, m2 did this chapter
+	%m2 did this chapter
+	These are similar to discrete random variables, except for there are infinite number of outcomes. They are in a range, so it is not impossible to work with, but it requires different methods.
+	
+	For example, the heights of a population are not constrained to certain values such as 100lb, 110lb, 120lb. Someone can be 113.223lb. However, there are upper and lower limits such as potentially 5lb up to 500lb.
+	
+	If we are given a PDF, we need to integrate over an interval of that PDF in which it basicaly becomes a CDF. 
 	
 	\subsection{Expectation}
+	The expectation can be found by integrating the PDF function between the upper and lower limit of the data. 
+	\begin{align*}
+		\mathbb E(h(x)) = \int_{-\infty}^{\infty}h(x)f(x)
+	\end{align*}
+
+	Variance and Standard Deviation are defined in the same way as with discrete variables. 
 	
 	\subsection{Normal Distribution}
+	This is a continuous distribution that has a specific PDF function.
+	
+	If a variable Z is normally distributed with \textbf{mean of 0} and \textbf{variance of 1}, we say $Z \approx \mathcal{N}(0,1)$.
+	
+	We represent the normal distribution by Phi ($\Phi$). 
+	\begin{align*}
+		\Phi(z) = P(Z\le z)
+	\end{align*}
+
+	If the mean and variance is not 0 and 1 respectively, we can convert it using the following equation:
+	\begin{align*}
+		\frac{x-\mu}{\sigma} = Z \approx N(0,1)
+	\end{align*}
+
+	We then have a standard normal table found in the appendix. 
 	
 	\subsection{Exponential Distribution}
+	This distribution is a poisson proccess with rate of $\lambda$. We have:
+	\begin{align*}
+		f(x) = \lambda e^{-\lambda x}  \qquad \mathbb E(X)=\frac{1}{\lambda} \qquad \text{Var}(X) = \frac{1}{\lambda^2}
+	\end{align*}
 	
 	\subsection{Gamma Distribution}
+	This distribution is like the geometric distribution from chapter 2. It is the waiting time for the \textbf{rth arrival}. 
+	\begin{align*}
+		f(x) = \frac{x^{r-1}}{(r-1)!}\lambda^re^{-\lambda x}  \qquad \mathbb E(X)=\frac{r}{\lambda} \qquad \text{Var}(X) = \frac{r}{\lambda^2}
+	\end{align*}
 	
 	\subsection{Joint Distributions}
+	%TODO figure this out
 	
 	\section{Chapter 4: Descriptive Statistics and Sampling}
 	% midterm 3 content
@@ -169,7 +293,7 @@
 	\end{center}
 	We call the \textbf{Inter Quartile Range (IQR)} as the difference between the third and first quartile $IQR = Q_3-Q_1$
 
-	We identify a datapoint $x$ as an outlier if:
+	We identify a datapoint $x$ as an \textbf{outlier} if:
 	\begin{align*}
 		x < Q_1 - 1.5IQR \qquad \text{or} \qquad x>Q_3 + 1.5IQR
 	\end{align*}
@@ -200,7 +324,7 @@
 	We can also use the normal distribution if the population is normally distributed to model $\sum_{i=1}^n X_i$ or $\overline X$.
 	
 	\subsection{Central Limit Theorum}
-	This states that as the number of runs of an experiment, it will start to reach a normal distribution. This is regardless of whether or not the experiment is normal or not. 
+	This states that as the \textbf{number of runs of an experiment increases}, it will start to reach a \textbf{normal distribution}. This is regardless of whether or not the individual experiments are normal or not. 
 	
 	\subsection{Difference between 2 Means}
 	We can work with 2 variables $X_1, X_2, ..., X_n$ with $\mu_1, \sigma^2_1$, and $Y_1, Y_2, ..., Y_m$ with $\mu_2, \sigma_2^2$ using the following formula:
@@ -209,22 +333,24 @@
 	\end{align*}
 
 	\subsection{Other Distributions}
-	We have 2 other main distributions. The Chi squared ($\chi^2$) distribution, and Student's t distribution. Student's t distribution is used when the population variance is unknown, and we have to approximate using the sample variance (standard deviation). 
+	We have 2 other main distributions. The \textbf{Chi squared} ($\chi^2$) distribution, and \textbf{Student's t} distribution. 
 	
-	Both of these distributions have the degrees of freedom which is just $n-1$. 
+	Student's t distribution is used when the population variance is unknown, and we have to approximate using the sample variance (standard deviation). This is found in the appendix.
+	
+	Both of these distributions have the \textbf{degrees of freedom} ($v$ or $df$) which is usually just $n-1$. This happens since we take away one degree of freedom by estimating the variance. 
 	
 	\section{Chapter 5: Point and Interval Estimation} 
 	% midterm 3 content
 	This chapter is mostly about confidence intervals (CI). 
 	
-	We have 2 main confidence intervals that we use. Each of them has an $\alpha$ value where if we say the $n$ percent interval, we have $\alpha = 1-n$.
+	We have 2 main confidence intervals that we use. Each of them has an \textbf{$\alpha$ value} where if we say the $n$ percent interval, we have $\alpha = 1-n$.
 	
 	So for the 95\% confidence interval, $\alpha = 0.05$. 
 	
-	The 2 main confidence intervals are the 95 percent, and 99 percent. 
+	The 2 main confidence intervals are the \textbf{95 percent, and 99 percent}. 
 	
 	\subsection{CI When $\sigma$ is known}
-	We can use a normal distribution to model this since we know $\sigma$, $n$, and $\overline X$. 
+	We can use a \textbf{normal distribution} to model this since we know $\sigma$, $n$, and $\overline X$. 
 	
 	We use the equation:
 	\begin{align*}
@@ -236,7 +362,7 @@
 	\subsection{CI When $\sigma$ is unknown}
 	Here we have to find the sample variance $s$ and we know $n$, and $\overline X$.
 	
-	We use Student's t distribution with the equation:
+	We use \textbf{Student's t distribution} with the equation:
 	\begin{align*}
 		CI = \overline X \pm t_{\alpha/2}(n-1) \frac{s}{\sqrt n}
 	\end{align*}
@@ -245,13 +371,15 @@
 	\subsection{CI For a Proportion}
 	When we are dealing with a proportion for a binomial distributions (2 options, either success of failure), we say that $P$ is the probability of success. 
 	
-	We can model this using the normal distribution using:
+	We can model this using the \textbf{normal distribution} using:
 	\begin{align*}
 		CI = P \pm z_{\alpha/2} \sqrt{\frac{P(1-P)}{n}}
 	\end{align*}
 
 	\section{Chapter 6: Hypothesis Testing}
 	This chapter is about hypotheses. We create 2 hypotheses. The first one, $H_1$ is the alternative hypothesis. We test it against the null hypothesis $H_0$. We do the test for $H_0$ and we either \textbf{reject} the null hypothesis in favour of $H_1$, or \textbf{fail to reject} the null hypothesis. We reject the null if evidence against the null is \textbf{strong}.
+	
+	\subsection{Types of Errors}
 	
 	We commit a \textbf{Type 1 error} if we reject $H_0$ when $H_0$ is actually true. The probability of a type 1 error is:
 	\begin{align*}
@@ -268,24 +396,27 @@
 	
 	We say that:
 	\begin{align*}
-		H_0&: \mu = \mu_0 \\
-		H_1&: \mu \ne \mu_0 \quad \text{ OR } \quad \mu<\mu_0 \quad \text{ OR }\quad \mu>\mu_0
+		H_0&: \mu = \mu_0 &\text{Null Hypothesis}\\
+		H_1&: \mu \ne \mu_0 &\text{Two Sided Alternative}\\ 
+		&\text{ OR } \mu<\mu_0 &\text{Left Sided Alternative}\\
+		&\text{ OR } \mu>\mu_0 &\text{Right Sided Alternative}
 	\end{align*}
 	
 	\subsection{Test for Mean with Known Variance}
-	If the population is normal, or it has a large number of samples ($n$ is large), then we can use a normal distribution to approximate the test. 
+	If the population is normal, or it has a \textbf{large number of samples} ($n$ is large), then we can use a \textbf{normal distribution} to approximate the test. 
 	
 	We can get a value from the normal distribution using the variance, mean, and number of samples. 
 	
 	\subsection{Test for Mean with Unknown Variance}
-	If we do not know the variance, we can use Student's t distribution.
+	If we do not know the variance, we can use \textbf{Student's t distribution.}
 	
 	\subsection{Two Sample Test}
+	%TODO figure this out
 	
 	\section{Chapter 7: Linear Regresion}
 	
 	\subsection{Correlation Coefficient}
-	The coefficient of correlation $\rho$ between 2 variables $x$ and $y$ is:
+	The \textbf{coefficient of correlation} $\rho$ between 2 variables $x$ and $y$ is:
 	\begin{align*}
 		\rho_{xy} = \frac{\sum (x_i-\overline x)(y_i-\overline y)}{\sqrt{\sum (x_i - \overline x)^2 \sum(y_i - \overline y)^2}} = \frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}
 	\end{align*}
@@ -307,9 +438,9 @@
 	\begin{align*}
 		\beta_1 = \frac{S_{xy}}{S_{xx}}
 	\end{align*}
-	The $\beta_0$ can be found by subbing in a known values for the equation of $\overline y = \beta_0 + \beta_1 \overline x$ adn solving for $\beta_0$.
+	The $\beta_0$ can be found by subbing in a known values for the equation of $\overline y = \beta_0 + \beta_1 \overline x$ and solving for $\beta_0$.
 	
-	We can also estimate the variance by doing:
+	We can also estimate the \textbf{variance} by doing:
 	\begin{align*}
 		\hat \sigma^2 = \frac{S_{yy} - \beta_1 S_{xy}}{n-2w}
 	\end{align*}
@@ -319,6 +450,24 @@
 	\begin{align*}
 		H_0: \beta_0 = \beta_{0,0} \qquad H_1: \beta_0 \ne \beta_{0,0}
 	\end{align*}
-	Similarly to chapter 6, this result is often normally distributed so can be easily calculated using the normal table. 
+	Similarly to chapter 6, this result is often \textbf{normally distributed} so can be easily calculated using the normal table. 
+	
+	\newpage
+	\section{Appendix}
+	\subsection {Normal Distribution Table (Z-Table)}
+	\begin{center}
+		\includegraphics[width=0.99\linewidth]{negativeztable}
+	\end{center}
+	\begin{center}
+		\includegraphics[width=0.99\linewidth]{positiveztable}
+	\end{center}
+	Tables taken from https://www.ztable.net/
+	
+	\subsection{Student's t Table}
+	\begin{center}
+		\includegraphics[width=0.99\linewidth]{t-table}
+	\end{center}
+	Table taken from https://www.tdistributiontable.com/
+	
 	
 \end{document}
