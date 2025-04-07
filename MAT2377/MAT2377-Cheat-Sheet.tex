@@ -62,6 +62,21 @@
 	\begin{align*}
 		\frac{n!}{(n-r)!r!} = {}_nC_r
 	\end{align*}
+
+	\begin{mdframed}
+	\textbf{Ex. }20 Items are sampled from a factory. The probability of an item being defective is 0.1. What is the probability of exactly 1 defective item?
+	
+	To do this, we know that for there to be exactly 1 defective item, there must be 19 working items. 
+	
+	But there are more than one way that this 1 defective item can be placed. It can be the first item we test, the second item we test, and so on. We do this by $\binom{20}{1}$.
+	\begin{align*}
+		P(\text{1 Defective Item}) = \binom{20}{1} 0.1^1 (1-0.1)^{19} = 0.27
+	\end{align*}
+	If we changed this do exactly 2 items, the formula would change to:
+	\begin{align*}
+		P(\text{2 Defective Items}) = \binom{20}{2} 0.1^2 (1-0.1)^{18} = 0.285
+	\end{align*}
+	\end{mdframed}
 	
 	\subsection{Probabilities}
 	The probability of an event $A$ with $N$ total outcomes and $a$ favourable outcomes is just:
@@ -79,6 +94,19 @@
 	\begin{align*}
 		P(A\cap B) = P(A)\cdot P(B)
 	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex. }The probability of event A is 0.95, and of event B is 0.98. The probability of them both is 0.94. What is the probability of neither of them occurring?
+		
+		We have:
+		\begin{align*}
+			P(A)=0.95\qquad P(B)=0.98\qquad P(A\cap B)=0.94
+		\end{align*}
+		We want:
+		\begin{align*}
+			P(A\cup B)\prime = 1-P(A\cup B) = 1- (P(A) - P(B) + P(A\cap B)) = 0.01
+		\end{align*}
+	\end{mdframed}
 
 	\subsection{Conditional Probability}
 	We say that the probability of event $B$ given that event $A$ has already happened is:
@@ -108,6 +136,31 @@
 	\begin{align*}
 		P(A|B) = \frac{P(B|A)\cdot P(A)}{P(B)}
 	\end{align*}
+	
+	\begin{mdframed}
+		\textbf{Ex. }We have a disease. A test for the disease was given to 450 patients who are known to have this disease. 436 were positive. It was also given to 1000 people without the disease where 10 tests were positive. The known rate of this disease is 15\%. What is the probability of someone having the disease given the test is positive?
+		
+		I will let $D$ represent Having the Disease, and $P$ represent the Test being Positive.
+		
+		We have the following information from the question:
+		\begin{align*}
+			P(P|D) = 436/450 \qquad P(P|D\prime ) = 10/1000 \qquad P(D) = 0.15 \qquad P(D| P) = ?
+		\end{align*}
+		We can use Bayes theorum to find $P(D|P)$
+		\begin{align*}
+			P(D|P) = \frac{P(P|D)P(D)}{P(P)}
+		\end{align*}
+		To find the denominator, we can use the law of total probability. 
+		\begin{align*}
+			P(P) = P(P|D)P(D) + P(P|D\prime)P(D\prime) = \frac{436}{450}0.15 + \frac{10}{1000}(1-0.15) = 0.1538
+		\end{align*}
+		And now I can substitute back into Bayes theorum to solve:
+		\begin{align*}
+			P(D|P) = \frac{P(P|D)P(D)}{P(P)} = \frac{436/450 \cdot 0.15}{0.1538} = 0.945
+		\end{align*}
+	\end{mdframed}
+
+
 	
 	\section{Chapter 2: Discrete Random Variables}
 	%m2 included this chapter
@@ -190,6 +243,24 @@
 	\begin{align*}
 		P(X=x)= \binom{n}{x}p^x(1-p)^{n-x}
 	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex. }There are 20 samples taken from a process. 1\% of samples have problems. X is the number of samples that have problems. What is the probability that the number of samples exceeds its mean by 3 standard deviations?
+		
+		So we need to get the mean and standard deviations. These can easily be calculated since this follows a binomial distribution:
+		\begin{align*}
+			\mathbb E(X) = np = 20\cdot 0.01 = 0.2 \qquad \text{Var}(X) = np(1-p) = 0.2(0.99) = 0.198\\
+			\text{SD}(X) = \sqrt{0.198} = 0.44
+		\end{align*}
+		Now we can find that $P(X>\mathbb E(X) + 3\text{SD}(X)) = P(X > 1.535)$. But since we are working with discrete variable, we can only have integers. $P(X>2) = 1- P(X\le 1)$. We use the complement since it is would be very hard to do 18 calculations. 
+		
+		Now we need to actually calculate $1-P(X\le 1)$.
+		\begin{align*}
+			P(X=0) &= \binom{20}{0}0.01^0 0.99^{20} = CALC\\
+			P(X=1) &= \binom{20}{1}0.01^1 0.99^{19} = CALC\\
+			P(X\le 1) &= 1- P(X=0) - P(X=1) = CALC
+		\end{align*}
+	\end{mdframed}
 	
 	\subsection{Geometric Distribution}
 	This is a distribution where we want to know the number of steps before the first success occurs. Such as the average number of basketball throws needed to score the first point. 
@@ -209,7 +280,7 @@
 	\end{align*}
 	The PDF is:
 	\begin{align*}
-		P(X=x)=x \binom{x-1}{r-1} (1-p)^{x-r}p^r
+		P(X=x)= \binom{x-1}{r-1} (1-p)^{x-r}p^r
 	\end{align*}
 
 	\subsection{Poisson Distribution}
@@ -239,6 +310,32 @@
 		\mathbb E(h(x)) = \int_{-\infty}^{\infty}h(x)f(x)
 	\end{align*}
 
+	\begin{mdframed}
+		\textbf{Ex. }We are given the following CDF. Find the mean.
+		\begin{align*}
+			F(x) = \begin{cases}
+				0 & \text{if } x \leq 0 \\
+				\frac{x}{2} & \text{if } 0 < x < 2 \\
+				1 & \text{if } x \geq 2
+			\end{cases}
+		\end{align*}
+	
+		To get the mean, we need to integrate the PDF. We are given the CDF. 
+		
+		We can get the PDF by taking the derivative of the CDF to get:
+		\begin{align*}
+			f(x) = F\prime (x) = \begin{cases}
+				0 & \text{if } x \leq 0 \\
+				\frac{1}{2} & \text{if } 0 < x < 2 \\
+				1 & \text{if } x \geq 2
+			\end{cases}
+		\end{align*}
+		Then we can integrate this from 0 to 2:
+		\begin{align*}
+			\mathbb E(x) = \int_0^2 x \cdot \frac{1}{2} = \frac{1}{2}\left[\frac{x^2}{2}\right]^2_0 = 1
+		\end{align*}
+	\end{mdframed}
+
 	Variance and Standard Deviation are defined in the same way as with discrete variables. 
 	
 	\subsection{Normal Distribution}
@@ -257,6 +354,38 @@
 	\end{align*}
 
 	We then have a standard normal table found in the appendix. 
+	
+	\begin{mdframed}
+		\textbf{Ex. }If we have a mean of 10s to kill a chicken jockey, and a standard deviation of 10s, what is the probability of taking more than 18.2 seconds to kill that pesky chicken jockey?
+		
+		Notice that we are given the value in terms of standard deviation $\sigma$ instead of variance $\sigma^2$. 
+		
+		We will normalize this value and then we can use the normal value to look it up in the normal table (found in the appendix).
+		\begin{align*}
+			P(X\ge 18.2) &= 1-P(X\le 18.2) = 1-\Phi\left(\frac{18.2-10}{4}\right) = 1-\Phi\left(2.05\right) \\
+			&= 1-0.9798=0.0202 \approx 2\%
+		\end{align*}
+		This value was found on the normal table:
+		\begin{center}
+			\includegraphics[width=0.5\linewidth]{normal-ex2}
+		\end{center}
+		
+	\end{mdframed}
+	
+	\begin{mdframed}
+		\textbf{Ex. }If we have X normally distributed with mean 10, and variance of 1 ($X\approx \mathcal N(10,1^2)$) then find the value of c such that $P(X\le c) = 0.7019$.
+		
+		Here we need to do a bit of reverse engineering. We start with finding out what the normal value ($\Phi$) will be to get 0.7019. I look on the normal table and get 0.53.
+		\begin{center}
+			\includegraphics[width=0.5\linewidth]{normal-ex1}
+		\end{center}
+		Now I know that to get this value of 0.53 I need to apply the normal conversion equation since mean is not 0, and variance is not 1. 
+		\begin{align*}
+			\frac{x-\mu}{\sigma} = Z \implies \frac{x-10}{\sqrt{1}} = 0.53 \implies x = 10.53
+		\end{align*}
+		Note that in the normal distribution $\mathcal N(0,1)$, it uses the \textbf{variance} ($\sigma^2$) not standard deviation ($\sigma$). So that is why we square root the 1 on the denominator.
+		
+	\end{mdframed}
 	
 	\subsection{Exponential Distribution}
 	This distribution is a poisson proccess with rate of $\lambda$. We have:
