@@ -56,7 +56,7 @@
 	\end{itemize}
 	
 	\subsection{Unordered Samples}
-	This is when the order of the samples does not matter, so $1,2,3$ would be the same as $1,3,2$. 
+	This is when the \textbf{order of the samples does not matter}, so $1,2,3$ would be the same as $1,3,2$. 
 	
 	We can see the number of unordered samples possible with $r$ draws in a sample space of size $n$ using:
 	\begin{align*}
@@ -64,7 +64,7 @@
 	\end{align*}
 
 	\begin{mdframed}
-	\textbf{Ex. }20 Items are sampled from a factory. The probability of an item being defective is 0.1. What is the probability of exactly 1 defective item?
+	\textbf{Ex. }20 Items are sampled from a factory. The probability of an item being defective is 0.1. What is the probability of \textbf{exactly} 1 defective item?
 	
 	To do this, we know that for there to be exactly 1 defective item, there must be 19 working items. 
 	
@@ -84,7 +84,7 @@
 		P(A) = \frac{a}{N}
 	\end{align*}
 	
-	We can add probabilities using the following formula:
+	We can \textbf{add probabilities} using the following formulas:
 	\begin{align*}
 		P(A\cup B) &= P(A) + P(B) - P(A\cap B) \\
 		P(A\cup B \cup C) &= P(A)+P(B)+P(C)-P(A\cap B) - P(A\cap C) - P(B\cap C) + P(A\cap B\cap C)
@@ -109,13 +109,13 @@
 	\end{mdframed}
 
 	\subsection{Conditional Probability}
-	We say that the probability of event $B$ given that event $A$ has already happened is:
+	We say that the probability of event $B$\textbf{ given that event $A$ has already happened} is:
 	\begin{align*}
 		P(B|A) = \frac{P(A\cap B)}{P(A)}
 	\end{align*}
 	
 	\subsection{Law of Total Probability}
-	This basically works off of the fact that all probabilities must add up to 1. 
+	This basically works off of the fact that \textbf{all probabilities must add up to 1}. 
 	
 	This is the specific case to 2 events $A$ and $B$:
 	\begin{align*}
@@ -164,7 +164,7 @@
 	
 	\section{Chapter 2: Discrete Random Variables}
 	%m2 included this chapter
-	A random variable is a variable (typically a capital letter) that associates a number to every outcome of an experiment. 
+	A random variable is a variable (typically a capital letter) that associates a \textbf{number to every outcome of an experiment}. 
 	
 	We have 2 functions:
 	\begin{itemize}
@@ -172,9 +172,9 @@
 		\item Cumulative Distribution Function (CDF) ($F(x)$)
 	\end{itemize}
 
-	The PDF specifies the probability of getting this specific value. 
+	The PDF specifies the probability of getting\textbf{ this specific value}. 
 	
-	The CDF specifies the probabilitu of getting anything below this specific value. 
+	The CDF specifies the probability of getting \textbf{anything below this} specific value. 
 	\begin{center}
 		\includegraphics[width=0.7\linewidth]{pdf-vs-cdf}
 	\end{center}
@@ -197,7 +197,7 @@
 	Note that the sum of all PDFs is always 1. The highest CDF is also 1. 
 	
 	\subsection{Expectation}
-	The expectation of a random variable is basically the mean of the variable. We say that this is:
+	The expectation of a random variable is basically the \textbf{mean} of the variable. We say that this is:
 	\begin{align*}
 		\mathbb E (u(x)) = \sum u(x)P(X=x)
 	\end{align*}
@@ -210,7 +210,7 @@
 	\end{mdframed}
 	
 	\subsection{Variance}
-	While the mean shows the average of the data, the variance shows how close most of the data is to this average. This can be calculated using the expectation formula:
+	While the mean shows the average of the data, the variance shows \textbf{how close most of the data is to this average}. This can be calculated using the expectation formula:
 	\begin{align*}
 		\text{Var}(X) = \mathbb E (X^2) - \mathbb E(X)^2
 	\end{align*}
@@ -263,7 +263,7 @@
 	\end{mdframed}
 	
 	\subsection{Geometric Distribution}
-	This is a distribution where we want to know the number of steps before the first success occurs. Such as the average number of basketball throws needed to score the first point. 
+	This is a distribution where we want to know the\textbf{ number of steps before the first success occurs}. Such as the average number of basketball throws needed to score the first point. 
 	
 	We have the following mean and variance:
 	\begin{align*}
@@ -284,7 +284,7 @@
 	\end{align*}
 
 	\subsection{Poisson Distribution}
-	The poisson distribution works off of a rate. We have the parameter $\lambda$ which is the number of arrivals in a fixed period of time. 
+	The poisson distribution works off of a rate. We have the parameter $\lambda$ which is the \textbf{number of arrivals} in a \textbf{fixed period of time}. 
 	
 	We have the following mean and variance:
 	\begin{align*}
@@ -298,9 +298,9 @@
 	
 	\section{Chapter 3: Continuous Random Variables}
 	%m2 did this chapter
-	These are similar to discrete random variables, except for there are infinite number of outcomes. They are in a range, so it is not impossible to work with, but it requires different methods.
+	These are similar to discrete random variables, except for there are\textbf{ infinite number of outcomes}. They are in a range, so it is not impossible to work with, but it requires different methods.
 	
-	For example, the heights of a population are not constrained to certain values such as 100lb, 110lb, 120lb. Someone can be 113.223lb. However, there are upper and lower limits such as potentially 5lb up to 500lb.
+	For example, the heights of a population are not constrained to certain values such as 100lb, 110lb, 120lb. Someone can be 113.223lb. However, there are upper and lower limits such as potentially 5lb up to 500lb. We would not see a human that is 2500lb so we do not even have to consider that part.
 	
 	If we are given a PDF, we need to integrate over an interval of that PDF in which it basicaly becomes a CDF. 
 	
@@ -356,7 +356,7 @@
 	We then have a standard normal table found in the appendix. 
 	
 	\begin{mdframed}
-		\textbf{Ex. }If we have a mean of 10s to kill a chicken jockey, and a standard deviation of 10s, what is the probability of taking more than 18.2 seconds to kill that pesky chicken jockey?
+		\textbf{Ex. }If we have a mean of 10s to kill a chicken jockey, and a standard deviation of 4s, what is the probability of taking more than 18.2 seconds to kill that pesky chicken jockey?
 		
 		Notice that we are given the value in terms of standard deviation $\sigma$ instead of variance $\sigma^2$. 
 		
@@ -373,7 +373,7 @@
 	\end{mdframed}
 	
 	\begin{mdframed}
-		\textbf{Ex. }If we have X normally distributed with mean 10, and variance of 1 ($X\approx \mathcal N(10,1^2)$) then find the value of c such that $P(X\le c) = 0.7019$.
+		\textbf{Ex. }If we have X normally distributed with mean 10, and variance of 1 ($X\approx \mathcal N(10,1)$) then find the value of c such that $P(X\le c) = 0.7019$.
 		
 		Here we need to do a bit of reverse engineering. We start with finding out what the normal value ($\Phi$) will be to get 0.7019. I look on the normal table and get 0.53.
 		\begin{center}
@@ -381,30 +381,52 @@
 		\end{center}
 		Now I know that to get this value of 0.53 I need to apply the normal conversion equation since mean is not 0, and variance is not 1. 
 		\begin{align*}
-			\frac{x-\mu}{\sigma} = Z \implies \frac{x-10}{\sqrt{1}} = 0.53 \implies x = 10.53
+			\frac{c-\mu}{\sigma} = Z \implies \frac{c-10}{\sqrt{1}} = 0.53 \implies c = 10.53
 		\end{align*}
 		Note that in the normal distribution $\mathcal N(0,1)$, it uses the \textbf{variance} ($\sigma^2$) not standard deviation ($\sigma$). So that is why we square root the 1 on the denominator.
 		
 	\end{mdframed}
 	
 	\subsection{Exponential Distribution}
-	This distribution is a poisson proccess with rate of $\lambda$. We have:
+	This distribution is a poisson proccess with rate of $\lambda$.
+	
+	It is the \textbf{waiting time} until the first arrival
+	
+	We have:
 	\begin{align*}
-		f(x) = \lambda e^{-\lambda x}  \qquad \mathbb E(X)=\frac{1}{\lambda} \qquad \text{Var}(X) = \frac{1}{\lambda^2}
+		f(x) = \lambda e^{-\lambda x}  \qquad \mathbb E(X)=\frac{1}{\lambda} \qquad \text{Var}(X) = \frac{1}{\lambda^2} \qquad F(x) = 1-e^{-\lambda x}
 	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex.} In a world, two chicken jockeys spawn per minute. This is a poisson process. What is the probability that we wait more than 1 minute for a chicken jockey to spawn?
+		
+		We say this is an exponential (or I guess we could do gamma with r=1) distribution since we have poisson variable $\lambda = 2$ and we are finding the waiting time of more than 1 minute, $X>1$.
+		\begin{align*}
+			P(X>1) = 1-P(X\le 1)
+		\end{align*}
+		Then we can use the CDF $F(x)$ of the exponential distribution to solve. We could also use the integral of the PDF (Same thing).
+		\begin{align*}
+			=1-F(1) = 1-(1-e^{-2}) = e^{-2}
+		\end{align*}
+	\end{mdframed}
 	
 	\subsection{Gamma Distribution}
-	This distribution is like the geometric distribution from chapter 2. It is the waiting time for the \textbf{rth arrival}. 
+	This distribution is like the geometric distribution from chapter 2. It is the \textbf{waiting time} for the \textbf{rth arrival}. 
 	\begin{align*}
-		f(x) = \frac{x^{r-1}}{(r-1)!}\lambda^re^{-\lambda x}  \qquad \mathbb E(X)=\frac{r}{\lambda} \qquad \text{Var}(X) = \frac{r}{\lambda^2}
+		f(x) = \frac{x^{r-1}}{(r-1)!}\lambda^re^{-\lambda x}  \qquad \mathbb E(X)=\frac{r}{\lambda} \qquad \text{Var}(X) = \frac{r}{\lambda^2} 
 	\end{align*}
+	There is no practical way to wright the CDF function for this distribution.
 	
 	\subsection{Joint Distributions}
-	%TODO figure this out
+	This distribution is where we have 2 variables such as $x$, and $y$. 
+	
+	So the PDF function would be $f(x,y)$.
+	
+	We can work with this similar to the 1 variable functions, except when we have 1 integral/sum, we just need 2 instead. Same idea with expected value, and variance. 
 	
 	\section{Chapter 4: Descriptive Statistics and Sampling}
 	% midterm 3 content
-	To describe a dataset, we have measures of central tendancy such as mean and median, and measures of spread such as standard deviation, quartiles, and inter-quartile-range. 
+	To describe a dataset, we have \textbf{measures of central tendancy} such as mean and median, and \textbf{measures of spread} such as standard deviation, quartiles, and inter-quartile-range. 
 	
 	The median is just the middle value of a \textbf{sorted} dataset. If there are 2 middle values, we just take the mean of both of those. 
 	
@@ -418,7 +440,7 @@
 	\subsection{Quartiles}
 	The quartile is like taking the median of the lower half of the data (under the true median). 
 	\begin{center}
-		\includegraphics[width=0.4\linewidth]{quartiles}
+		\includegraphics[width=0.5\linewidth]{quartiles}
 	\end{center}
 	We call the \textbf{Inter Quartile Range (IQR)} as the difference between the third and first quartile $IQR = Q_3-Q_1$
 
@@ -430,7 +452,7 @@
 	\subsection{Sample Statistics}
 	If we do not know the variance of a whole dataset (such as the entire earths population) then we can consider a sample of this population to estimate the population. 
 	
-	We have \textbf{sample standard deviation $s$} and \textbf{sample variance $s^2$}. These estimage the standard deviation $\sigma$ and variance $\sigma^2$ respectively. 
+	We have \textbf{sample standard deviation $s$} and \textbf{sample variance $s^2$}. These estimate the standard deviation $\sigma$ and variance $\sigma^2$ respectively. 
 	\begin{align*}
 		s^2 = \frac{1}{n-1}\sum^{n}_{i=1}(x_i - \overline x)^2
 	\end{align*}
@@ -452,8 +474,19 @@
 	\end{align*}
 	We can also use the normal distribution if the population is normally distributed to model $\sum_{i=1}^n X_i$ or $\overline X$.
 	
+	
+	
 	\subsection{Central Limit Theorum}
-	This states that as the \textbf{number of runs of an experiment increases}, it will start to reach a \textbf{normal distribution}. This is regardless of whether or not the individual experiments are normal or not. 
+	This states that as the \textbf{number of runs of an experiment increases}, it will start to reach a \textbf{normal distribution}. This is regardless of whether or not the individual experiments are normal or not.
+	
+	\begin{mdframed}
+		\textbf{Ex.} The average amount of time waiting for a spider jockey to spawn is 8.2 days with standard deviation of 1.5 days. We have a sample of 49 spawn events. What is the probability that we wait less than 10 days for a spider jockey to spawn?
+		
+		This is very simple. Since it is an IID case where each event is independant, and they all have the same distribution, and n is large, we can use the central limit theorum to approximate it by a normal distribution. 
+		\begin{align*}
+			P(X \le 10) = \Phi \left(\frac{10-8.2}{1.5/\sqrt {49}}\right) = \Phi(8.4) \approx 1 = 100\%
+		\end{align*}
+	\end{mdframed} 
 	
 	\subsection{Difference between 2 Means}
 	We can work with 2 variables $X_1, X_2, ..., X_n$ with $\mu_1, \sigma^2_1$, and $Y_1, Y_2, ..., Y_m$ with $\mu_2, \sigma_2^2$ using the following formula:
@@ -461,10 +494,28 @@
 		Z = \frac{\overline X - \overline Y - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n}+\frac{\sigma^2_2}{m}}}
 	\end{align*}
 
+	\begin{mdframed}
+		\textbf{Ex.} We have two random samples. One has size 16, with mean of 75 and standard deviation of 8. The other one has size 9, mean 70, and standard deviation 12. We want to find the probability that their sample means difference is between 3.5 and 5.5.
+		
+		This is just:
+		\begin{align*}
+			3.5\le \overline X_1 - \overline X_2 \le 5.5
+		\end{align*}
+	
+		I use the normal approximation to add up the variances and means to get:
+		\begin{align*}
+			\mu = 75-70 = 5 \qquad \sigma^2 = \frac{8^2}{16} + \frac{12^2}{9} = 20
+		\end{align*}
+		And now we can just solve liek a standard normal problem. 
+		\begin{align*}
+			P(3.5\le \overline X_1 - \overline X_2 \le 5.5) = \Phi\left(\frac{5.5-5}{\sqrt {20}}\right) - \Phi\left(\frac{3.5-5}{\sqrt {20}}\right) =0.1769
+		\end{align*}
+	\end{mdframed}
+
 	\subsection{Other Distributions}
 	We have 2 other main distributions. The \textbf{Chi squared} ($\chi^2$) distribution, and \textbf{Student's t} distribution. 
 	
-	Student's t distribution is used when the population variance is unknown, and we have to approximate using the sample variance (standard deviation). This is found in the appendix.
+	Student's t distribution is used when the population variance is unknown, and we have to approximate using the sample variance (standard deviation). This table is found in the appendix.
 	
 	Both of these distributions have the \textbf{degrees of freedom} ($v$ or $df$) which is usually just $n-1$. This happens since we take away one degree of freedom by estimating the variance. 
 	
@@ -488,6 +539,19 @@
 
 	Using the normal table we can get $Z_{\alpha/2}$. For $\alpha = 0.05$ we have $Z_{0.025} = 1.96$ and for $\alpha = 0.01$ we have $Z_{0.005} = 2.575$.
 	
+	\begin{mdframed}
+		\textbf{Ex. }We have a set of data with a standard deviation of 130. We test 9 samples, and we find that there is a sample mean of 4970. We need the 95\% confidence interval for this dataset. 
+		
+		We have the following data given from the question:
+		\begin{align*}
+			\sigma = 130 \qquad \overline X = 4970 \qquad \alpha = 0.05 \qquad n = 9
+		\end{align*}
+		Since $\sigma$ is known, we can simply sub into the equation with $Z_{\alpha/2}=1.96$:
+		\begin{align*}
+			CI = 4970\pm1.96\cdot\frac{130}{\sqrt9}=[4885.07,5054.93]
+		\end{align*}
+	\end{mdframed}
+	
 	\subsection{CI When $\sigma$ is unknown}
 	Here we have to find the sample variance $s$ and we know $n$, and $\overline X$.
 	
@@ -504,9 +568,35 @@
 	\begin{align*}
 		CI = P \pm z_{\alpha/2} \sqrt{\frac{P(1-P)}{n}}
 	\end{align*}
+	\begin{mdframed}
+		\textbf{Ex.}In examples, we are not given the variance, or the sample variance. We are however given a probability or the means to calculate a probability.
+		
+		Then we can just sub the values into the equation and solve. 
+	\end{mdframed}
+
+	\subsection{Error}
+	We have an error when we estimate using the sample mean $\overline X$. This gets smaller as the number of samples $n$ increases. We can find the error using the following equation:
+	\begin{align*}
+		E = Z_{\alpha/2} \frac{\sigma}{\sqrt n}
+	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex.} We have the following values:
+		\begin{align*}
+			\sigma = 0.5 \qquad E = 0.2 \qquad \alpha = 0.05 \qquad n = ?
+		\end{align*}
+		We find the sample size required for this error by using the equation:
+		\begin{align*}
+			E = Z_{\alpha/2} \frac{\sigma}{\sqrt n} \implies n = \left(\frac{Z_{\alpha/2}\sigma}{E}\right)^2= \left(\frac{1.96\cdot 0.5}{0.2}\right)^2 = 24.01
+		\end{align*}
+	\end{mdframed}
 
 	\section{Chapter 6: Hypothesis Testing}
 	This chapter is about hypotheses. We create 2 hypotheses. The first one, $H_1$ is the alternative hypothesis. We test it against the null hypothesis $H_0$. We do the test for $H_0$ and we either \textbf{reject} the null hypothesis in favour of $H_1$, or \textbf{fail to reject} the null hypothesis. We reject the null if evidence against the null is \textbf{strong}.
+	
+	The Null Hyopothesis $H_0$ is the claim. It is what we expect to happen. We often want to find evidence to disprove this hypothesis so we can reject it in favour of $H_1$.
+	
+	The Alternative Hypothesis $H_1$ is a different outcome that we are testing for. 
 	
 	\subsection{Types of Errors}
 	
@@ -514,6 +604,8 @@
 	\begin{align*}
 		\alpha = P(\text{reject }H_0 | H_0\text{ is True})
 	\end{align*}
+	
+	We often use values of $\alpha = 0.01$ or $\alpha = 0.05$.
 	
 	We commit a \textbf{Type 2 error} if we fail to reject $H_0$ when $H_0$ is actually false. The probability of a type 2 error is:
 	\begin{align*}
@@ -531,16 +623,118 @@
 		&\text{ OR } \mu>\mu_0 &\text{Right Sided Alternative}
 	\end{align*}
 	
-	\subsection{Test for Mean with Known Variance}
-	If the population is normal, or it has a \textbf{large number of samples} ($n$ is large), then we can use a \textbf{normal distribution} to approximate the test. 
+	\subsection{Test using P Values}
+	To test using the P value, we need to get the P value, and then compare this to the alpha value. 
 	
-	We can get a value from the normal distribution using the variance, mean, and number of samples. 
+	We use the following procedure:
+	\begin{enumerate}
+		\item Find $H_0$, and $H_1$.
+		\item Choose the correct $\alpha$ value, usually $0.05$ or $0.01$
+		\item For the sample, find $z_0$ or $t_0$. Usually found by $z_0 = \frac{\overline x - \mu}{\sigma/\sqrt n}$ or $t_0 = \frac{\overline x - \mu}{S/\sqrt n}$ or if it is two sample or proportion, we use the corresponding value. 
+		\item Find the P value by:
+		\subitem \begin{tabular}{|c|c|c|}
+			\hline
+			$H_1: \mu > \mu_0$&  $P(Z>z_0)$&Or use $P(t(n-1)>t_0)$ for $t_0$\\
+			\hline
+			$H_1: \mu<\mu_0$&  $P(Z<z_0)$&Or use $P(t(n-1)<t_0)$ for $t_0$\\
+			\hline
+			$H_1: \mu\ne\mu_0$& $2\cdot \text{min}(P(Z>z_0), P(Z<z_0))$ & Or change for t table using $t_0$\\
+			\hline
+		\end{tabular}
+		\item Check whether we reject or fail to reject:
+		\subitem If P value $\le \alpha$, then reject $H_0$
+		\subitem If P value $>\alpha$, then fail to reject $H_0$
+	\end{enumerate}
 	
-	\subsection{Test for Mean with Unknown Variance}
-	If we do not know the variance, we can use \textbf{Student's t distribution.}
+	\subsection{Test using Confidence Intervals}
+	Rather than find the p value, and then comparing this to the value using $\alpha$, we can find the confidence interval for the given $\alpha$ and then check if out sample mean is within this range or not. 
+	
+	We take the procedure from the P values, and modify it:
+	\begin{enumerate}
+		\item Find $H_0$ and $H_1$
+		\item Choose the correct $\alpha$ value, usually 0.05 or 0.01
+		\item Find the confidence interval for the data: $CI = \overline X \pm z_{\alpha/2} \frac{\sigma}{\sqrt n}$
+		\item Check if $\mu \in CI$.
+		\subitem If $\mu \in CI$, then we fail to reject $H_0$
+		\subitem If $\mu \notin CI$, then we reject $H_0$
+	\end{enumerate}
+
+	\begin{mdframed}
+		\textbf{Ex.} We have the following data. 
+		\begin{align*}
+			n = 9 \qquad \sigma^2 = 25 \qquad \overline X = 23 \qquad \alpha = 0.05\\
+			H_0: \mu = 20 \qquad H_1: \mu \ne 20
+		\end{align*}
+		So we want to see whether or not to reject the claim that the average is 20. 
+		
+		We will create a confidence interval and see if the mean of 20 is within this confidence interval (fail to reject) or falls outside this CI (reject). 
+		\begin{align*}
+			CI = 23\pm 1.96\cdot\frac{5}{3} = [19.73,26.26]
+		\end{align*}
+		Since $\mu\in CI$, then we fail to reject the claim that $\mu = 20$.
+	\end{mdframed}
+	
+	
+	\subsection{Test for a Proportion}
+	We can test using a proportion in a very similar way to the standard tests using variance, except we use the equation:
+	\begin{align*}
+		z_0 = \frac{x-np}{\sqrt{np(1-p)}}
+	\end{align*}
 	
 	\subsection{Two Sample Test}
-	%TODO figure this out
+	If we have two samples; one of them is before an event and one after an event, and we want to test a hypothesis about this difference $D_i$, then we do:
+	\begin{align*}
+		t_0 = \frac{\overline D}{S_D / \sqrt n}
+	\end{align*}
+	We can get the sample variance $S_D^2$ and average difference $\overline D$ through:
+	\begin{align*}
+		\overline D = \frac{1}{n} \sum D_i \qquad S_D^2 = \frac{1}{n-1}\sum (D_i - \overline D)^2
+	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex.}We have 10 people who are in a program to reduce their weight. Before and after statistics as well as difference is shown below. Using 95\% confidence, is this program effective?
+		
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+				\hline
+				Before & 195 & 213 & 247 & 201 & 187 & 210 & 215 & 246 & 294 & 310 \\
+				\hline
+				After & 187 & 195 & 221 & 190 & 175 & 197 & 199 & 221 & 278 & 285 \\
+				\hline
+				Difference & -8 & -18 & -26 & -11 & -12 & -13 & -16 & -25 & -16 & -25 \\
+				\hline
+			\end{tabular}
+		\end{center}
+		Now we need to follow the standard steps to find the p-value. 
+		
+		The hypotheses are: $H_0: \mu_0 = 0 \qquad H_1: \mu_0 < 0$
+		
+		We have $\alpha = 0.05$
+		
+		To get $t_0$, we will use the two sample test equation. We need to find the sample variance $S^2$ and the sample mean $\overline D$. 
+		
+		I will use a spreadsheet to calculate these using the equations:
+		\begin{align*}
+			\overline D = \frac{1}{n} \sum D_i = -17\qquad S_D^2 = \frac{1}{n-1}\sum (D_i - \overline D)^2 = 41.11
+		\end{align*}
+		And now I can actually calculate $t_0$.
+		\begin{align*}
+			t_0 = \frac{\overline D}{S_D / \sqrt n} = \frac{-17}{\sqrt{41.11} / \sqrt{10}} = -8.38
+		\end{align*}
+		Now we find the P value using the second row of the table in step 4. 
+		\begin{align*}
+			P(t(10-1) < -8.38) <0.0005
+		\end{align*}
+		We could not get the exact value on the t table, but we see that it is larger than even the highest value (4.781) so it gives us a value smaller than 0.0005.
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{t-table-ex}
+		\end{center}
+		The final step asks us to compare the P value (less than 0.0005) to the alpha value, and it is smaller. So re reject $H_0$. 
+		
+		This means we reject the claim that the mean difference is 0 (no effect of program) in favour of the claim that the mean difference is less than 0 (good effect of the weight loss program). 
+		
+		
+	\end{mdframed}
 	
 	\section{Chapter 7: Linear Regresion}
 	
@@ -571,15 +765,37 @@
 	
 	We can also estimate the \textbf{variance} by doing:
 	\begin{align*}
-		\hat \sigma^2 = \frac{S_{yy} - \beta_1 S_{xy}}{n-2w}
+		\hat \sigma^2 = \frac{S_{yy} - \beta_1 S_{xy}}{n-2}
 	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex.} For these examples we are typically given a lot of values such as:
+		\begin{align*}
+			\sum x_i = ... \qquad \sum y_i = ... \qquad \sum x^2_i = ... \qquad \sum x_iy_i = ... \qquad \sum y_i^2 = ... \qquad n = ...
+		\end{align*}
+		Then we need to find the equation for linear regression. 
+		
+		We know how to get $\beta_1 = \frac{S_{xy}}{S_{xx}}$.
+		
+		Finding these values such as $S_{xx}$ we get since we know the $\sum x_i^2$, and while we do not directly know $\overline x$, we can find it by definition through $\overline x = \frac{1}{n}\sum x_i$
+		\begin{align*}
+			S_{xx} = \sum x_i^2 - n\overline x ^2 = \sum x_i^2 - n\left(\frac{1}{n}\sum x_i\right)^2
+		\end{align*}
+		The same idea applies for $S_{xy}$
+		\begin{align*}
+			S_{xy} &= \sum x_iy_i - n\frac{\sum x_i}{n}\frac{\sum y_i}{n}
+		\end{align*}
+		And then we have $\beta_1$. 
+		
+		To find $\beta_0$, we can sub into the equation of $y=\beta_0 + \beta_1 x \implies \overline y = \beta_0 + \beta_1 \overline x$ since we know $\overline y$ and $\overline x$.
+	\end{mdframed}
 	
 	\subsection{Hypothesis Testing}
 	We can do hypothesis testing using these $\beta$ values such as where:
 	\begin{align*}
 		H_0: \beta_0 = \beta_{0,0} \qquad H_1: \beta_0 \ne \beta_{0,0}
 	\end{align*}
-	Similarly to chapter 6, this result is often \textbf{normally distributed} so can be easily calculated using the normal table. 
+	Similarly to chapter 6, this result is often \textbf{normally distributed} so can be easily calculated using the normal table or Student's t table. 
 	
 	\newpage
 	\section{Appendix}
