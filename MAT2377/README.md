@@ -1,4 +1,4 @@
-A formula sheet (`uo-official-cheat-sheet.pdf`) as well as a whole year cheet sheet (`cs.tex / cs.pdf`)
+A formula sheet (`uo-official-cheat-sheet.pdf`) as well as a whole year cheet sheet (`MAT2377-Cheat-Sheet.tex / MAT2377-Cheat-Sheet.pdf`)
 
 The official one looks weird since it has to follow strict guidelines
 
