@@ -45,14 +45,20 @@
 	\end{enumerate}
 
 	We have a few charts to help us convert between the systems:
-	\begin{center}
+	\begin{figure}[h!]
+		\centering
 		\includegraphics[width=0.8\linewidth]{trans}
-	\end{center}
+		\caption{Coordinate System Conversions}
+		\label{figure:coord-conversions}
+	\end{figure}
 
 	When integrating, the differential line/surface/volume elements can be found in the following chart:
-	\begin{center}
+	\begin{figure}[h!]
+		\centering
 		\includegraphics[width=0.7\linewidth]{differential_surfaces}
-	\end{center}
+		\caption{Differential Elements}
+		\label{figure:differentials}
+	\end{figure}
 	
 	Tables taken from PHY2323 Course Formula Sheet.
 	
@@ -72,7 +78,45 @@
 	Note that anything with the $\prime$ means that it is related to the \textbf{surface of charge}, and anything without the prime is related to the \textbf{observation point.}
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. }We have a charged semicircular ring with radius $b$ in the xy plane. Find the electric field at any point on the z axis.
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{ex-coulomb}
+		\end{center}
+		
+		I will call the point I need to solve $\vec E$ at to be $h$. So at $(0,0,h)$.
+		
+		I cannot use Gausses Law since it is not symmetric. So I will use coulomb. It is a line, so I use $\mathrm d l$.
+		\begin{align*}
+			\vec E (\vec r) = \frac{1}{4\pi \epsilon_0} \int_S \frac{\rho(\vec r\prime)(\vec r - \vec r\prime)}{|\vec r - \vec r\prime | ^3}\mathrm d l
+		\end{align*}
+		To get $\vec r$, this is the vector going from the origin to the point of interest, in this case $\vec r = (0,0,h) = h\hat z$.
+		
+		To get $\vec r\prime$, this is the vector going from the origin to the charged object, which in this case only depends on $b \hat \rho$. This is because anything in cylindrical coordinates always has \textbf{one less} vector than the equivalent cartesian would have. 
+		
+		Now we do need to convert this to cartesian to work with the $h\hat z$ from $r$. This gives us $\vec r \prime = b\cos \phi \hat x + b\sin \phi \hat y$
+		
+		Then the $\mathrm d l$ is in the $\phi$ direction since a small section of the semicircle goes in the $\phi$ direction, or we can use Figure \ref{figure:differentials}. It is $\rho d\phi\hat\phi$.
+		
+		\textit{Note: We turn the $\rho$ into $b$ since we are always at $\rho = b$}
+		
+		Then the charge density is given in the question as $k\sin \phi$. 
+		
+		Now sub into the equation:
+		\begin{align*}
+			\vec E (\vec r) &= \frac{1}{4\pi \epsilon_0} \int_S \frac{\rho(\vec r\prime)(\vec r - \vec r\prime)}{|\vec r - \vec r\prime | ^3}\mathrm d l = \frac{1}{4\pi \epsilon_0} \int_0^\pi \frac{k\sin\phi(h\hat z - b\cos\phi\hat x - b\sin\phi\hat y)}{\sqrt{h^2 + (b\cos\phi)^2+(b\sin\phi)^2}  ^3}\mathrm \rho\mathrm d \phi \\
+			&=\frac{k\rho}{4\pi \epsilon_0} \int_0^\pi \frac{\sin\phi(h\hat z - b\cos\phi\hat x - b\sin\phi\hat y)}{(h^2 + b^2)^{3/2}}\mathrm d \phi\\
+			&=\frac{kb}{(4\pi \epsilon_0)(h^2 + b^2)^{3/2}} \int_0^\pi \sin\phi(h\hat z - b\cos\phi\hat x - b\sin\phi\hat y)\mathrm d \phi
+		\end{align*}
+		And now we need to break it up into its 3 components (x, y, z):
+		\begin{align*}
+			\vec E_x &= \frac{-kb^2}{(4\pi \epsilon_0)(h^2 + b^2)^{3/2}} \int_0^\pi \sin\phi\cos\phi\hat x\mathrm d \phi = 0\\
+			\vec E_y &= \frac{-kb^2}{(4\pi \epsilon_0)(h^2 + b^2)^{3/2}} \int_0^\pi \sin^2\phi\hat y\mathrm d \phi = \frac{-kb^2}{(4\pi \epsilon_0)(h^2 + b^2)^{3/2}} \cdot \frac{\pi}{2}\hat y\\
+			\vec E_z &= \frac{kbh}{(4\pi \epsilon_0)(h^2 + b^2)^{3/2}} \int_0^\pi \sin\phi\hat z\mathrm d \phi = \frac{kbh}{(4\pi \epsilon_0)(h^2 + b^2)^{3/2}} \cdot 2\hat z\\
+		\end{align*}
+		Now I have the solution, and I can put it together if I want to get:
+		\begin{align*}
+			\vec E = \frac{kb}{(4\pi \epsilon_0)(h^2 + b^2)^{3/2}} \cdot \left(2h\hat z - \frac{b\pi}{2}\hat y\right)
+		\end{align*}
 	\end{mdframed}
 	
 	\subsection{Gausses Law}
@@ -80,17 +124,17 @@
 	
 	It can be used on a \textbf{closed surface} where we make a guassian surface (such as a sphere, or cylander) at the point of interest. 
 	\begin{align*}
-		\int_S \vec E \mathrm d \vec s = \frac{Q_{enc}}{\epsilon}
+		\oint_S \vec E \cdot \mathrm d \vec s = \frac{Q_{enc}}{\epsilon}
 	\end{align*}
 
 	We also have the $\vec D$ field which is the \textit{Electric Flux Density}.
 	\begin{align*}
-		\int_S \vec D \mathrm d \vec s = Q_{enc}
+		\oint_S \vec D \cdot \mathrm d \vec s = Q_{enc}
 	\end{align*}
 	
-	Finally, we have the flux $\psi$, a scalar. 
+	Finally, we have the flux $\Psi$, a scalar. 
 	\begin{align*}
-		\psi = \epsilon \int_s \vec E \mathrm d \vec s = \int \vec D \mathrm d \vec s
+		\Psi = \epsilon \int_s \vec E \cdot \mathrm d \vec s = \int \vec D \cdot \mathrm d \vec s
 	\end{align*}
 
 	This is useful in 3 main cases. 
@@ -102,13 +146,82 @@
 
 	A useful piece of information is if we want to find the $Q_{enc}$, we can often just integrate the charge density in a volume $V$ (or surface $S$).
 	\begin{align*}
-		Q_{enc} = \iiint_V \rho \mathrm d V
+		Q_{enc} = \int_V \rho \mathrm d V
 	\end{align*}
 
 	Also, the $\vec D$ field is just the $\vec E$ field times a factor of $\epsilon$ ($\vec D = \epsilon \vec E$) 
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. } We have 4 spherical shells with radii shown in diagram. Each shell has a \textbf{surface charge density} shown in the diagram. Find the $\vec E$ field at radius 0.1m, 0.3m, 0.5m, 0.7m, and 1m. 
+		\begin{center}
+			\includegraphics[width=0.6\linewidth]{gauss-law}
+		\end{center}
+		We start by noticing that there is spherical symmetry in this example. A perfect opportunity for Gausses Law. Although we could still use coulomb if we wanted pain. 
+		
+		The equation is:
+		\begin{align*}
+			\oint \vec E \cdot \mathrm d \vec s = \frac{Q_{enc}}{\epsilon_0}
+		\end{align*}
+		This basically says that the $\vec E$ field at a certain gaussian surface (we will define this by the radius 0.1, 0.3, 0.5, ...) is equal to the charge enclosed at this radius (0.1, 0.3, ...) with a constant $\epsilon_0$.
+		
+		Since we noticed the spherical symmetry, we can see that the $\vec E$ field only depends on the radius from the center. So we can say that $\vec E = E \hat r = E(r)$.
+		
+		So the dot product on the left side of the equation will just be the E field times the surface area at the gaussian surface. 
+		\begin{align*}
+			\oint\vec E \cdot \mathrm d \vec s = E(r) A = E(r) 4\pi r^2
+		\end{align*}
+		The other side of the equation needs the charge enclosed. Since we are given the \textbf{charge density}, we need to multiply it by the surface area ($4\pi r^2$) to get the \textbf{charge}.
+		\begin{align*}
+			Q_{enc} = (4\pi r^2)(\text{Charge Density})
+		\end{align*}
+		We need to notice that the radius for the charge enclosed (0.2, 0.4, 0.6, 0.8) \textbf{is not the same} as the radius of out gaussian surface (0.1, 0.3, 0.5, ...). 
+		
+		Now we can put these 2 together to get:
+		\begin{align*}
+			E(r) 4\pi r^2 = \frac{Q_{enc}}{\epsilon_0} \implies E(r) = \frac{Q_{enc}}{\epsilon_0 4\pi r^2}
+		\end{align*}
+		And now we can evaluate the electric field at all the radii. 
+		
+		At \textbf{r=0.1m} there is no enclosed charge, so the $\vec E$ field is 0. 
+		\begin{align*}
+			E(0.1) = \frac{0}{\epsilon_0 4\pi 0.1^2} = 0
+		\end{align*}
+		At \textbf{r=0.3m} there only the first sphere shell at 0.2m, so the $Q_{enc}$ only includes this charge. 
+		\begin{align*}
+			E(0.3) = \frac{4\pi (10\times 10^{-6})(0.2)^2 }{\epsilon_0 4\pi 0.3^2} = 502197 \frac{V}{m}
+		\end{align*}
+		At \textbf{r=0.5m} there are the first two shells at 0.2m, and 0.4m enclosed, so the $Q_{enc}$ includes both these charges. 
+		\begin{align*}
+			E(0.5) = \frac{4\pi [(10\times 10^{-6})(0.2)^2 -(2\times 10^{-6})(0.4)^2]}{\epsilon_0 4\pi 0.5^2} = 36158\frac{V}{m}
+		\end{align*}
+		At \textbf{r=0.7m} there are the first three shells enclosed, so the $Q_{enc}$ includes all three charges. 
+		\begin{align*}
+			E(0.7) = \frac{4\pi [(10\times 10^{-6})(0.2)^2 -(2\times 10^{-6})(0.4)^2] - (0.5\times 10^{-6})(0.6)^2}{\epsilon_0 4\pi 0.7^2} = -23060 \frac{V}{m}
+		\end{align*}
+		At \textbf{r=1m} there are all 4 shells enclosed, so we just add on the last one as well to the $Q_{enc}$. 
+		
+	\end{mdframed}
+
+	\begin{mdframed}
+		\textbf{Ex.} We have a circular surface in the $z=2.5$ plane with radius $0.5$. We have a $\vec D$ field of $\vec D = 10\sin \phi \hat \rho + 12z\cos\left(\frac{\phi}{4}\right)\hat z \frac{C}{m^2}$. Find the flux.
+		\begin{center}
+			\includegraphics[width=0.25\linewidth]{electric-flux-ex}
+		\end{center}
+		We know that the flux is:
+		\begin{align*}
+			\Psi = \int_S \vec D\cdot \mathrm d \vec s
+		\end{align*}
+		We know $\vec D$, and we can see from the diagram that $\mathrm d \vec s$ is a surface in the $\hat z$ direction and using the table from chapter 1 (Figure \ref{figure:differentials}) we can get it as $\mathrm d \vec s = \rho \mathrm d \rho \mathrm d \phi \hat z$
+		
+		Then we can sub it into the flux equation. 
+		\begin{align*}
+			\Psi = \int^{2\pi}_0\int^{0.5}_0\left[10\sin \phi \hat \rho + 12z\cos\left(\frac{\phi}{4}\right)\hat z\right]\cdot\left[\rho \mathrm d \rho \mathrm d \phi \hat z\right]
+		\end{align*}
+		Due to the dot product, the $\hat \rho$ component becomes 0. $z$ becomes $2.5$ as well.
+		\begin{align*}
+			\Psi = \int^{2\pi}_0\int^{0.5}_0\left[12z\cos\frac{\phi}{4}\rho\mathrm d\rho\mathrm\phi\right] = 12\cdot 2.5 \left[\frac{\rho^2}{2}\right]^{0.5}_0\left[4\sin\left(\frac{\phi}{4}\right)\right]^{2\pi}_0 = 15C
+		\end{align*}
+		
 	\end{mdframed}
 	
 	\subsection{Energy Stored in an Electric Field}
@@ -132,7 +245,50 @@
 	\end{align*}
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. }We have a charge that goes along the arc of a circle with radius 2m from $\phi=0$ to $\phi=\pi/4$. We have an electric field given as $\vec E = 10y\hat x + 10x \hat y + 2z\hat z$. What is the potential between both ends?
+		\begin{center}
+			\includegraphics[width=0.25\linewidth]{voltage-ex1}
+		\end{center}
+		There are lots of equations for the voltage. Since we are given the $\vec E$ field, we can make use of this shorter equation:
+		\begin{align*}
+			\Delta V =\ -\int \vec E \cdot \mathrm d \vec l = -\int_0^{\pi/4} \left(10y\hat x + 10x \hat y + 2z\hat z\right)\cdot \rho \mathrm d \phi \hat \phi
+		\end{align*}
+		We need to convert into entirely cartesian, or entirely cylindrical. I will convert into entirely cylindrical using Figure \ref{figure:coord-conversions} from chapter 1 since this is easier. 
+		\begin{align*}
+			\hat \phi = \cos\phi \hat y - \sin \phi \hat x
+		\end{align*}
+		\begin{align*}
+			\Delta V = -\int_0^{\pi/4} (10y(-\sin\phi) + 10x\cos\phi)\rho \mathrm d \phi 
+		\end{align*}
+		Now we still have to deal with the x and y. We do not know what to do with it, so we can convert it to cylindrical again through Figure \ref{figure:coord-conversions}. 
+		
+		We get $x = \rho \cos \phi, y = \rho\sin\phi$.
+		\begin{align*}
+			\Delta V = -\int^{\pi/4}_0 (10\rho\cos^2\phi - 10\rho\sin^2\phi)\rho\mathrm d \phi =\int^{\pi/4}_0 (-\cos^2\phi +\sin^2\phi)10\rho^2\mathrm d \phi
+		\end{align*}
+		Since we know that $\rho = 2$:
+		\begin{align*}
+			\Delta V = 40\int^{\pi/4}_0 (-\cos^2\phi +\sin^2\phi)\mathrm d \phi = -20^ V
+		\end{align*}
+		Now since we just want the magnitude of the voltage, we remove the negative sign and get:
+		\begin{align*}
+			\Delta V = 20^V
+		\end{align*}
+		
+		
+		
+	\end{mdframed}
+	
+	\begin{mdframed}
+		\textbf{Ex. }Extending on the previous example, what would be the potential if we go all around the circle (so from $\phi = 0$ to $\phi = 2\pi$).
+		
+		Here we would modify the integral to be:
+		\begin{align*}
+			-\int^{2\pi}_0 10\rho^2 \cos(2\phi) d\phi = 0
+		\end{align*}
+		This makes sense because the voltage does not depend on the path taken. 
+		
+		As far as the voltage is concerned, this is the same thing as seeing the voltatge difference if we start at $\phi=0$ and then just stay there. Which obviously would have no change in voltage. 
 	\end{mdframed}
 
 	\subsection{Electric Dipole}
@@ -159,6 +315,10 @@
 
 	\begin{mdframed}
 		\textbf{Ex. }
+		\begin{center}
+			\includegraphics[width=0.9\linewidth]{cap-ex}
+		\end{center}
+		
 	\end{mdframed}
 	
 	\section{Materials in Electric Fields}
@@ -172,7 +332,7 @@
 	We have rules concerning the \textbf{normal} and \textbf{tangential} part of the boundary between 2 materials, so we need to break up the field into those two components. 
 	
 	\begin{center}
-		\includegraphics[width=0.55\linewidth]{../MAT2377/boundary-conditions-E}
+		\includegraphics[width=0.55\linewidth]{boundary-conditions-E}
 	\end{center}
 	
 	
@@ -237,7 +397,7 @@
 	\end{align*}
 
 	\begin{center}
-		\includegraphics[width=0.7\linewidth]{../MAT2377/current-density-contirbutions}
+		\includegraphics[width=0.7\linewidth]{current-density-contirbutions}
 	\end{center}
 
 
