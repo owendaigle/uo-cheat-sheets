@@ -1,0 +1,4 @@
+#! /bin/bash
+if [! -f ./parser.java ]
+    echo "File Not Found"
+fi
