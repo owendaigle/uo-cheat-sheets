@@ -296,7 +296,7 @@
 	
 	This means that at the point of observation, they \textbf{seem} as though they are only one charge. 
 	
-	We have an equation that relates the charge of each end of the dipole $q$, the distance between the charges $d$, and the vector between the dipole and the observation point $\vec r$. This vector must be large compared to $d$.
+	We have an equation that relates the charge of each end of the dipole $q$, the distance between the charges $d$, and the vector between the dipole and the observation point $\vec r$. This vector must be large compared to $d$. We have charge density of $\sigma$. 
 	\begin{align*}
 		V(\vec r) = \frac{(qd) \hat z \cdot \hat r}{4\pi \epsilon |r|^2}
 	\end{align*}
@@ -314,10 +314,33 @@
 	\end{enumerate}
 
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. } We have 2 cylindrical conductors creating a capacitor with radius $a$ and $b$. The length is $L$ and permitivity $\epsilon$. Find the capacitence $C$. 
 		\begin{center}
-			\includegraphics[width=0.9\linewidth]{cap-ex}
+			\includegraphics[width=0.4\linewidth]{ex-cap}
 		\end{center}
+	
+		We start by noticing that since these are conductors, all the charges will be on the surface. So at $\rho = a$, and $\rho = b$. 
+		
+		Now using the capacitence formula, we need to find the voltage which means we need to find the $\vec E$ field. 
+		
+		This can be found using a gaussian cylander between a and b. 
+		\begin{align*}
+			\oint \vec E \cdot \mathrm d \vec s = \frac{Q_{enc}}{\epsilon}
+		\end{align*}
+		Since the $\vec E$ field only depends on the radius $\rho$, and the $\mathrm d \vec s$ is just the gaussian cylander $2\pi \rho \L$, and the enclosed charge is only the inner shell at $\rho = a$:
+		\begin{align*}
+			E_\rho = \frac{\sigma 2\pi (a)L}{2\pi \rho L \epsilon} = \frac{\sigma a}{\rho \epsilon} \hat \rho
+		\end{align*}
+		To get the voltage, I just will take the negative integral of this:
+		\begin{align*}
+			\Delta V = -\int \vec E \cdot \mathrm d \vec l = -\int_a^b \frac{\sigma a}{\rho \epsilon}\hat\rho \cdot \mathrm d \vec \rho\hat\rho = -\frac{\sigma a}{\epsilon}\int^b_a \frac{1}{\rho} \mathrm d \rho = -\frac{\sigma a}{\epsilon} (\ln b - \ln a) = \frac{\sigma a}{\epsilon} \ln\left(\frac{b}{a}\right)
+		\end{align*}
+		We remove the negative since we just want the change in voltage, the direction does not matter. 
+		
+		Now we can sub this into the capacitance equation knowing that th enclosed charge is just $Q=2\pi a L\sigma$:
+		\begin{align*}
+			C = \frac{Q}{\Delta V} = \frac{\sigma2\pi a L}{\frac{\sigma a}{\epsilon} \ln\left(\frac{b}{a}\right)} = \frac{2\pi L\epsilon}{ \ln\left(\frac{b}{a}\right)}
+		\end{align*}
 		
 	\end{mdframed}
 	
@@ -355,7 +378,16 @@
 	\end{align*}
 
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. }We have an interface between free space and a conductor such as copper. We align the x and y axis as shown in the diagram below. We know that the x component of the $\vec E$ field is $10 Vm^{-1}$. What is the y component?
+		\begin{center}
+			\includegraphics[width=0.5\linewidth]{boundary-conditions-ex}
+		\end{center}
+		We know that for a conductor the tangential components are equal and equal to 0. 
+		
+		So using that information, we can calculate the tangential component of the $x$ axis, and let that be equal to the tangential component of the $y$ axis, and then solve for $y$. 
+		\begin{align*}
+			E_{xt} = E_{yt} = 0 \implies x\sin (30) = y\cos (30) \implies y = x\frac{\sin(30)}{\cos(30)}= 10\frac{\sin(30)}{\cos(30)} = 5.77 \frac{V}{m}
+		\end{align*}
 	\end{mdframed}
 
 	\section{Laplace and Poisson Equations}
@@ -542,7 +574,42 @@
 	So basically we need to get $\vec B$ using probably amperes law, and then assuming we know I, we can calculate the magnetic force $\vec F_m$.
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. }We have 2 wires as shown below. Find the magnetic force acting on the whole loop.
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{"magnetic force-ex"}
+		\end{center}
+		I know that the formula for magnetic force is:
+		\begin{align*}
+			\vec F_m = \int I \mathrm d\vec l\times \vec B
+		\end{align*}
+		So I need to find B around the 500A wire. 
+		\begin{align*}
+			&B = \frac{\mu_0 500}{2\pi\rho}\hat\phi &\text{Using Amperes Law}
+		\end{align*}
+		Then I need to calculate the magnetic force on each of the four segments and then sum them up. 
+		
+		For the left segment note $\hat z \times \hat \phi = -\hat \rho$:
+		\begin{align*}
+			\vec F_m = 20\int_{0.8}^0 \mathrm d \vec z \hat z \times \frac{\mu_0 500}{2\pi\rho}\hat\phi	= \frac{20\mu_0 500}{2\pi(0.2)}\cdot (-0.8)(-\hat\rho) = \frac{20\mu_0 500}{2\pi(0.2)}(0.8)\hat \rho
+		\end{align*}
+		For the right segment, note that again $\hat z \times \hat \phi = -\hat \rho$:
+		\begin{align*}
+			\vec F_m = 20\int^{0.8}_0 \mathrm d \vec z \hat z \times \frac{\mu_0 500}{2\pi\rho}\hat\phi	= \frac{20\mu_0 500}{2\pi(0.4)}\cdot (0.8)(-\hat\rho) = \frac{20\mu_0 500}{2\pi(0.4)}(-0.8)\hat \rho
+		\end{align*}
+		For the bottom segment, note that $\hat \rho \times \hat \phi = \hat z$:
+		\begin{align*}
+			\vec F_m = 20\int^{0.4}_{0.2} \mathrm d \vec \rho \hat \rho \times \frac{\mu_0 500}{2\pi\rho}\hat\phi	= \frac{20\mu_0 500}{2\pi}\cdot \ln\left(\frac{0.4}{0.2}\right)\hat z
+		\end{align*}
+		For the top segment, note that again $\hat \rho \times \hat \phi = \hat z$:
+		\begin{align*}
+			\vec F_m = 20\int^{0.2}_{0.4} \mathrm d \vec \rho \hat \rho \times \frac{\mu_0 500}{2\pi\rho}\hat\phi	= \frac{20\mu_0 500}{2\pi} \ln\left(\frac{0.2}{0.4}\right)\hat z= -\frac{20\mu_0 500}{2\pi}\cdot \ln\left(\frac{0.4}{0.2}\right)\hat z
+		\end{align*}
+		Note that the top and bottom components cancel each other out. 
+		
+		Then the total magnetic force is just the sum of the 4 (or 2 since the top and bottom cancel) components:
+		\begin{align*}
+			\vec F_{mtot} = \sum F_m = \frac{20\mu_0 500\cdot 0.8}{2\pi}\left(\frac{1}{0.2}-\frac{1}{0.4}\right) = 0.004N
+		\end{align*}
 	\end{mdframed}
 	
 	\subsection{Torques}
@@ -557,7 +624,22 @@
 	The torque $\vec \tau$ is just the cross product between the magnetic field and the magnetic dipole moment vectors.
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. }We have a meter with a 25 turn coil in a 0.2T magnetic field. The coil is 4cm by 2.5cm. While a torque is applied, an equal and oppsite torque is applied to prevent the coil from turning by a spring which is equal to $5\times 10^{-6}$. Find the current I.
+		\begin{center}
+			\includegraphics[width=0.3\linewidth]{torque-ex}
+		\end{center}
+		This is a bit of a weird question since directions are not given. So we can kind of ignore them.
+		
+		This is a question about torque, so I start with that equation:
+		\begin{align*}
+			\vec \tau = \vec m \times \vec B
+		\end{align*}
+		I know $B$, and I know $\tau = 5\times 10^{-6}$. I need to find $\vec m$ though. 
+		\begin{align*}
+			&\vec m = IAN = I(0.025\cdot 0.04)\cdot 25 = 0.025I\\
+			&\tau = 0.5\times 0.025I = 0.0005I \implies I = \frac{\tau}{0.005} = \frac{5\times 10^{-6}}{0.005} = CALC
+		\end{align*}
+		
 	\end{mdframed}
 	
 	\subsection{Boundary Conditions}
@@ -582,6 +664,8 @@
 	Basically if we know the velocity and $\vec B$ field, we can find the EMF, or if we know the magnetic flux $\Phi$, we can derive it with respect to time and get the EMF. 
 	
 	The reason for the negative in front of the derivative is that the \textbf{direction of the induced current} will oppose the \textbf{change in magnetic flux}. This is known as Lenz's law.
+	
+	Usually for these problems we need to find the $\vec B$ field, and then find the change in flux, and then we can get the EMF. 
 	
 	\begin{mdframed}
 		\textbf{Ex. } Using Lenz's law we can find the direction of the induced current.
@@ -608,7 +692,27 @@
 	\end{mdframed}
 
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. }We have an aluminium loop with radius 1cm. The loop is in a $\vec B$ field increasing at $40 \frac{T}{s}$. The conductivity of aluminium is $\sigma = 3.57\times 10^7$. What is the induced current through the loop?
+		\begin{center}
+			\includegraphics[width=0.3\linewidth]{changing-current-ex}
+		\end{center}
+		This is quite simple. We can find the equation for flux:
+		\begin{align*}
+			\Phi = \int \vec B \cdot \mathrm d \vec s = BA
+		\end{align*}
+		Now we need the rate of change of $\Phi$. Since only the $\vec B$ field is changing, and the area is constant:
+		\begin{align*}
+			\frac{\mathrm d\Phi}{\mathrm d t} = A \cdot \frac{\mathrm d \vec B}{\mathrm d t} = (10\times 10^{-3} \cdot 20\times 10^{-3}) \cdot 40 = 0.8^V = \epsilon
+		\end{align*}
+		To get the current I can use Ohms law since I have a voltage ($\epsilon$). But I need a resistance. I can calculate this:
+		\begin{align*}
+			R = \int \frac{\mathrm d \vec l}{\iint \sigma A \mathrm d \vec s} = \frac{L}{\sigma A} = \frac{0.2+0.2+0.1+0.1}{\sigma \cdot \pi (r)^2} = \frac{0.6}{3.57\times 10^7\cdot \pi(1\times 10^{-3})^2} = 0.000535 ^\Omega
+		\end{align*}
+		And now I can get the current:
+		\begin{align*}
+			I = \frac{V}{R} = \frac{0.8}{0.000535} = 149.5^A
+		\end{align*}
+		Since the $\vec B$ field is increasing into the page, then the induced current will produce a magnetic field coming out of the page. According to Right Hand Rule, the current will therefore be counter clockwise (CCW).
 	\end{mdframed}
 	
 	
