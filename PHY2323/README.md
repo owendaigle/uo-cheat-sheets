@@ -1,1 +1,1 @@
-still working on this one so far
+Not confident in this course at all, so take all this with a grain of salt. 
