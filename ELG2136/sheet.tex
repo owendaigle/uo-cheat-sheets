@@ -50,7 +50,7 @@
 		n_i = 5.2\times 10^{15} T^{\frac{3}{2}} e^\frac{-E_g}{2kT}
 	\end{align*}
 
-	We define $q$ as the charge of a single electron/hole, $\mu_n, \mu_p$ as the mobility constants of the electrons (n) and holes (p), $D-n, D_p$ as the diffusion constants, $n$ and $p$ are the electron and hole concentrations, and $E$ is the electric field applied.
+	We define $q$ as the charge of a single electron/hole, $\mu_n, \mu_p$ as the mobility constants of the electrons (n) and holes (p), $D_n, D_p$ as the diffusion constants, $n$ and $p$ are the electron and hole concentrations, and $E$ is the electric field applied.
 	\begin{align*}
 		J_{drift} = q(\mu_n n+ \mu_p p) E \qquad J_{diffusion} = qD_n \frac{dn}{dx} - qD_p \frac{dp}{dx}
 	\end{align*} 
@@ -62,9 +62,27 @@
 	
 	If the material has majority positive (p-type), we say: $n_p, p_p, p_p\cdot n_p = n_i^2$
 	
-	If the material has majority negative (n-type), we say: $n_n, p_n, p_n\cdot n_p = n_i^2$
+	If the material has majority negative (n-type), we say: $n_n, p_n, p_n\cdot n_n = n_i^2$
 	
-	We can put a p-type and n-type material adjacent, and that creates a \textbf{diode}.
+	We can put a p-type and n-type material adjacent (PN Junction), and that creates a \textbf{diode}.
+	
+	\subsection{At a PN Junction}
+	This is a junctin of two materials, specifically a positive (P) and negative (N) material. 
+	\begin{center}
+		\includegraphics[width=0.23\linewidth]{pn-junction}
+	\end{center}
+
+	We have constants of $L_p$ and $L_n$ for the spacial exponential decay of the P or N charges. 
+	
+	Then the numbers $N_A$ and $N_D$ are porportional to the number of positive and negative charges respectively. They are the number of \textit{acceptor} or \textit{donor} atoms. 
+	
+	If $A$ is the area, then we say that the total diffusion current density is:
+	\begin{align*}
+		J_{diff\_tot} = Aqn_i^2\left(\frac{D_p}{L_pN_D}+\frac{D_n}{L_nN_A}\right)\left(e^{\frac{v}{V_t}}-1\right)
+	\end{align*}
+	This is also the total current since the drift current in a PN junction is small due to the generated electric field. 
+	
+	
 	
 	\section{Circuit Analysis with Diodes}
 	We have three models for diodes. There is the ideal, constant voltage (ideal with voltage source), and constant voltage with resistance (ideal with voltage source and resistance). All of these model the real diode. 
@@ -108,6 +126,7 @@
 	\end{mdframed}
 	
 	\section{DC Power Supply}
+	This is a very important application of diodes. This will convert an AC time dependant source to a DC constant source. 
 	
 	\subsection{Rectifier}
 	The rectifyer will take an AC source, and make the output be positive.
@@ -140,10 +159,13 @@
 	\end{align*}
 	We can make some approxmiations (with ideal diodes) to see that:
 	\begin{align*}
-		V_r = \frac{V_p}{fRC} \text{ for a half wave rectifier or } V_r = \frac{V_p}{2fRC} \text{ for a full wave }\\
-		\omega\Delta t = \sqrt{\frac{2V_r}{V_p}} \text{ for both types of rectifiers}\\
-		\text{Current through diode average }i_{Davg} = I_L(1+\pi\sqrt{\frac{2V_p}{V_r}}) \text { for half wave or for full wave } \\ i_{Davg} = I_L (1+\pi\sqrt{\frac{V_p}{2V_r}}) \\
-		\text{Current through diode MAX }i_{Dmax} = I_L(1+2\pi\sqrt{\frac{2V_p}{V_r}}) \text { for half wave or } i_{Dmax} = I_L (1+2\pi\sqrt{\frac{V_p}{2V_r}})\\
+		V_r &= \frac{V_p}{fRC} \text{ for a half wave rectifier or } \\
+		V_r &= \frac{V_p}{2fRC} \text{ for a full wave }\\
+		\omega\Delta t &= \sqrt{\frac{2V_r}{V_p}} \text{ for both types of rectifiers}\\
+		\text{Current through diode average }i_{Davg} &= I_L(1+\pi\sqrt{\frac{2V_p}{V_r}}) \text { for half wave} \\ 
+		\text{or for full wave } i_{Davg} &= I_L (1+\pi\sqrt{\frac{V_p}{2V_r}}) \\
+		\text{Current through diode MAX }i_{Dmax} &= I_L(1+2\pi\sqrt{\frac{2V_p}{V_r}}) \text{ for half wave }\\ 
+		\text { or for full wave } i_{Dmax} &= I_L (1+2\pi\sqrt{\frac{V_p}{2V_r}}) \\
 	\end{align*}
 
 	If we are working with a different model, such as the constant voltage model, then we will need to modify the equations such as increasing the peak voltage by 0.7V. The one exception is the conduction angle formula $\omega \Delta t$ since that is not affected by te extra 0.7V.
@@ -166,6 +188,81 @@
 	\begin{mdframed}[]
 	\textbf{Ex. }
 	\end{mdframed}
+	
+	\section{Bipolar Junction Transistor (BJT)}
+	
+	\subsection{DC Analysis}
+	
+	\subsection{AC Analysis}
+	
+	\subsection{Early Effect}
+	
+	\section{Metal Oxide Semiconductor Field Effect Transistor (MOSFET)}
+	
+	\subsection{DC Analysis}
+	
+	\subsection{AC Analysis}
+	
+	\subsection{Channel Modulation}
+	
+	\section{Complementary MOSFET (CMOS)}
+	
+	\subsection{Voltage Transfer Characteristic (VTC) of CMOS}
+	
+	\subsection{Delay in the CMOS}
+	
+	\newpage
+	\section{Appendix}
+	\subsection{Short Formula Sheet}
+	This is just a summary of all the important formulas:
+	
+\textbf{Semiconductor Physics:}
+	\begin{align*}
+&		n_i = 5.2\times 10^{15} T^{\frac{3}{2}} e^\frac{-E_g}{2kT}\\
+&		J_{drift} = q(\mu_n n+ \mu_p p) E \qquad J_{diffusion} = qD_n \frac{dn}{dx} - qD_p \frac{dp}{dx}\\
+&		p_p \propto N_A \qquad n_n \propto N_D\\
+&		p_pn_p = n_np_n = n_i^2\\
+& 		J_{diff\_tot} = Aqn_i^2\left(\frac{D_p}{L_pN_D}+\frac{D_n}{L_nN_A}\right)\left(e^{\frac{v}{V_t}}-1\right) \text{ For PN Junction}
+	\end{align*}
+\textbf{Rectifyer with Filter: Half wave rectifyer with single ideal diode}
+	\begin{align*}
+		V_r &= \frac{V_p}{fRC} &\omega\Delta t = \sqrt{\frac{2V_r}{V_p}} \\
+		i_{Davg} &= I_L(1+\pi\sqrt{\frac{2V_p}{V_r}}) &i_{Dmax} = I_L(1+2\pi\sqrt{\frac{2V_p}{V_r}}) 
+	\end{align*}
+\textbf{Zener Diode}
+	\begin{align*}
+		\text{Line Regulation}=\frac{\Delta V_O}{\Delta V_s} = \frac{r_z}{r_z+R} \qquad \text{Load Regulation}=\frac{\Delta V_O}{\Delta I_L} = -\frac{r_z\times R}{r_z+R} = -r_z // R
+	\end{align*}
+	\textbf{BJT}
+	\begin{align*}
+		g_m = \frac{I_C}{V_T} \qquad r_\pi = \frac{\beta}{g_m} \qquad r_0 = \frac{V_A}{I_C} \qquad r_e = \frac{\alpha}{g_m} \qquad \alpha = \frac{\beta}{\beta+1}
+	\end{align*}
+\textbf{NMOS ($V_{TH}>0$)}
+	\begin{align*}
+		&V_{GS} < V_{TH} \qquad I_D = I_S = 0 &\text{Cutoff}\\
+		&V_{GS} > V_{TH} \qquad V_{DS} < V_{GS} - V_{TH} &\text{Triode}\\
+		&I_D = I_S = \mu_n C_{ox} \frac{W}{L} \left((V_{GS}-V_{TH})V_{DS} - \frac{1}{2}V^2_{DS}\right)&\text{Triode}\\
+		&V_{GS} > V_{TH} \qquad V_{DS} \ge V_{GS} - V_{TH}&\text{Saturation}\\
+		&I_D = I_S = \frac{1}{2}\mu_n C_{ox} \frac{W}{L} (V_{GS} - V_{TH})^2(1+\lambda V_{DS})&\text{Saturation}
+	\end{align*}
+\textbf{PMOS ($V_{TH}<0$)}
+	\begin{align*}
+		&V_{GS} > V_{TH} \qquad I_D = I_S = 0 &\text{Cutoff}\\
+		&V_{GS} < V_{TH} \qquad V_{DS} \ge V_{GS} - V_{TH} &\text{Triode}\\
+		&I_D = I_S = \mu_p C_{ox} \frac{W}{L} \left((V_{SG}-|V_{TH}|)|V_{DS}| - \frac{1}{2}V^2_{DS}\right)&\text{Triode}\\
+		&V_{GS} < V_{TH} \qquad V_{DS} < V_{GS} - V_{TH}&\text{Saturation}\\
+		&I_D = I_S = \frac{1}{2}\mu_p C_{ox} \frac{W}{L} (V_{SG} - |V_{TH}|)^2(1+\lambda |V_{DS}|)&\text{Saturation}
+	\end{align*}
+\textbf{Small Signal Parameters for NMOS or PMOS}
+	\begin{align*}
+		g_m = \sqrt{2\mu C_{ox} \frac{W}{L}I_D} = \mu C_{ox} \frac{W}{L} (V_{GS} - V_TH) \qquad r_0 = \frac{1}{\lambda I_D}
+	\end{align*}
+\textbf{CMOS Inverter}
+	\begin{align*}
+		&V_{IH} = \frac{1}{8} (5V_{DD} - 2V_t)  &V_{IL} = \frac{1}{8} (3V_{DD} + 2V_t)		\\
+		&t_{PHL} = \frac{a_n C}{\mu_n C{ox}\frac{W}{L}_n V_{DD}}& \alpha_n = \frac{2}{\frac{7}{4}-\frac{3V_{tn}}{V_{DD}}+\left(\frac{V_{tn}}{V_{DD}}\right)^2}\\
+		&t_{PHL} = \frac{a_p C}{\mu_p C{ox}\frac{W}{L}_p V_{DD}}& \alpha_p = \frac{2}{\frac{7}{4}-\frac{3|V_{tp}|}{V_{DD}}+\left(\frac{V_{tp}}{V_{DD}}\right)^2}
+	\end{align*}
 	
 	
 	
