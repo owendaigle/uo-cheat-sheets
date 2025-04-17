@@ -25,25 +25,25 @@
 
 % adds header and footer
 \pagestyle{fancy}
-\fancyhead{} \fancyhead[C]{ELG 2136 Cheat Sheet} \fancyhead[L]{ELG2136} \fancyhead[R]{Owen Daigle}
+\fancyhead{} \fancyhead[C]{ELG 2136 Course Summary} \fancyhead[L]{ELG2136} \fancyhead[R]{Owen Daigle}
 \fancyfoot{} \fancyfoot[C]{\thepage}
 
 
 \begin{document}
 	
 	\begin{center}
-		\Large\textbf{ELG 2136 Cheat Sheet} \\
+		\Large\textbf{ELG 2136 Course Summary} \\
 		\vspace{0.5em}
 	\end{center}	
 
 	\section{Physics}
 	Electric Conduction can happen due to 2 different mechanisms. 
 	\begin{enumerate}[]	
-		\item Forced Drift (When an Electric Field is applied)
-		\item Natural Diffusion (Free charges tend to move to less densely charged areas)
+		\item Forced \textbf{Drift} (When an Electric Field is applied)
+		\item Natural \textbf{Diffusion} (Free charges tend to move to less densely charged areas)
 	\end{enumerate}
 
-	We define \textbf{$J$} as the current density which is just $\frac{\text{total current}}{\text {area}}$. J can be calculated for Drift, or Diffusion but we need a few more things defined. 
+	We define \textbf{$J$} as the \textbf{current density} which is just $\frac{\text{total current}}{\text {area}}$. J can be calculated for Drift, or Diffusion but we need a few more things defined. 
 	
 	We define $n_i$ as the density of electrons/holes, which depends on the boltzmann constant $k$, the temperature T, and the material specific bandgap energy $E_g$. 
 	\begin{align*}
@@ -67,7 +67,7 @@
 	We can put a p-type and n-type material adjacent (PN Junction), and that creates a \textbf{diode}.
 	
 	\subsection{At a PN Junction}
-	This is a junctin of two materials, specifically a positive (P) and negative (N) material. 
+	This is a junction of two materials, specifically a positive (P) and negative (N) material. 
 	\begin{center}
 		\includegraphics[width=0.23\linewidth]{pn-junction}
 	\end{center}
@@ -107,7 +107,7 @@
 	\end{mdframed}
 	
 	\subsection{Plotting}
-	For these problems, we have a circuit, and we have an input voltage (x axis) and another value such as output voltage, or output current, and we need to plot the output as a function of the inputs. 
+	For these problems, we have a circuit, and we have an input voltage (x axis) and another value such as output voltage, or output current, and we need to \textbf{plot the output as a function of the inputs}. 
 	
 	This is a lot of work since we have diodes, and when each diode changes, as will the relation between the input and the output. 
 	
@@ -148,7 +148,7 @@
 	\end{mdframed}
 	
 	\subsection{Filter}
-	The Filter is just adding a capacitor in parallel with the load resistor. This will smooth out the big inflections, but there will still be a ripple. 
+	The Filter is just adding a capacitor in parallel with the load resistor. This will \textbf{smooth out the big inflections}, but there will still be a ripple. 
 	\begin{center}
 		\includegraphics[width=0.9\linewidth]{filter}
 	\end{center}
@@ -172,13 +172,13 @@
 	
 	
 	\subsection{Regulator}
-	The regulator is a function that takes in a voltage source with unwanted ripples, and greatly reduces these ripples. It does this with a diode working in the breakdown region (zener diode).
+	The regulator is a function that takes in a voltage source with unwanted ripples, and greatly \textbf{reduces these ripples}. It does this with a diode working in the breakdown region (zener diode).
 	\begin{center}
 		\includegraphics[width=0.4\linewidth]{regulator}
 	\end{center}
 	$r_z$ is the internal resistance of the diode. $V_{ZO}$ is the internal voltage source of the diode. 
 	
-	We need to ensure that the zener operates only in the breakdown region for no fluctuations in the output voltage. We do this by finding the minimum and maximum current allowed for the diode to stay in the breakdown region (straight line part).
+	We need to ensure that the zener operates \textbf{only in the breakdown region} for no fluctuations in the output voltage. We do this by finding the minimum and maximum current allowed for the diode to stay in the breakdown region (straight line part).
 	
 	We want to maintain the output voltage to be as constant as possible, and this is measured using the line and load regulation. 
 	\begin{align*}
@@ -190,26 +190,265 @@
 	\end{mdframed}
 	
 	\section{Bipolar Junction Transistor (BJT)}
+	A BJT transistor has 2 PN junctions. 
+	
+	The BJT can either have P type sandwiched between 2 N types (NPN), or N type sandwiched between 2 P types (PNP). 
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{pnp-vs-npn}
+	\end{center}
+	A BJT has three terminals called the \textbf{Emitter, Collector, and Base}. Each of these terminals needs to have a DC voltage applied. Depending on how these voltages relate to each other (biassing of each PN junction) makes the transistor operate differently. 
+	
+	In this course we only care about the \textbf{active} mode which is where for PNP, the emitter is the largest, followed by base, followed by collector, and for NPN, collector is largest, followed by base, followed by emitter. 
+	
+	In all cases, the BE junction has a difference of 0.7 volts due to the diode. 
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.4\linewidth]{bjt-biassing}
+		\caption{Active Mode Bias}
+		\label{figure:bjt-active-mode-bias}
+		
+	\end{figure}
+	
+	Going back to the PNP or NPN model, if the current flows from P to N, we say that junction is in forward bias. While if the current flows from N to P, we say that junction is in reverse bias. 
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{bjt-bias-table}
+	\end{center}
 	
 	\subsection{DC Analysis}
+	To do the DC analysis, we need to figure out what mode the transistor is in. Typically for this course it is either in Cutoff mode (no current), or active mode (see Figure \ref{figure:bjt-active-mode-bias}).
+	
+	So we \textbf{assume active mode}, and see if there is a contradiction (such as negative or 0 current).
+	
+	We have some very useful relations for the currents which are:
+	\begin{align*}
+		&I_E = I_B + I_C & I_C = \beta I_B
+	\end{align*}
+	$\beta$ is a parameter of the specific BJT given in the \textbf{datasheet}.
 	
 	\subsection{AC Analysis}
+	We need to introduce a new notation for this. We say that lowercase means ac, and uppercase means DC. Mixed case means a mixed signal.
+	\begin{align*}
+		&v_A& \text{ac and DC Signal}\\
+		&v_a &\text{Pure ac Signal}\\
+		&V_A &\text{Pure DC signal}
+	\end{align*}
+
+	To get the current, \textit{sometimes} we are given the $I_S$ parameter. This gives:
+	\begin{align*}
+		i_C = I_S e^{\frac{v_{BE}}{V_T}} \text{ for NPN or replace $V_{BE}$ with $V_{EB}$ for PNP}
+	\end{align*}
+	Here $V_T$ is a known value that is given on the \textbf{datasheet}. 
+	
+	With ac analysis, we generally do not know the ac currents or voltages since these fluxuate with time. But we do know the resistances and the DC currents. Through this information we can get the following parameters:
+	\begin{align*}
+		g_m = \frac{I_C}{V_T} \qquad r_\pi  =\frac{\beta}{g_m} = \frac{V_T}{I_B} \qquad r_e = \frac{\alpha}{g_m}\qquad \alpha = \frac{\beta}{\beta+1}
+	\end{align*}
+	Then we also have other parameters that we need to find through circuit analysis such as KVL or KCL. These are things such as:
+	\begin{align*}
+		&A_V = \frac{v_{out}}{v_{in}}&\text{Voltage Gain}\\
+		&G_v = \frac{v_{out}}{v_{sig}}&\text{Overall Voltage Gain}\\
+		&A_i = \frac{i_{out}}{i_{in}}&\text{Current Gain}\\
+		&R_{in} &\text{Input Resistance}\\
+		&R_{out}&\text{Output Resistance} 
+	\end{align*}
+	When doing these, the answer \textbf{MUST NOT be in terms of time dependant values} such as ac current, or ac voltage.
+	
+	To do this, we need to change the BJT transistor for a \textbf{model}. We have the Hybrid Pi model, or the T model. 
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{hybridpi-tmodel}
+	\end{center}
+	
+	\subsection{ac and DC Analysis Combined}
+	When combining the two analyses, we can consider each one individually and follow the following technique:
+	\begin{itemize}
+		\item DC Analysis
+		\subitem Short Circuit all ac voltage sources and Open Circuit all ac current sources
+		\subitem Short circuit all inductors, and open circuit all capacitors
+		\subitem Find C, B, E currents and voltages, find $g_m$, and confirm it is in active mode.
+		\item ac Analysis
+		\subitem Short Circuit all DC voltage sources and Open Circuit all DC current sources
+		\subitem Short circuit all capacitors, and open circuit all inductors
+		\subitem Solve for what we want (such as $A_V$ or $R_{in}$)
+	\end{itemize}
+
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
 	
 	\subsection{Early Effect}
+	In the real world the current has a dependance on the voltage. This is called the Early effect. To model this, we can add a \textbf{resistor} with resistance $r_0$ between the collector and base. 
+	
+	When dealing with the early effect, we are given a voltage valus $V_A$ which is specific to the BJT we are working with. This allows us to calculate $r_0$. 
+	\begin{align*}
+		r_0 = \frac{V_A}{I_C}
+	\end{align*}
+	Then we can just proceed with the analysis steps as normal. The analysis does get more complex, but it is the same general process. 
+	
+	We just need to change the models to:
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{hybridpi-tmodel-w-early}
+	\end{center}
 	
 	\section{Metal Oxide Semiconductor Field Effect Transistor (MOSFET)}
+	A MOSFET has 3 connections. The\textbf{ Source, Gate, and Drain}. There is \textbf{no current in the gate} since it does not directly touch the materials (therefore \textbf{source current and drain current are same}). It is just used to generate an electric field to move the charges. 
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{nmos-pmos}
+	\end{center}
+	When we apply a voltage at the gate, a channel is created where the electrons will flow from the Source to the Drain (for NMOS or Drain to Source for PMOS).
+	\begin{center}
+		\includegraphics[width=0.35\linewidth]{mos-channel}
+	\end{center}
+	MOSFETs have three modes they can be in:
+	\begin{itemize}
+		\item Cutoff (No current)
+		\item Saturation (Constant current)
+		\item Triode (Changing current)
+	\end{itemize}
+
+	We have some parameters for the MOSFET. These are unique to each MOSFET and given on the datasheet.
+	\begin{align*}
+		&\mu C_{ox} \frac{W}{L} &V_t
+	\end{align*}
+	For NMOS, $V_t > 0$, and for PMOS, $V_t<0$.
+	
+	The symbols are:
+	\begin{center}
+		\includegraphics[width=0.25\linewidth]{pmos-nmos-symbols}
+	\end{center}
+	
 	
 	\subsection{DC Analysis}
+	To do the DC analysis, we use the following process:
+	\begin{enumerate}
+		\item Test for cutoff mode (No current)
+		\item \textbf{If not cutoff}, Assume Saturation or Triode mode
+		\item Use the transistor current equation to get $I_D$ AKA $I_S$
+		\item Do more circuit analysis if required
+		\item Verify the two conditions for the assumed mode (from step 2)
+		\item \textbf{If conditions are not met}, then return to step 2 and assume the other mode.
+	\end{enumerate}
+
+	The conditions and transistor current equation are different for NMOS or PMOS. They depend on $V_t$ which is also referred to as $V_TH$.
+	
+	\textbf{NMOS ($V_{TH}>0$)}
+	\begin{align*}
+		&V_{GS} < V_{TH} \qquad I_D = I_S = 0 &\text{Cutoff Conditions and Current}\\
+		&V_{GS} > V_{TH} \qquad V_{DS} < V_{GS} - V_{TH} &\text{Triode Conditions}\\
+		&I_D = I_S = \mu_n C_{ox} \frac{W}{L} \left((V_{GS}-V_{TH})V_{DS} - \frac{1}{2}V^2_{DS}\right)&\text{Triode Current}\\
+		&V_{GS} > V_{TH} \qquad V_{DS} \ge V_{GS} - V_{TH}&\text{Saturation Conditions}\\
+		&I_D = I_S = \frac{1}{2}\mu_n C_{ox} \frac{W}{L} (V_{GS} - V_{TH})^2(1+\lambda V_{DS})&\text{Saturation Current}
+	\end{align*}
+	\textbf{PMOS ($V_{TH}<0$)}
+	\begin{align*}
+		&V_{GS} > V_{TH} \qquad I_D = I_S = 0 &\text{Cutoff Conditions and Current}\\
+		&V_{GS} < V_{TH} \qquad V_{DS} \ge V_{GS} - V_{TH} &\text{Triode Conditions}\\
+		&I_D = I_S = \mu_p C_{ox} \frac{W}{L} \left((V_{SG}-|V_{TH}|)|V_{DS}| - \frac{1}{2}V^2_{DS}\right)&\text{Triode Current}\\
+		&V_{GS} < V_{TH} \qquad V_{DS} < V_{GS} - V_{TH}&\text{Saturation Conditions}\\
+		&I_D = I_S = \frac{1}{2}\mu_p C_{ox} \frac{W}{L} (V_{SG} - |V_{TH}|)^2(1+\lambda |V_{DS}|)&\text{Saturation Current}
+	\end{align*}
 	
 	\subsection{AC Analysis}
+	When we are doing the ac analysis just like the BJT we cannot have any answers with a time dependant current or voltage. 
+	
+	We often want to find the same parameters such as the voltage gain, or current gain. 
+	
+	We follow a similar procedure to the BJT where we first do DC analysis to find the operating mode, then we go into ac mode and sub in the ac model. Then we can find what we want to find. 
+	
+	The ac model is:
+	\begin{center}
+		\includegraphics[width=0.8\linewidth]{mosfet-ac-model}
+	\end{center}
+
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
+	
 	
 	\subsection{Channel Modulation}
+	This is the same idea of early effect for BJT but for MOSFET. 
 	
-	\section{Complementary MOSFET (CMOS)}
+	As the channel width increases, its resistance changes. So we need to account for this. 
+	
+	We have the parameter $\frac{1}{V_A} = \lambda$.
+	
+	This only affects the saturation mode equation hence the term $1+\lambda V_{DS}$ at the end of those current equations. 
+	
+	We add a resistor $r_0$ with value of:
+	\begin{align*}
+		r_0 = \frac{1}{I_D \lambda}
+	\end{align*}
+	
+	\section{Complementary MOSFET (CMOS) Inverter}
+	A CMOS is a circuit with 2 MOSFETS, one of which is a PMOS, one is an NMOS. 
+	
+	The Inverter is a circuit that will take a low voltage and turn it into a high voltage, and take a high voltage and turn it into a low voltage. 
+	
+	It is the \verb|NOT| gate.
+	\begin{center}
+		\includegraphics[width=0.34\linewidth]{cmos}
+	\end{center}
+	
 	
 	\subsection{Voltage Transfer Characteristic (VTC) of CMOS}
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{CMOS-vtc}
+	\end{center}
+	Through the VTC, we can see that there are 5 main areas. 
+	\begin{itemize}
+		\item First area when $V_{out} = V_{OH}$ when the output is constant HIGH
+		\item Second area where $V_{out}$ decreases, but is still HIGH
+		\item Third area where $V_{out}$ is in the middle, neither HIGH or LOW (Between $V_{IL}$ and $V_{IH}$)
+		\item Fourth area where $V_{out}$ is decreasing, but reached te LOW section
+		\item Fifth area where $V_{out}$ is constant LOW
+	\end{itemize}
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{CMOS-vtc-w-regions}
+	\end{center}
+	We can figure out through using the circuit diagram, and the MOSFET equations the states of the MOSFETs in all 5 regions:
+	\begin{table}
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Region & NMOS & PMOS \\
+			\hline
+			\hline
+			1 & Cutoff & Triode \\
+			\hline
+			2 & Saturation & Triode \\
+			\hline
+			3 & Saturation & Borderline of Triode/Saturation \\
+			\hline
+			4 & Triode & Saturation \\
+			\hline
+			5 & Triode & Cutoff \\
+			\hline
+			\end{tabular}
+	\end{table}
+
+	Most of the values are fairly straightforward to calculate, such as the main input voltage in region 3 is just half of the max input voltage $V_{DD}$. The low end of the HIGH part $V_{IL}$ and the high end of the LOW part $V_{IH}$ are:
+	\begin{align*}
+		&V_{IH} = \frac{1}{8} (5V_{DD} - 2V_t)  &V_{IL} = \frac{1}{8} (3V_{DD} + 2V_t)		\\
+	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex.}
+	\end{mdframed}
 	
-	\subsection{Delay in the CMOS}
+	\subsection{Delay in the CMOS Inverter}
+	In real life, the inverter does not change from HIGH to LOW, or from LOW to HIGH instantaneously. There is some delay.
+	
+	We define the time it takes for the inverter to go from LOW to halfway to HIGH as $t_{PLH}$ and from HIGH to halfway to LOW as $t_{PHL}$.
+	
+	We can see this quite obviously if we have a capacitor connected to the output voltage of the CMOS inverter. By definition, the voltage of the capacitor cannot change instantaneously. So there must be some delay. 
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{not-with-cap}
+	\end{center}
+	We have the following equations to calculate the times given a capacitence $C$:
+	\begin{align*}
+		&t_{PHL} = \frac{a_n C}{\mu_n C_{ox}\left(\frac{W}{L}\right)_n V_{DD}}& \alpha_n = \frac{2}{\frac{7}{4}-\frac{3V_{tn}}{V_{DD}}+\left(\frac{V_{tn}}{V_{DD}}\right)^2}\\
+		&t_{PHL} = \frac{a_p C}{\mu_p C_{ox}\left(\frac{W}{L}\right)_p V_{DD}}& \alpha_p = \frac{2}{\frac{7}{4}-\frac{3|V_{tp}|}{V_{DD}}+\left(\frac{V_{tp}}{V_{DD}}\right)^2}
+	\end{align*}
+	
 	
 	\newpage
 	\section{Appendix}
@@ -224,12 +463,12 @@
 &		p_pn_p = n_np_n = n_i^2\\
 & 		J_{diff\_tot} = Aqn_i^2\left(\frac{D_p}{L_pN_D}+\frac{D_n}{L_nN_A}\right)\left(e^{\frac{v}{V_t}}-1\right) \text{ For PN Junction}
 	\end{align*}
-\textbf{Rectifyer with Filter: Half wave rectifyer with single ideal diode}
+	\textbf{Rectifyer with Filter: Half wave rectifyer with single ideal diode}
 	\begin{align*}
 		V_r &= \frac{V_p}{fRC} &\omega\Delta t = \sqrt{\frac{2V_r}{V_p}} \\
 		i_{Davg} &= I_L(1+\pi\sqrt{\frac{2V_p}{V_r}}) &i_{Dmax} = I_L(1+2\pi\sqrt{\frac{2V_p}{V_r}}) 
 	\end{align*}
-\textbf{Zener Diode}
+	\textbf{Zener Diode}
 	\begin{align*}
 		\text{Line Regulation}=\frac{\Delta V_O}{\Delta V_s} = \frac{r_z}{r_z+R} \qquad \text{Load Regulation}=\frac{\Delta V_O}{\Delta I_L} = -\frac{r_z\times R}{r_z+R} = -r_z // R
 	\end{align*}
@@ -237,7 +476,7 @@
 	\begin{align*}
 		g_m = \frac{I_C}{V_T} \qquad r_\pi = \frac{\beta}{g_m} \qquad r_0 = \frac{V_A}{I_C} \qquad r_e = \frac{\alpha}{g_m} \qquad \alpha = \frac{\beta}{\beta+1}
 	\end{align*}
-\textbf{NMOS ($V_{TH}>0$)}
+	\textbf{NMOS ($V_{TH}>0$)}
 	\begin{align*}
 		&V_{GS} < V_{TH} \qquad I_D = I_S = 0 &\text{Cutoff}\\
 		&V_{GS} > V_{TH} \qquad V_{DS} < V_{GS} - V_{TH} &\text{Triode}\\
@@ -245,7 +484,7 @@
 		&V_{GS} > V_{TH} \qquad V_{DS} \ge V_{GS} - V_{TH}&\text{Saturation}\\
 		&I_D = I_S = \frac{1}{2}\mu_n C_{ox} \frac{W}{L} (V_{GS} - V_{TH})^2(1+\lambda V_{DS})&\text{Saturation}
 	\end{align*}
-\textbf{PMOS ($V_{TH}<0$)}
+	\textbf{PMOS ($V_{TH}<0$)}
 	\begin{align*}
 		&V_{GS} > V_{TH} \qquad I_D = I_S = 0 &\text{Cutoff}\\
 		&V_{GS} < V_{TH} \qquad V_{DS} \ge V_{GS} - V_{TH} &\text{Triode}\\
@@ -253,11 +492,11 @@
 		&V_{GS} < V_{TH} \qquad V_{DS} < V_{GS} - V_{TH}&\text{Saturation}\\
 		&I_D = I_S = \frac{1}{2}\mu_p C_{ox} \frac{W}{L} (V_{SG} - |V_{TH}|)^2(1+\lambda |V_{DS}|)&\text{Saturation}
 	\end{align*}
-\textbf{Small Signal Parameters for NMOS or PMOS}
+	\textbf{Small Signal Parameters for NMOS or PMOS}
 	\begin{align*}
 		g_m = \sqrt{2\mu C_{ox} \frac{W}{L}I_D} = \mu C_{ox} \frac{W}{L} (V_{GS} - V_TH) \qquad r_0 = \frac{1}{\lambda I_D}
 	\end{align*}
-\textbf{CMOS Inverter}
+	\textbf{CMOS Inverter}
 	\begin{align*}
 		&V_{IH} = \frac{1}{8} (5V_{DD} - 2V_t)  &V_{IL} = \frac{1}{8} (3V_{DD} + 2V_t)		\\
 		&t_{PHL} = \frac{a_n C}{\mu_n C{ox}\frac{W}{L}_n V_{DD}}& \alpha_n = \frac{2}{\frac{7}{4}-\frac{3V_{tn}}{V_{DD}}+\left(\frac{V_{tn}}{V_{DD}}\right)^2}\\
