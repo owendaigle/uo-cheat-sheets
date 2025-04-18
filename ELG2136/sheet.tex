@@ -100,10 +100,59 @@
 
 	If either of these criteria are wrong, then our assumption is on, and we need to try another one. 
 	
+	For reference, the diode looks like the following:
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{diode-anode-cathode}
+	\end{center}
+	
+	
 	NOTE: There can only be \textbf{one } combination that works with a circuit. So if we have 2 diodes, and the first try it works, then it MUST be ONLY that combination.
 	
 	\begin{mdframed}[]
-		\textbf{Ex. }
+		\textbf{Ex. }In the following circuit, find $V_{out}$.
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{diodes-ex}
+		\end{center}
+		We need to start by replacing the diodes with their model. I will use the ideal model for this example. So the diode is replaced by either a short circuit if ON, or an open circuit if OFF. 
+		
+		I will assume that $D1$ is OFF, and $D2$ is OFF. 
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{diodes-ex1.1}
+		\end{center}
+		Now I need to check the conditions which for OFF is that the cathode voltage is greater than the anode voltage. 
+		
+		I see that the anode voltage is $3^V$, and the cathode voltage is $0^V$. So our assumption is WRONG.
+		
+		I will try another assumption of $D1$ is ON, $D2$ is OFF.
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{diodes-ex1.2}
+		\end{center}
+		For $D1$ which is ON, I need to find the current and see that it is positive. I do a KVL starting at the 3V source, and going right. 
+		\begin{align*}
+			3 = 1k(I)+1k(I) \implies I=1.5mA \qquad \checkmark
+		\end{align*}
+		Now for $D2$ I need to check that the cathode voltage is greater than anode voltage. Using a voltage dividor, the anode voltage is 1.5V, then from observation the cathode voltage is 2V. $\checkmark$
+		
+		Now we know that this is the state of the circuit. We DO NOT need to check any other situations since there can ONLY be ONE correct configuration. 
+		
+		Now we can analyse and find that $V_{out} = 1.5^V$
+		
+	\end{mdframed}
+
+	\begin{mdframed}
+		\textbf{Ex.} For the previous example, find $V_{out}$ using the constant voltage model.
+		
+		Here we just need to modify the diagram to add a 0.7V source to each diode. I will test out $D1$ is ON and $D2$ is OFF.
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{diodes-ex2.1}
+		\end{center}
+		For the ON diode, I find that the current is 1.15mA through a KVL. 
+		
+		For the OFF diode I find that the anode (top) is 1.15V, and the cathode (bottom) is 2.7V. 
+		
+		Note that I consider this as the voltage drop over the ideal diode component of the constant voltage model, not the entire diode. 
+		
+		Now I find $V_{out} = 1.15V$.
 	\end{mdframed}
 	
 	\subsection{Plotting}
@@ -122,14 +171,66 @@
 	\end{enumerate}
 
 	\begin{mdframed}[]
-	\textbf{Ex. }
+	\textbf{Ex. }Find $V_{out}$ as a function of $V_{in}$ using ideal diode model.
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{diodes-plotting-1.1}
+	\end{center}
+	First I need to find the state when $V_{in}$ is very small ($-\infty$).
+	
+	If the input is very small, then D1 must be off since by definition $V_{in}$ is the smallest voltage in the circuit, so the other side must be larger. 
+	
+	This creates an open circuit over D1 causing the rest of the loop to be a simple KVL. We find that D2 must also be OFF. 
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{diodes-plotting-1.2}
+	\end{center}
+	We can see that for this interval, \textbf{the output is 0V.}
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{diodes-plotting-1.3}
+	\end{center}
+	Now we need to find when one of the diodes will change states. This is when the voltage across one of the diodes becomes 0. Here it must be a value of $V_{in}$ that causes this change. 
+	\begin{align*}
+		D1: V_{in} &= V_{D1} + 1k(I) + V_{out}&\\
+			&=0 + 0 & \text{No current $I$, and $V_{D1}$ is 0}\\
+			&= V_{out} = 0 &\text{Since we know $V_{out}=0$}\\
+		D2: V_{out} &= V_{D2} + 2&\text{KVL starting with $V_{out}$}\\
+			\implies 0 &= 2 \qquad X &\text{Since we know $V_{out}=0$}
+	\end{align*}
+	So D1 must change first. Now I change D1 to ON to get:
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{diodes-plotting-1.4}
+	\end{center}
+	We need to find $V_{out}$ as a function of $V_{in}$ for this part as well. 
+	\begin{align*}
+		&V_{out} = \frac{V_{in}}{2}&\text{I see this from the circuit} \\
+		&&\text{It can also be found from voltage dividor}
+	\end{align*}
+	\begin{center}
+		\includegraphics[width=0.3\linewidth]{diodes-plotting-1.5}
+	\end{center}
+	Now I need to find the last break point (if it exists). This will be when D2 changes since D1 cannot change again. This can be either the value of the \textit{input or output} since both are changing. 
+	\begin{align*}
+		V_{out} = V_{D2} + 2 = 2 \implies V_{in} = 2V_{out} = 4
+	\end{align*}
+	So D2 will change to ON when the input is 2, and the output is 4. 
+	
+	Finally we need to know what the ouput actually changes to when this happens.
+	\begin{center}
+		\includegraphics[width=0.4\linewidth]{diodes-plotting-1.6}
+	\end{center}
+	We can see that the output is just parallel with the constant 2V source. So it is just 2 Volts. 
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{diodes-plotting-1.7}
+	\end{center}
+	
+	
+	
 	\end{mdframed}
 	
 	\section{DC Power Supply}
 	This is a very important application of diodes. This will convert an AC time dependant source to a DC constant source. 
 	
-	\subsection{Rectifier}
-	The rectifyer will take an AC source, and make the output be positive.
+	\subsection{rectifier}
+	The rectifier will take an AC source, and make the output be positive.
 	\begin{center}
 		\includegraphics[width=0.9\linewidth]{rectifier}
 	\end{center}
@@ -137,15 +238,12 @@
 	
 	A Half wave rectifier (1 diode) will just kill the negative part of the wave, while a Full wave rectifier (2 diodes) will keep the positive part, and invert the negative part. 
 	
-	A Bridge rectifyer is a special type of full wave rectifier that has 4 diodes instead of 2. 
+	A Bridge rectifier is a special type of full wave rectifier that has 4 diodes instead of 2. 
 	
 	A useful statistic is the PIV (Peak Inverse Voltage) across a diode. To find this, we take a diode that we want to find the PIV across, then we find what would be the maximum negative voltage across this diode (note the diode will be OFF) when the source is at its inverse peak. 
 	
-	Typically we di a KVL through the circuit. Note that we find the voltage across the whole diode (including voltage and resistance if using that model).
+	Typically we do a KVL through the circuit. Note that we find the voltage across the whole diode (including voltage and resistance if using that model).
 	
-	\begin{mdframed}[]
-	\textbf{Ex. }
-	\end{mdframed}
 	
 	\subsection{Filter}
 	The Filter is just adding a capacitor in parallel with the load resistor. This will \textbf{smooth out the big inflections}, but there will still be a ripple. 
@@ -170,6 +268,42 @@
 
 	If we are working with a different model, such as the constant voltage model, then we will need to modify the equations such as increasing the peak voltage by 0.7V. The one exception is the conduction angle formula $\omega \Delta t$ since that is not affected by te extra 0.7V.
 	
+	\begin{mdframed}[]
+		\textbf{Ex. }We have a bridge rectifier with a filter capacitor as shown below. We want to find the PIV if the filter is disconnected, or connected. Then we want to find the capacitence required for a ripple of 2V. We also want to conduction angle (with the filter connected).
+		\begin{center}
+			\includegraphics[width=0.7\linewidth]{filter-ex}
+		\end{center}
+		First we need to find the peak voltage on the secondary side of the transformer. This needs to be high enough to overcome the two voltage drops from the diodes, and must be 1V higher than needed for the ripple:
+		\begin{align*}
+			V_s = 0.7+0.7+10+1=12.4V
+		\end{align*}
+	
+		If the filter is disconnected, the PIV can be found taking a KVL through the circuit starting at the source in the reverse direction (not going through the capacitor since this is disconnected):
+		\begin{align*}
+			-12.4 + 0 + 0.7 = -11.7V \implies PIV = 11.7
+		\end{align*}
+		\begin{center}
+			\includegraphics[width=0.5\linewidth]{filter-ex1}
+		\end{center}
+	
+		If the filter is connected, we will take a KVL through a similar loop, except we go through the capacitor since it gives 10V average voltage. 
+		\begin{align*}
+			-12.4+0+0.7-10=-21.7V \implies PIV = 21.7
+		\end{align*}
+		The waveforms generated will be as follows:
+		\begin{center}
+			\includegraphics[width=0.7\linewidth]{filter-ex2}
+		\end{center}
+		Finding the capacitence is simple. We know that the peak voltage through the capacitor is 11V, and we know the frequency, ripple, and load resistance. So we use the formula:
+		\begin{align*}
+			V_r = \frac{V_p}{2fRC}\implies C = \frac{V_p}{2V_rfR} = \frac{11}{2\cdot 2\cdot 60\cdot 100} = CALC
+		\end{align*}
+		Same idea for the conduction angle except for that works off the peak voltage at the source. 
+		\begin{align*}
+			\omega\Delta t = \sqrt{\frac{2V_r}{V_p}} = \sqrt{\frac{2\cdot 2}{12.4}} = CALC
+		\end{align*}
+		
+	\end{mdframed}
 	
 	\subsection{Regulator}
 	The regulator is a function that takes in a voltage source with unwanted ripples, and greatly \textbf{reduces these ripples}. It does this with a diode working in the breakdown region (zener diode).
@@ -186,7 +320,33 @@
 	\end{align*}
 
 	\begin{mdframed}[]
-	\textbf{Ex. }
+		\textbf{Ex. }We have a zener regulator. We have two datapoints. When $V_Z=10.1V$, $I_Z = 0.01A$. When $V_Z=10.2V$, $I_Z=0.02A$. Find the zener diode resistance and voltage $r_z, V_{ZO}$. 
+		\begin{center}
+			\includegraphics[width=0.33\linewidth]{zener}
+		\end{center}
+		To find the zener resistance, we use the standard slope equation:
+		\begin{align*}
+			SLOPE = \frac{\Delta i}{\Delta V} = \frac{0.02-0.01}{10.2-10.1}=0.1
+		\end{align*}
+		Since the zener resistance is the recipricol of the slope, $r_z = 10\Omega$.
+		
+		To find the voltage source, I will create an equation for the slope of the line, and then let the current equal 0 (current is $y$, voltage is $x$). 
+		\begin{align*}
+			&i = \frac{1}{r_z}V+c \implies 0.01 = \frac{10.1}{10} + c \implies c  = -1\\
+			&0 = \frac{1}{10}V_{zo}-1 \implies V_{zo}=10
+		\end{align*}
+		Now we can go back to the circuit and replace the zener diode with its model of the voltage source and resistance.
+		
+		Note that since it is a zener diode, the voltage source is \textit{reversed}.
+		\begin{center}
+			\includegraphics[width=0.33\linewidth]{zener1}
+		\end{center}
+		If we now want to find the output voltage, we can use any circuit analysis method such as source transformations to do:
+		\begin{center}
+			\includegraphics[width=1\linewidth]{zener2}
+		\end{center}
+		Then using a voltage dividor we can get the voltage. 
+	
 	\end{mdframed}
 	
 	\section{Bipolar Junction Transistor (BJT)}
@@ -463,7 +623,7 @@
 &		p_pn_p = n_np_n = n_i^2\\
 & 		J_{diff\_tot} = Aqn_i^2\left(\frac{D_p}{L_pN_D}+\frac{D_n}{L_nN_A}\right)\left(e^{\frac{v}{V_t}}-1\right) \text{ For PN Junction}
 	\end{align*}
-	\textbf{Rectifyer with Filter: Half wave rectifyer with single ideal diode}
+	\textbf{rectifier with Filter: Half wave rectifier with single ideal diode}
 	\begin{align*}
 		V_r &= \frac{V_p}{fRC} &\omega\Delta t = \sqrt{\frac{2V_r}{V_p}} \\
 		i_{Davg} &= I_L(1+\pi\sqrt{\frac{2V_p}{V_r}}) &i_{Dmax} = I_L(1+2\pi\sqrt{\frac{2V_p}{V_r}}) 
