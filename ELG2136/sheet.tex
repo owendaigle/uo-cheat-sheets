@@ -1,3 +1,4 @@
+% !TeX root = sheet.tex
 % Crucial Preamble
 \documentclass[12pt,letterpaper]{article} \usepackage{amsmath} \usepackage{graphicx} \usepackage[margin=1in]{geometry} \usepackage{longtable}  \usepackage{amssymb}
 
@@ -403,6 +404,8 @@
 	\begin{align*}
 		g_m = \frac{I_C}{V_T} \qquad r_\pi  =\frac{\beta}{g_m} = \frac{V_T}{I_B} \qquad r_e = \frac{\alpha}{g_m}\qquad \alpha = \frac{\beta}{\beta+1}
 	\end{align*}
+	\textbf{NOTE that $V_T$ is a constant with value 25mV}
+	
 	Then we also have other parameters that we need to find through circuit analysis such as KVL or KCL. These are things such as:
 	\begin{align*}
 		&A_V = \frac{v_{out}}{v_{in}}&\text{Voltage Gain}\\
@@ -432,7 +435,67 @@
 	\end{itemize}
 
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. }Using the below circuit, find the voltage gain, the input resistance, and the output resistance. We know that $\beta = 100$
+		\begin{center}
+			\includegraphics[width=0.3\linewidth]{bjt-ex}
+		\end{center}
+		First we need to do the\textbf{ DC analysis}. The first step is always to do a KVL through the BE part since we know the voltage drop is 0.7 Volts. We also have to disable the ac sources. I can also label the Collector, Base, and Emitter using the NPN values since arrow going out of the BJT.
+		\begin{center}
+			\includegraphics[width=0.1\linewidth]{bjt-ex1}
+		\end{center}
+		\begin{align*}
+			2.5-100000I_B - 0.7 - 200 I_E= 0
+		\end{align*}
+		Now using the relation between the three currents, we can get that $I_E = I_C + I_B = I_B (\beta + 1)$
+		\begin{align*}
+			2.5-100000I_B - 0.7 - 200 (101) I_B= 0 \implies I_B = 1.498 \mu A \implies I_C = 1.498 mA
+		\end{align*}
+		To ensure the BJT is in active mode, I find the voltages at all three places:
+		\begin{align*}
+			&V_C = 2.5^V\qquad V_B = 2.5-100000I_B = 1.002^V \qquad V_E = 1.002-0.7 = 0.3\\
+			& V_C > V_B > B_E \qquad \checkmark
+		\end{align*}
+		Now we move to \textbf{ac analysis} starting with finding the circuit parameters.
+		\begin{align*}
+			&g_m = \frac{I_C}{V_T} = \frac{1.498}{25}=0.05992 &r_\pi = \frac{\beta}{g_m} = 1669
+		\end{align*}
+		Now we can set up the ac circuit by disabling DC sources and using an ac model. I will use the Hybrid Pi model. 
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{bjt-ex2}
+		\end{center}
+		To find the \textbf{Voltage gain} $A_V = \frac{v_o}{v_i}$, we can create some KVLs.
+		\begin{align*}
+			&v_{in} = v_\pi + 200i_E = i_B r_\pi + 200i_E\\
+			&v_{out} = 200i_E\\
+			&A_V = \frac{v_o}{v_i} = \frac{200i_E}{i_Br_\pi+200i_E}
+		\end{align*}
+		Well this is a problem since we cannot have \textbf{any time dependant currents/voltages}. But if we write $i_B$ in terms of $i_E$, we can cancel out all $i_E$ to get no time dependant sources.
+		\begin{align*}
+			&A_V = \frac{v_o}{v_i} = \frac{200i_E}{\frac{i_E}{\beta +1}r_\pi+200(i_E)} = \frac{200}{\frac{r_\pi}{\beta +1}+200} = 0.92
+		\end{align*}
+		To find the \textbf{input resistance}, we can create a test source at $R_{in}$, disable all INDEPENDANT sources, and then solve for $\frac{V_{test}}{I_{test}}$. 
+		
+		In this case, we already have a source ($V_{in}$) so we do not need to create a test source. We just need to find the input current. 
+		\begin{align*}
+			&v_{in} = \frac{i_E}{\beta +1}r_\pi+200(i_E)\\
+			&i_{in} = i_{100k} + i_b = \frac{v_{in}}{100k} + \frac{i_E}{\beta + 1} = \frac{\frac{i_E}{\beta +1}r_\pi+200(i_E)}{100k} + \frac{i_E}{\beta + 1}\\
+			&R_{in} = \frac{v_{in}}{i_{in}} = \frac{\frac{i_E}{\beta +1}r_\pi+200(i_E)}{\frac{\frac{i_E}{\beta +1}r_\pi+200(i_E)}{100k} + \frac{i_E}{\beta + 1}} = \frac{\frac{1}{\beta +1}r_\pi+200}{\frac{\frac{1}{\beta +1}r_\pi+200}{100k} + \frac{1}{\beta + 1}} = 17.95k
+		\end{align*}
+		To find the \textbf{output resistance} we follow a similar procedure except for we need a test source. 
+		
+		Since we disable all independant sources, then $v_{in}$ becomes a short circuit killing the 100k resistor (since // to SC).
+		
+		The circuit becomes:
+		\begin{center}
+			\includegraphics[width=0.7\linewidth]{bjt-ex3}
+		\end{center}
+		And now I can just solve for the resistance:
+		\begin{align*}
+			&v_{test} = v_\pi = r_\pi i_B\\
+			&i_{test} = \beta i_B + i_B + \frac{v_\pi}{200} = \beta i_B + i_B + \frac{r_\pi i_B}{200}\\
+			&R_{test} = R_{out} = \frac{v_{test}}{i_{test}} = \frac{r_\pi i_B}{\beta i_B + i_B + \frac{r_\pi i_B}{200}} = \frac{r_\pi}{\beta + 1 + \frac{r_\pi }{200}} = 15.4
+		\end{align*}
+		
 	\end{mdframed}
 	
 	\subsection{Early Effect}
@@ -508,7 +571,7 @@
 	\end{align*}
 	
 	\subsection{AC Analysis}
-	When we are doing the ac analysis just like the BJT we cannot have any answers with a time dependant current or voltage. 
+	When we are doing the ac analysis just like the BJT we cannot have any answers with a \textbf{time dependant current or voltage}. 
 	
 	We often want to find the same parameters such as the voltage gain, or current gain. 
 	
@@ -519,15 +582,10 @@
 		\includegraphics[width=0.8\linewidth]{mosfet-ac-model}
 	\end{center}
 
-	\begin{mdframed}
-		\textbf{Ex. }
-	\end{mdframed}
-	
-	
 	\subsection{Channel Modulation}
 	This is the same idea of early effect for BJT but for MOSFET. 
 	
-	As the channel width increases, its resistance changes. So we need to account for this. 
+	As the channel width increases, its\textbf{ resistance changes}. So we need to account for this. 
 	
 	We have the parameter $\frac{1}{V_A} = \lambda$.
 	
@@ -537,6 +595,54 @@
 	\begin{align*}
 		r_0 = \frac{1}{I_D \lambda}
 	\end{align*}
+
+	\begin{mdframed}
+		\textbf{Ex. }We have the following NMOS circuit, find $\frac{V_o}{V_{sig}}$. Consider channel modulation. 
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{mosfet-ex}
+		\end{center}
+		Notice how since there is never any current at the gate we can disregard $R_{sig}$ for all analysis.
+		
+		First we need to start with the DC analysis to see what mode it is in. I will disable the ac source, and open circuit the capacitor. Then I can test the modes. 
+		
+		I will test saturation mode. 
+		\begin{align*}
+			I_D &= \frac{1}{2}\mu_n C_{ox} \frac{W}{L} (V_{GS} - V_t)^2 = \frac{0.5}{2}(6-(1k\cdot I_D)-1)^2 = 0.25(6-I_D-1)^2 \\ &\implies I_D=2.10mA \qquad I_D=11.90mA
+		\end{align*}
+		Now I need to check the currents to see which one is correct. 
+		\begin{align*}
+			V_{GS} > V_t &\implies 6-(2.10\cdot 1) = 3.899 > 1 \qquad &\checkmark \\
+			V_{DS} > V_{GS} - V_t &\implies 10-2\cdot 2.10 - 2.10= 3.697 > 3.899-1 \qquad &\checkmark
+		\end{align*}
+		So it must be 2.10mA since there cannot be 2 answers. Now I can find the circuit parameters:
+		\begin{align*}
+			&g_m = \sqrt{2\mu_n C_{ox}\frac{W}{L} I_D} = 1.449 &r_0 = \frac{1}{\lambda I_D} = 4.762k\Omega
+		\end{align*}
+		Now we can move to the ac model. 
+		\begin{center}
+			\includegraphics[width=0.5\linewidth]{mosfet-ex1}
+		\end{center}
+		To find the $\frac{v_o}{v_{sig}}$ I can make a lot of KVL and KCL loops/nodes, and then solve for what we want. 
+		\begin{align*}
+			&v_o = i_0r_0+1k i_s&\text{KVL From out going down through $r_0$}\\
+			&v_o = -(i_0 + g_m v_{gs})(1k//2k)&\text{KVL From out going down right away}\\
+			&v_{sig} = v_{gs} + 1k i_s&\text{KVL From in going down}\\
+			&i_s = i_0 + g_m v_{gs}&\text{KCL}
+		\end{align*}
+		Then I can do a lot of algebra to get:
+		\begin{align*}
+			&v_o = -i_s(1k//2k)\\
+			&v_{sig} = \frac{i_s-\frac{-i_s (1k//2k)-1ki_s}{r_0}}{g_m} + 1k i_s\\
+			&\frac{v_o}{v_{sig}} = \frac{-(1k//2k)}{\frac{1-\frac{-(1k//2k)-1k}{r_0}}{g_m} + 1k} = -0.345
+		\end{align*}
+		If we want to find the \textbf{input resistance}, we can see that there is no current in the gate, so therefore there is infinite resistance. 
+		\begin{align*}
+			R = \frac{V}{I} = \lim_{I\to 0} \frac{V}{I} = \infty
+		\end{align*}
+		If we wanted to find the output resistance as well, we could use a similar method to finding $\frac{v_o}{v_{sig}}$ except we are finding $\frac{v_{test}}{i_{test}}$. We would create lots of KVLs and KCLs and then solve. Finally we would get a value. 
+		
+		
+	\end{mdframed}
 	
 	\section{Complementary MOSFET (CMOS) Inverter}
 	A CMOS is a circuit with 2 MOSFETS, one of which is a PMOS, one is an NMOS. 
@@ -591,7 +697,71 @@
 	\end{align*}
 
 	\begin{mdframed}
-		\textbf{Ex.}
+		\textbf{Ex.} For the following VTC and CMOS inverter circuit, find the voltages and currents at A, B, C, ..., E. $V_{DD} = 3$, $V_{Tn} = 0.5V = -V_{Tp}$, $\mu C_{ox}\frac{W}{L} = 22222\mu A$
+		\begin{center}
+			\includegraphics[width=0.8\linewidth]{cmos-ex}
+		\end{center}
+		If we start with $V_E$, we say that the input is 0V and the current is 0A since the NMOS is in cutoff mode. 
+		
+		Therefore there cannot be a voltage drop so the drain voltage is also 3V. 
+		
+		Then onto $V_D$. Here the input voltage must such that the NMOS almost is exiting cutoff mode. So $V_{GS} = V_{TH} = 0.5$. Therefore the current is still 0A and the drain voltage is also 0.5.
+		
+		To find $V_C$ and $V_B$, we can use the equations for $V_{IL}, V_{IH}$. We get 1.25 and 1.75 V. 
+		
+		Then to get the current for C we will use the saturation mode equation for the NMOS. We could technically use the triode mode equation for the PMOS, but we do not know the drain voltage. So it would not work. For B we use the saturation mode equation for PMOS.
+		\begin{align*}
+			I_S = \frac{1}{2}\mu_n C_{ox} \frac{W}{L} (V_{GS} - V_{TH})^2(1+\lambda V_{DS}) = 0.5\cdot 22.222(1.25-0 - 0.5)^2 = 6.25mA\\
+			I_S = \frac{1}{2}\mu_n C_{ox} \frac{W}{L} (V_{SG} - |V_{TH}|)^2(1+\lambda V_{DS}) = 0.5\cdot 22.222(3-1.75 - 0.5)^2 = 6.25mA
+		\end{align*}
+		Here the input is $\frac{V_{DD}}{2}$.
+		
+		I can let the 2 currents equal to each other since I know that in the previous mode the NMOS is in saturation and the PMOS is in triode mode to get:
+		\begin{align*}
+			\frac{1}{2}\mu_n C_{ox}\frac{W}{L}_n (V_{GS} - V_t)^2 &= \mu_p C_{ox} \frac{W}{L}_p \left((V_{SG} - |V_t|)|V_{DS}|-\frac{1}{2}V_{DS}^2\right)\\
+			\frac{1}{2}(\frac{V_{DD}}{2} - V_t)^2&=\left((3-\frac{V_{DD}}{2} - V_t)(3-V_{out})-\frac{1}{2}(3-V_{out})^2\right)\\
+			&\implies V_{out} = 2^V
+		\end{align*}
+		Then the current can be obtained by just taking one of the sides of that equation:
+		\begin{align*}
+			I_D = \frac{1}{2}\mu_n C_{ox}\frac{W}{L}\left(\frac{V_{DD}}{2}-V_t\right)^2 = \frac{1}{2}\mu_n C_{ox}\frac{W}{L}\left(\frac{3}{2}-0.5\right) = 11.11^{mA}
+		\end{align*}
+		This is the same general procedure as the previous section. Except we start at the place where the PMOS is in saturation, and the NMOS is in triode. Work from the bottom up. 
+		\begin{align*}
+			\mu_n C_{ox} \frac{W}{L}_n \left((V_{GS1}-V_t)V_{DS1} - \frac{1}{2}V_{DS1}^2\right) &= \frac{1}{2}\mu_p C_{ox} \frac{W}{L}_p (V_{SG2} - V_t)^2\\
+			\left((\frac{V_{DD}}{2}-0.5)V_{out} - \frac{1}{2}V_{out}^2\right) &= \frac{1}{2}(3-\frac{V_{DD}}{2}-0.5)^2\\
+			&\implies V_{out} = 1^V
+		\end{align*}
+		
+		To find the current I just need to use one half of the equation:
+		\begin{align*}
+			I_D = \frac{1}{2}\mu_p C_{ox} \frac{W}{L}_p (V_{SG2} - V_t)^2 = \frac{1}{2}\mu_p C_{ox} \frac{W}{L}_p (3-1.5 - 0.5)^2 = 11.11^{mA}
+		\end{align*}
+		Going to A, we know that the current is 0 since the PMOS is in cutoff mode. To find the voltage, we can see that the PMOS is just going from saturation mode to cutoff mode. So using the conditions:
+		\begin{align*}
+			V_{GS} > V_{TH} \implies V_{G}-V_{S} = V_{TH} \implies V_G - 3 = -0.5 \implies V_G = 2.5
+		\end{align*}
+		
+		In summary, all these relationships (in below table) can be shown by analysing the boundary conditions between the different regions, and using the correct formulas.
+		\begin{tabular}{|c|c|c|}
+			\hline
+			Voltage Name & Value (V) & Value of Corresponding Current ($I_{D1} = I_{D2}$) (mA) \\
+			\hline
+			$V_A$ & $2.5^V$ & $0^{mA}$ \\
+			\hline
+			$V_B$ & $1.75^V$ & $6.25^{mA}$ \\
+			\hline
+			$V_C$ & $1.25^V$ & $6.25 ^{mA}$ \\
+			\hline
+			$V_D$ & $0.5^V$ & $0^{mA}$ \\
+			\hline
+			$V_E$ & $3^V$ & $0^{mA}$ \\
+			\hline
+			$V_F$ & $2^V$ & $11.11^{mA}$ \\
+			\hline
+			$V_G$ & $1^V$ & $11.11^{mA}$ \\
+			\hline
+		\end{tabular}
 	\end{mdframed}
 	
 	\subsection{Delay in the CMOS Inverter}
