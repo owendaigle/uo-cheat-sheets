@@ -223,8 +223,6 @@
 		\includegraphics[width=0.5\linewidth]{diodes-plotting-1.7}
 	\end{center}
 	
-	
-	
 	\end{mdframed}
 	
 	\section{DC Power Supply}
@@ -268,6 +266,8 @@
 	\end{align*}
 
 	If we are working with a different model, such as the constant voltage model, then we will need to modify the equations such as increasing the peak voltage by 0.7V. The one exception is the conduction angle formula $\omega \Delta t$ since that is not affected by te extra 0.7V.
+	
+	For most of the equations, we use the peak voltage at the source. The only exception is the capacitor formula where we use the peak voltage at the capacitor. 
 	
 	\begin{mdframed}[]
 		\textbf{Ex. }We have a bridge rectifier with a filter capacitor as shown below. We want to find the PIV if the filter is disconnected, or connected. Then we want to find the capacitence required for a ripple of 2V. We also want to conduction angle (with the filter connected).
@@ -682,7 +682,7 @@
 			\hline
 			2 & Saturation & Triode \\
 			\hline
-			3 & Saturation & Borderline of Triode/Saturation \\
+			3 & Borderline of Triode/Saturation & Borderline of Triode/Saturation \\
 			\hline
 			4 & Triode & Saturation \\
 			\hline
