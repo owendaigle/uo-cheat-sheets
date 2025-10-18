@@ -4,7 +4,7 @@
 % Extra Preamble
 \usepackage{fancyhdr} \usepackage{enumitem} \usepackage{float} \usepackage{soul}
 \usepackage{multicol} \usepackage[compact]{titlesec}
-
+\usepackage[section]{placeins}
 
 % frames with display breaks
 \usepackage{mdframed}
@@ -125,6 +125,8 @@
 	\end{figure}
 	The unit step is 0 when x is negative, and 1 when positive or 0. The impulse is 1 only when x is 0.
 	
+	The unit step function is called $u(t)$ or $u[n]$. The unit pulse is called $\delta(t)$ or $\delta[n]$.
+	
 	\subsection{System Properties}
 	
 	\subsubsection{Memory}
@@ -170,35 +172,194 @@
 	\end{mdframed}
 	
 	\section{LTI Systems}
+	Many systems in the real world are linear and time invariant. An example is a signal amplifier. 
 	
 	\subsection{Convolution in Discrete Time}
+	The convolution sum contains 3 parts. 
+	\begin{itemize}
+		\item $h[n]$ is the response of the LTI system
+		\item $x[n]$ is the input to the LTI system
+		\item $y[n]$ is the output of the LTI system
+	\end{itemize}
+	
+	\begin{mdframed}
+		\textbf{Ex.} Consider a signal amplifier such as a microphone amplifier, or a speaker amplifier. 
+		
+		If we have a microphone or speaker, the input $y[n]$ is the input such as the voice or the demodulated radio signal. 
+		
+		The response $h[n]$ is the algorithms that do all the amplification, and maybe some noise reduction. 
+		
+		The output $y[n]$ is the final audio signal such as what we hear from a speaker. 
+	\end{mdframed}
+	
+	The convolution sum is how we calculate the output given an input and response. We can think of this as we have the response $h[n]$, and then we send through the input $x[n]$ throughout the entire response. 
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/convolution idea"}
+		\label{fig:convolution-idea}
+	\end{figure}
+	
+	The convolution is represented in Equation \ref{eq:7}.
+	\begin{align}
+		y[n] = \sum^{\infty}_{k=-\infty} x[k]h[n-k] = x[n]*h[n] \label{eq:7}
+	\end{align}
+	Note that when finding the convolution, we now consider $k$ as the x axis variable, and $n$ as a constant. 
+	
+	To calculate the convolution sum, we draw $h[n-k]$ and $x[k]$. Then we analyze all overlap regions and find $x[k]\cdot h[n-k]$ for that region. 
 	
 	\subsection{Convolution in Continuous Time}
+	This is very similar to the convolution in discrete time except now we have $h(t), y(t), x(t)$. We also use an integral to calculate the convolution instead of a sum as shown in Equation \ref{eq:8}.
+	\begin{align}
+		y(t)=\int^{\infty}_{-\infty} x(\tau)h(t-\tau)\mathrm d\tau = x(t)*h(t)\label{eq:8}
+	\end{align}
 	
+	Again to solve, we break it up into all the overlap regions and find the product ($x(t)\cdot h(t)$) for each region.
+	
+	\begin{mdframed}
+		\textbf{Ex.} We have a system response $h(t)$. The input $x(t) = \delta(t)$. What is the output $y(t)$?
+		
+		This is very simple. We could go about calculating the convolution sum using equation \ref{eq:8}, but we can also think this through logically. 
+		
+		Recall that the response $h(t)$ is just the stuff that is applied to the input signal $x(t)$. Since the input signal is just a single pulse, it will travel through the system visiting each point only \textbf{once}. 
+		
+		This means that the output will just be the response. 
+		\begin{align*}
+			y(t) = x(t) * h(t) = \delta(t) * h(t) = h(t)
+		\end{align*}
+		This is actually a general equation where:
+		\begin{align}
+			x(t)*\delta(t-t_0) = x(t-t_0)
+		\end{align}
+	\end{mdframed}
+	
+	\subsection{Properties}
+	An LTI system is memoryless if $h[n] = K\delta[n]$ where $k \in \mathbb R$. This means $y[n] = Kx[n]$.
+	
+	An LTI system is invertable if we can get back the input after applying a convolution to the output. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\linewidth]{images/invertability}
+		\label{fig:invertability}
+	\end{figure}
+	
+	An LTI system is causal if $h[n] = 0$ for $n < 0$.
+	
+	An LTI system is stable if for all finite inputs to the response, the output os finite: $\int^{\infty}_{-\infty} |h(t)|\mathrm d \tau < \infty$.
 	\subsection{Differential and Difference Equations}
+	These are equations in the form of:
+	\begin{align*}
+		y[n] = y[n-1] + x[n]
+	\end{align*}
+	We can solve by using the initial rest condition which is a time when the output is 0. Then we can solve for consecutive values of $n$ starting at initial rest. 
 	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
 	\section{Fourier Series}
+	Any periodic signal can be represented by sinusoids (or complex exponentials).
+	
+	We have the signal of $e^{j\omega_0t}$ which is periodic. It contains both sin and cos components. 
+	
+	If we change it to $e^{jk\omega_0 t}$, for $k=0, \pm1, \pm2, ...$ then we say that these are harmonically related. The first harmonic has $k=\pm1$, the second $k=\pm2$, and so on. We have:
+	\begin{align}
+		x(t) = a_0 + \sum^{\infty}_{k=1} \left[a_k e^{jk\omega_0t} + a_{-k}e^{-jk\omega_0t}\right]
+	\end{align}
+	
+	We see that the $e$ terms are constant, only the coefficients change a meaningful amount. We can calculate the coefficients using Equation \ref{eq:9}.
+	\begin{align}
+		a_k &= \frac{1}{T}\int^T_0 x(t)e^{-jk\omega_0 t}\mathrm d t\label{eq:9}\\
+		a_0 &= \frac{\text{AREA}}{T} \qquad \text{Specific Case for DC offset ($a_0$)}
+	\end{align}
+	
+	\begin{mdframed}
+		\textbf{Ex.} Find $a_k$ and $a_0$
+		
+		\centering
+		
+		\includegraphics[width=0.7\linewidth]{images/ex2}
+		
+		\raggedright
+		We need to use Equation \ref{eq:9}.
+		\begin{align*}
+			a_k &= \frac{1}{T}\int^T_0 x(t)e^{-jk\omega_0 t}\mathrm d t = \frac{1}{T}\int^{-T_1}_{T_1} 1\cdot e^{-jk\omega_0 t}\mathrm d t = \frac{1}{Tjk\omega_0}e^{-jk\omega_0 t}|^{T_1}_{-T_1} = \frac{2}{k\omega_0 T}\left[\frac{e^{jk\omega_0 T_1 - e^{-jk\omega_0 T_1}}}{2j}\right]\\
+			&= \frac{2}{k\omega_0T}\cdot \sin(k\omega_0T_1) \qquad \text{Using an identity} \\
+			a_k&= \frac{\sin(k\omega_0 T_1)}{k\pi} \qquad \text{Using $T = \frac{2\pi}{\omega_0}$}\\
+			\\
+			a_0 &= \frac{\text{AREA}}{T} = \frac{2T_1}{T} \qquad \text{We could also use $a_k$ to get 0/0, and use l'Hopital}
+		\end{align*}
+		
+	\end{mdframed}
 	
 	\subsection{Properties of Continuous Fourier Series}
+	If we have coefficients $a_k$ already for a signal $x(t)$, or maybe more than one signal $x(t)$ and $y(t)$, then after applying some changes to the signals we come up with new coefficients by these properties.
+	\begin{center}
+		\begin{tabular}{|c||c|c|}
+			\hline
+			Property & Periodic Signal & Coefficients \\
+			\hline\hline
+			Linearity & $A x(t) + B y(t)$ & $A a_k + B b_k$ \\
+			\hline
+			Time Shifting & $x(t-t_0)$ & $e^{-jk\omega_0 t_0} a_k$ \\
+			\hline
+			Frequency Shifting & $e^{jM\omega_0 t} x(t)$ & $a_{k-M}$ \\
+			\hline
+			Conjugation & $x^*(t)$ & $a^*_{-k}$ \\
+			\hline
+			Time Reversal & $x(-t)$ & $a_{-k}$ \\
+			\hline
+			Time Scaling & $x(\alpha t), \ \alpha > 0$ & $a_k$ \\
+			\hline
+			Periodic Convolution & $\int_T x(\tau) y(t-\tau) \mathrm{d}\tau$ & $T a_k b_k$ \\
+			\hline
+			Multiplication & $x(t) y(t)$ & $\sum^{\infty}_{l=-\infty} a_l b_{k-l}$ \\
+			\hline
+			Differentiation & $\frac{\mathrm{d} x(t)}{\mathrm{d} t}$ & $j k \omega_0 a_k = j k \frac{w \pi}{T} a_k$ \\
+			\hline
+			Parseval's Relation & $\frac{1}{T} \int_T |x(t)|^2 \mathrm{d} t = \sum^{\infty}_{k=-\infty} |a_k|^2$ &  \\
+			\hline
+		\end{tabular}
+	\end{center}
 	
-	\subsubsection{Linearity}
-	
-	\subsubsection{Time Shifting}
-	
-	\subsubsection{Time Reversal}
-	
-	\subsubsection{Time Scaling}
-	
-	\subsubsection{Multiplication}
-	
-	\subsubsection{Conjugate}
-	
-	\subsubsection{Parseval's Relation}
 	
 	\subsection{Properties of Discrete Fourier Series}
+	It is the same idea with discrete signals. We have the equations for the coefficients, and the properties. 
+	
+	\begin{align}
+		x[n] = \sum_{k=N} a_k e^{jk\omega_0 n}\\
+		a_k = \frac{1}{N} \sum _{n=N} x[n]e^{-jk\omega _0}n
+	\end{align}
+	
+	\begin{center}
+		\begin{tabular}{|c||c|c|}
+			\hline
+			Property & Periodic Signal & Coefficients \\
+			\hline\hline
+			Linearity & $A x[n] + B y[n]$ & $A a_k + B b_k$ \\
+			\hline
+			Time Shifting & $x[n-n_0]$ & $e^{-jk\omega_0 n_0} a_k$ \\
+			\hline
+			Frequency Shifting & $e^{jM\omega_0 n} x[n]$ & $a_{k-M}$ \\
+			\hline
+			Conjugation & $x^*[n]$ & $a^*_{-k}$ \\
+			\hline
+			Time Reversal & $x[-n]$ & $a_{-k}$ \\
+			\hline
+			Time Scaling & $x_m[n]$ & $a_k$ \\
+			\hline
+			Periodic Convolution & $\sum_{r=N} x[r] y[n-r]$ & $N a_k b_k$ \\
+			\hline
+			Multiplication & $x[n] y[n]$ & $\sum_{l=N} a_l b_{k-l}$ \\
+			\hline
+			Differentiation & $x[n] - x[n-1]$ & $(1-e^{-jk\omega_0})a_k$ \\
+			\hline
+			Parseval's Relation & $\frac{1}{T} \sum_{n=N} |x[n]|^2 = \sum_{n=N} |a_k|^2$ &  \\
+			\hline
+		\end{tabular}
+	\end{center}
 	
 	% MIDTERM MATERIAL ENDS HERE
 	\section{Fourier Transformations}
+	We can also represent non periodic (aperiodic) signals by sinusoids using Fourier Transformations.
 	
 	\section{Discrete Time Fourier Transformation}
 	
