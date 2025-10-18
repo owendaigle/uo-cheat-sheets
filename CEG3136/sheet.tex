@@ -5,6 +5,8 @@
 \usepackage{fancyhdr} \usepackage{enumitem} \usepackage{float} \usepackage{soul}
 \usepackage{multicol} \usepackage[compact]{titlesec}
 \usepackage{listings}
+\usepackage{pdfpages}
+
 
 
 % frames with display breaks
@@ -566,6 +568,10 @@ ENDP
 	An interrupt is a signal that occurs that tells the controller that it needs to stop whatever it is currently doing, save the state using the stack, and then move on to the interrupt service routine (ISR). After it then restores the stack, and goes back to the user program.
 	
 	It needs to save \verb*|xPSR|, \verb*|PC|, \verb*|LR|, \verb*|R12|, \verb*|R3|, \verb*|R2|, \verb*|R1|, and \verb*|R0| . Therefore it can use any of those registers to store data. Any other registers that are used must be returned to their original state. 
+	
+	\newpage 
+	\section{Appendix}
+	\includepdf[pages=-]{arm_reference_sheet.pdf}
 	
 	
 	
