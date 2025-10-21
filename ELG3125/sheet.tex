@@ -5,6 +5,7 @@
 \usepackage{fancyhdr} \usepackage{enumitem} \usepackage{float} \usepackage{soul}
 \usepackage{multicol} \usepackage[compact]{titlesec}
 \usepackage[section]{placeins}
+\usepackage{pdfpages}
 
 % frames with display breaks
 \usepackage{mdframed}
@@ -137,15 +138,16 @@
 	\subsubsection{Invertibility}
 	A system is invertible if distinct inputs lead to distinct outputs. 
 	
+	\begin{mdframed}
+		\textbf{Ex.} Example found in 
+	\end{mdframed}
+	
 	\subsubsection{Causality}
 	A system is causal if the output at any time depends only on input values of present and in the past. It does not depend on any future values. 
 	
 	This is also referred to as being nonanticipative.
 	
 	Note that all memoryless systems are causal.
-	\begin{mdframed}
-		\textbf{Ex.}
-	\end{mdframed}
 	
 	\subsubsection{Stability}
 	A system is stable if when inputs are bounded, the outputs are always bounded. So:
@@ -158,8 +160,16 @@
 	A system is time invariant if a time shift in the input results in an identical time shift in the output. 
 	
 	\begin{mdframed}
-		\textbf{Ex.}
+		\textbf{Ex.} Is y(t) = x(6t) time invariant?
+		
+		We can do:
+		\begin{align*}
+			y(t-t_0) &= x(6t-6t_0) \qquad \text{Now we delay by $-t_0$}\\
+			y(t) &= x(6t-5t_0)  \qquad \text{Now we delay by $+t_0$}\\
+			&\ne x(6t) \qquad \text{So it is NOT time invariant.}
+		\end{align*}
 	\end{mdframed}
+
 	
 	\subsubsection{Linearity}
 	A system is linear if Equation \ref{eq:6} is satisfied.
@@ -168,8 +178,43 @@
 	\end{align}
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. } Is $y(t) = x(t)^2$ linear?
+		
+		We know intuitively that the answer is no here. But we can prove this using the relation:
+		\begin{align*}
+			y_1(t) &= x_1(t)^2\\
+			y_2(t) &= x_2(t)^2\\
+			x_3(t) &= ax_1(t) + bx_2(t)\\
+			y_3(t) &= ay_1(t) + by_2(t)\\
+			y_3(t) = ax_1(t)^2 + bx_2(t)^2 &\ne \left[ax_1(t) + bx_2(t)\right]^2 = x_3(t)^2
+		\end{align*}
+		Basically what we did here is find the left side of the equation by finding the output twice, vs finding the left side by doing the input twice. 
 	\end{mdframed}
+	
+	\begin{mdframed}
+		\textbf{Ex. } Find all the properties of $y(t) = \cos(t)x(t+1)$.
+		
+		We see that it is with memory since it relies on $t+1$.
+		
+		It is not causal since it depends on a future value $t+1$.
+		
+		If we have an input that is finite, so $x(t) < \infty$, then we also have $\cos(t) < \infty$ since $-1 \ge \cos(x)\ge 1$.
+		
+		To determine if it is time variant, we need to do $t = t-t_0$ and then remove the $t_0$ from each side. We see if we are still the same.
+		\begin{align*}
+			y(t-t_0) &= \cos(t-t_0)x(t+1-t_0)\\
+			\implies \qquad  y(t) &= \cos(t-t_0) x(t+1) \qquad\qquad  X
+		\end{align*}
+		So it is not time invariant. 
+		To see if it is linear we check the equation. 
+		\begin{align*}
+			y_1(t) &= \cos(t)x_1(t+1)\\
+			y_2(t) &= \cos(t) x_2(t+1)\\
+			y_3(t) &= y_1(t) + y_2(t) =  \cos(t)x_1(t+1) +  \cos(t)x_2(t+1) \\&= \cos(t) \left[x_1(t+1) + x_2(t+1)\right] = ay_1(t) + by_2(t)
+		\end{align*}
+	\end{mdframed}
+	
+	
 	
 	\section{LTI Systems}
 	Many systems in the real world are linear and time invariant. An example is a signal amplifier. 
@@ -232,6 +277,37 @@
 		\end{align}
 	\end{mdframed}
 	
+	\begin{mdframed}
+		\textbf{Ex. } We have an input signal and a convolution. Find the output.
+		\begin{align*}
+			x(t) = \delta (t-1) + e^{-3t} u(t) \qquad h(t) = u(t-1) - u(t-5)
+		\end{align*}
+		To find the output, I need to take the convolution of these two signals. I will need to plot $h(-k+n)$, and it will be helpful to have a plot of the input as well.
+		
+		I see that $x(t)$ looks complicated to plot. So I will do it in two plots. 
+		
+		\centering
+		\includegraphics[width=0.99\linewidth]{images/ex3}
+
+		\raggedright
+			
+		Now we need to run the response $h(n-k)$ through both other functions.
+		
+		Using the first delta function, I have 3 areas:
+		\begin{align*}
+			&t+1 < n-5 \implies t<-6 & =0\\
+			&t-1 > n+1 > n-5 \implies n-2 > t > n-6 & =1\\
+			&t+1 > n-1 \implies t > n-2 & =0
+		\end{align*}
+		Then for the second function, I also have 3 regions. 
+		\begin{align*}
+			&t < n-5 & = \int_{-5}^{-1}e^{-3(t-\tau)}d\tau\\
+			&n-1 > t > n-5  & =\int_{t}^{-1} e^{-3(t-\tau)}d\tau\\
+			&t > n-1 \implies n > n-2 & =0
+		\end{align*}
+		Now we can add up the 2 functions to get 5 regions. 
+	\end{mdframed}
+	
 	\subsection{Properties}
 	An LTI system is memoryless if $h[n] = K\delta[n]$ where $k \in \mathbb R$. This means $y[n] = Kx[n]$.
 	
@@ -253,7 +329,27 @@
 	We can solve by using the initial rest condition which is a time when the output is 0. Then we can solve for consecutive values of $n$ starting at initial rest. 
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. } We have a causal LTI system described by $y[n] - \frac{1}{3} y[n-1] = x[n]$
+		
+		The impulse response $h[n]$ can be found by remembering that if we let $x[n] = \delta[n]$ then $y[n]=h[n]$.
+		\begin{align*}
+			h[n] = \delta[n] + \frac{1}{3} h[n-1]
+		\end{align*}
+		Then since it is causal, we know that when $n<0$, $h[n]=0$. So I can try a few values to get a pattern.
+		\begin{align*}
+			h[0] &= \delta[0] + \frac{1}{3}h[-1] = 1 + \frac{1}{3} (0) = 1\\
+			h[1] &= \delta[1] + \frac{1}{3}h[0] = \frac{1}{3} (1) = \frac{1}{3}\\
+			h[2] &= 0 + \frac{1}{3} \frac{1}{3} = \left[\frac{1}{3}\right]^2\\
+			h[3] &= \left[\frac{1}{3}\right]^3\\
+			h[n] &= \left[\frac{1}{3}\right]^n
+		\end{align*}
+		Now we know $h[n]$. We can do many things. 
+		
+		We know the system is stable since if we increase $n \to \infty$ then $h[n]$ is finite. 
+		
+		We also can find the inverse impulse response $h'[n]$ by just swapping $x$ for $y$ in the original equation and then solving using the same method. 
+		
+%		If we want to find the output given a certain input we can. We just use the convolution sum to do so. We would end up with three regions, the first of which $y[n]=0$.
 	\end{mdframed}
 	\section{Fourier Series}
 	Any periodic signal can be represented by sinusoids (or complex exponentials).
@@ -361,7 +457,86 @@
 	\section{Fourier Transformations}
 	We can also represent non periodic (aperiodic) signals by sinusoids using Fourier Transformations.
 	
+	We do this by taking a periodic signal, and increasing the period to be very large. This makes it so each pulse of the periodic signal is infinitesimally far apart, which means it is basically a non periodic signal.
+	
+	We can represent a signal in either the time domain (what we usually do) or the frequency domain. The frequency domain is similar to the fourier series representation of a periodic function. 
+	\begin{align}
+		x(t) &= \frac{1}{2\pi} \int_{-\infty}^\infty X(\jmath \omega) e^{\jmath\omega t}\mathrm d \omega \qquad \text{Time Domain (Inverse Fourier Transform)} \\
+		x(\jmath \omega) &= \int^\infty_{-\infty} x(t) e^{-\jmath \omega t}\mathrm d t \qquad \text{Frequency Domain (Fourier Transform)}
+	\end{align} 
+	
+	We can also fourier transform periodic signals into the frequency domain using:
+	\begin{align}
+		X(\jmath \omega) = \sum^\infty_{-\infty}2\pi a_k \delta(\omega - k\omega_0)
+	\end{align}
+	
+	These are some common fourier transform pairs:
+	\[
+	\begin{array}{|c|c|}
+		\hline
+		e^{-a t} u(t) \quad \Longleftrightarrow \quad \frac{1}{a + j\omega},\quad a>0 &
+		e^{-a|t|} \quad \Longleftrightarrow \quad \frac{2a}{a^2 + \omega^2},\quad a>0 \\
+		
+		\hline
+		x(t) = \left\{
+		\begin{array}{ll}
+			1, & |t| < T_1 \Longleftrightarrow \frac{2\sin\omega T_1}{\omega} \\
+			0, & |t| > T_1 \Longleftrightarrow \frac{2\sin\omega T_1}{\omega}
+		\end{array}
+		\right. &
+		\frac{\sin Wt}{\pi t} \Longleftrightarrow X(j\omega) = 
+		\left\{
+		\begin{array}{ll}
+			1, & |\omega| < W \\
+			0, & |\omega| > W 
+		\end{array}
+		\right. \\
+		
+		\hline
+		\delta(t) \Longleftrightarrow 1 & \delta(t-t_0) \Longleftrightarrow e^{-j\omega t_0} \\
+		
+		\hline
+		1 \Longleftrightarrow 2\pi \delta(\omega) & e^{j\omega_0 t} \Longleftrightarrow 2\pi\delta(\omega-\omega_0) \\
+		
+		\hline
+		\sin\omega_0 t \Longleftrightarrow \frac{\pi}{j}\delta(\omega-\omega_0) - \frac{\pi}{j}\delta(\omega+\omega_0) &
+		\cos\omega_0 t \Longleftrightarrow \pi\delta(\omega-\omega_0) + \pi\delta(\omega+\omega_0) \\
+		
+		\hline
+		\sum_{k=-\infty}^{\infty} a_k e^{j k \omega_0 t} \Longleftrightarrow \sum_{k=-\infty}^{\infty} 2\pi a_k \delta(\omega - k \omega_0) &
+		\sum_{k=-\infty}^{\infty}\delta(t - kT) \Longleftrightarrow \frac{2\pi}{T} \sum_{k=-\infty}^{\infty} \delta\left(\omega - \frac{2\pi k}{T_0}\right) \\
+		
+		\hline
+	\end{array}
+	\]
+	
+	\subsection{Properties}
+	We also have a lot of properties of these transforms such as the derivative which is very useful.
+	
+	Below is a table with some of the ones:
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			Time Shifting & $x(t) \Longleftrightarrow e^{-j\omega t_0} X(j\omega)$ \\
+			\hline
+			Conjugate & $x^*(t) \Longleftrightarrow X^*(-j\omega)$ \\
+			\hline
+			Differentiation & $\frac{\mathrm{d}x(t)}{\mathrm{d}t} \Longleftrightarrow j\omega X(j\omega)$ \\
+			\hline
+			Parseval's Relation & $\int_{-\infty}^{\infty} |x(t)|^2 \mathrm{d}t \Longleftrightarrow \frac{1}{2\pi} \int_{-\infty}^{\infty} |X(j\omega)|^2 \mathrm{d}\omega$ \\
+			\hline
+			Convolution & $y(t) = h(t) * x(t) \Longleftrightarrow Y(j\omega) = H(j\omega) X(j\omega)$ \\
+			\hline
+			Multiplication & $r(t) = s(t)p(t) \Longleftrightarrow R(j\omega) = \frac{1}{2\pi} \int_{-\infty}^{\infty} S(j\theta) P(j(\omega-\theta)) \mathrm{d}\theta$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	
 	\section{Discrete Time Fourier Transformation}
+	This is very similar to the fourier transforms in continuous time, but there are slight differences. 
+	
+	The idea is exactly the same, it is just a few equations that we use are a bit different.
 	
 	\section{Filters}
 	
@@ -371,5 +546,7 @@
 	
 	\section{Laplace Transformations}
 	
-	
+	\newpage 
+	\section{Appendix}
+	\includepdf[pages=-]{Formula-Sheets}
 \end{document}
