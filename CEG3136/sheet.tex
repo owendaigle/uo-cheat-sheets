@@ -554,7 +554,7 @@ ENDP
 	\section{C and Assembly}
 	When we have C code, it goes through a lot of steps to get into ARM assembly to be loaded onto the microcontroller.
 	\begin{align*}
-		Proprocessor \to Compiler \to Assembler \to Linker \to Loader \text{ }and\text{ } Debugger \to \\MCU (thru \text{ }programmer)
+		Proprocessor \to Compiler \to Assembler \to Linker \to Loader \to MCU (thru \text{ }programmer)\\\to Debugger
 	\end{align*}
 	
 	Typically, C will set up data so every word starts at an even multiple of 4 bits address. This is for efficiency. Same idea with half words, but every 2 bits. C does this by padding extra space. We can use the \verb*|__packed| keyword in c to not pad the extra space. But this can cause weird behavior. 
