@@ -149,6 +149,8 @@
 	
 	Note that all memoryless systems are causal.
 	
+	Basically if we see something like $x(t+1)$, it is non causal. If we see something like $(t+1) x(t)$, it is likely causal. 
+	
 	\subsubsection{Stability}
 	A system is stable if when inputs are bounded, the outputs are always bounded. So:
 	\begin{align}
@@ -293,17 +295,19 @@
 			
 		Now we need to run the response $h(n-k)$ through both other functions.
 		
+		Note that k is the variable that we change. So we change 
+		
 		Using the first delta function, I have 3 areas:
 		\begin{align*}
-			&t+1 < n-5 \implies t<-6 & =0\\
-			&t-1 > n+1 > n-5 \implies n-2 > t > n-6 & =1\\
-			&t+1 > n-1 \implies t > n-2 & =0
+			&n-1<1 \implies n<2 & =0\\
+			&1 < n-1 < 5 \implies 2 < n < 6 & =1\\
+			&n-1 > 5 \implies n > 6 & =0
 		\end{align*}
 		Then for the second function, I also have 3 regions. 
 		\begin{align*}
-			&t < n-5 & = \int_{-5}^{-1}e^{-3(t-\tau)}d\tau\\
-			&n-1 > t > n-5  & =\int_{t}^{-1} e^{-3(t-\tau)}d\tau\\
-			&t > n-1 \implies n > n-2 & =0
+			& k -1 < 0 \implies k<1 & = 0\\
+			&0 < k-1 < 4 \implies 1 < k < n & \int_1^{n} e^{-3(t-k)}\mathrm d k = e^{-3t} \int_1^n e^{3k} \mathrm d k\\
+			&k-1 > 4 \implies k > 5 & =0
 		\end{align*}
 		Now we can add up the 2 functions to get 5 regions. 
 	\end{mdframed}
@@ -517,7 +521,7 @@
 	\begin{center}
 		\begin{tabular}{|c|c|}
 			\hline
-			Time Shifting & $x(t) \Longleftrightarrow e^{-j\omega t_0} X(j\omega)$ \\
+			Time Shifting & $x(t-t_0) \Longleftrightarrow e^{-j\omega t_0} X(j\omega)$ \\
 			\hline
 			Conjugate & $x^*(t) \Longleftrightarrow X^*(-j\omega)$ \\
 			\hline
