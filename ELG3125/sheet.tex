@@ -328,9 +328,12 @@
 	\subsection{Differential and Difference Equations}
 	These are equations in the form of:
 	\begin{align*}
-		y[n] = y[n-1] + x[n]
+		y[n] = y[n-1] + x[n] \qquad \text{Difference Equation}\\
+		\frac{dy(t)}{dt} + y(t) = x(t) \qquad \text{Differential Equation}
 	\end{align*}
-	We can solve by using the initial rest condition which is a time when the output is 0. Then we can solve for consecutive values of $n$ starting at initial rest. 
+	We can solve difference equations by using the initial rest condition which is a time when the output is 0. Then we can solve for consecutive values of $n$ starting at initial rest. 
+	
+	For differential equations we need to find the homogeneous solution (input is 0) and the particular solution. Then we sum them together. 
 	
 	\begin{mdframed}
 		\textbf{Ex. } We have a causal LTI system described by $y[n] - \frac{1}{3} y[n-1] = x[n]$
@@ -353,7 +356,11 @@
 		
 		We also can find the inverse impulse response $h'[n]$ by just swapping $x$ for $y$ in the original equation and then solving using the same method. 
 		
-%		If we want to find the output given a certain input we can. We just use the convolution sum to do so. We would end up with three regions, the first of which $y[n]=0$.
+		If we want to find the output given a certain input we can. We just use the convolution sum to do so. We would end up with three regions, the first of which $y[n]=0$.
+	\end{mdframed}
+	
+	\begin{mdframed}
+		\textbf{Ex. } % put differential equation example here
 	\end{mdframed}
 	\section{Fourier Series}
 	Any periodic signal can be represented by sinusoids (or complex exponentials).
