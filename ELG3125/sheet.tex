@@ -530,6 +530,10 @@
 			\hline
 			Time Shifting & $x(t-t_0) \Longleftrightarrow e^{-j\omega t_0} X(j\omega)$ \\
 			\hline
+			Time Reversal & $x(-t) \Longleftrightarrow X(-\jmath\omega)$\\
+			\hline
+			Time and Frequency Scaling & $x(\alpha t) \Longleftrightarrow \frac{1}{|\alpha|} X\left(\frac{\jmath \omega}{\alpha}\right)$\\
+			\hline
 			Conjugate & $x^*(t) \Longleftrightarrow X^*(-j\omega)$ \\
 			\hline
 			Differentiation & $\frac{\mathrm{d}x(t)}{\mathrm{d}t} \Longleftrightarrow j\omega X(j\omega)$ \\
@@ -548,6 +552,57 @@
 	This is very similar to the fourier transforms in continuous time, but there are slight differences. 
 	
 	The idea is exactly the same, it is just a few equations that we use are a bit different.
+	
+	We get the two equations of:
+	\begin{align}
+		x[n] &= \frac{1}{2\pi} \int_{2\pi} X(e^{j\omega}) e^{\jmath \omega n} \mathrm d \omega \qquad \text{Time Domain (Inverse Fourier Transform)} \\
+		x[e^{\jmath \omega}] &= \sum^\infty_{n=-\infty} x[n]e^{-j\omega n} \qquad \text{Frequency Domain (Fourier Transform)}
+	\end{align} 
+	
+	\begin{tabular}{|c|c|}
+		\hline
+		
+		$\delta[n] \Longleftrightarrow 1$ & $a^n u[n], |a| < 1 \Longleftrightarrow \frac{1}{1 - a e^{-j\omega}}$ \\
+		
+		\hline
+		
+		$a^{|n|}, |a| < 1 \Longleftrightarrow \frac{1-a^2}{1-2a\cos\omega + a^2}$ & $x[n] = \begin{cases} 1, & |n| \leq N_1 \\ 0, & |n| > N_1 \end{cases} \Longleftrightarrow \frac{\sin \omega (N_1 + 1/2)}{\sin(\omega / 2)}$ \\
+		
+		\hline
+		
+		$e^{j\omega_0 n} \Longleftrightarrow 2\pi \delta(\omega-\omega_0), -\pi \leq \omega \leq \pi $& $\sum\limits_{k=-\infty}^{+\infty}\delta[n-kN] \Longleftrightarrow \frac{2\pi}{N}\sum\limits_{k=-\infty}^{\infty}\delta\left( \omega - \frac{2\pi k}{N} \right) $\\
+		
+		\hline
+		
+		$\cos \omega_0 n \Longleftrightarrow \pi \delta(\omega - \omega_0 ) + \pi \delta(\omega + \omega_0)$ &$ \sum_{k=\langle N \rangle} a_k e^{jk(2\pi/N)n} \Longleftrightarrow \sum_{k=-\infty}^{+\infty} 2\pi a_k \delta \left( \omega - \frac{2\pi k}{N} \right) $\\
+		
+		\hline
+	\end{tabular}
+	
+	\subsection{Properties}
+	We also have a lot of properties of these transforms.
+	
+	Below is a table with some of the ones:
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			Time Shifting & $x[n-n_0] \Longleftrightarrow e^{-j\omega n_0} X(e^{j\omega})$ \\
+			\hline
+			Time Reversal & $x[-n] \Longleftrightarrow X(e^{-\jmath\omega})$\\
+			\hline
+			Conjugate & $x^*[n] \Longleftrightarrow X^*(e^{-j\omega})$ \\
+			\hline
+			Time Difference & $x[n]-x[n-1] \Longleftrightarrow (1-e^{-\jmath \omega})X(e^{\jmath\omega})$ \\
+			\hline
+			Parseval's Relation & $\int_{-\infty}^{\infty} |x[n]|^2 \mathrm{d}t \Longleftrightarrow \frac{1}{2\pi} \int_{-\infty}^{\infty} |X(e^{\jmath\omega})|^2 \mathrm{d}\omega$ \\
+			\hline
+			Convolution & $y[n] = h[n] * x[n] \Longleftrightarrow Y(e^{j\omega}) = H(e^{j\omega}) X(e^{j\omega})$ \\
+			\hline
+			Multiplication & $r[n] = s[n]p[n] \Longleftrightarrow R(j\omega) = \frac{1}{2\pi} \int_{-\infty}^{\infty} S(e^{\jmath\omega}) P(e^{\jmath(\omega-\theta)}) \mathrm{d}\theta$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	% finish above table converting to n
 	
 	\section{Filters}
 	
