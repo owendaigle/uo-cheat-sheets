@@ -519,7 +519,7 @@ ADDEQ ...
 	
 	We have the instructions \verb*|PUSH <reg list>| and \verb*|POP <reg list>|. 
 	
-	When we push or pop multiple registers, the highest number register is pushed first. 
+	When we push or pop multiple registers, the highest number register is pushed first, and popped last. 
 	
 	\begin{mdframed}
 		\textbf{Ex.} \verb*|PUSH {r6, r8, r7}|
@@ -527,6 +527,14 @@ ADDEQ ...
 		This instruction will first push \verb|r8|, followed by \verb*|r7| and then finally \verb*|r6|.
 		
 		It would be equivalent to \verb*|PUSH {r6, r7, r8}| and to \verb*|PUSH {r8, r6, r7}| and so on.
+	\end{mdframed}
+	
+	\begin{mdframed}
+		\textbf{Ex.} \verb*|POP {r6, r8, r7}|
+		
+		This instruction will first pop \verb|r6|, followed by \verb*|r7| and then finally \verb*|r8|.
+		
+		It would be equivalent to \verb*|POP {r6, r7, r8}| and to \verb*|POP {r8, r6, r7}| and so on.
 	\end{mdframed}
 	
 	\begin{mdframed}
