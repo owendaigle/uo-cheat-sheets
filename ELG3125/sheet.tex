@@ -548,6 +548,21 @@
 	\end{center}
 	
 	
+	\begin{mdframed}
+		\textbf{Ex. } %ex
+	\end{mdframed}
+	
+	
+	\begin{mdframed}
+		\textbf{Ex. } %ex
+	\end{mdframed}
+	
+	
+	\begin{mdframed}
+		\textbf{Ex. } %ex
+	\end{mdframed}
+	
+	
 	\section{Discrete Time Fourier Transformation}
 	This is very similar to the fourier transforms in continuous time, but there are slight differences. 
 	
@@ -602,11 +617,115 @@
 			\hline
 		\end{tabular}
 	\end{center}
-	% finish above table converting to n
+
+	
+	
+	\begin{mdframed}
+		\textbf{Ex. } 
+	\end{mdframed}
 	
 	\section{Filters}
+	Filters are used to pass/stop certain frequencies. Low pass filters pass low frequencies and block high frequencies, high pass filters block low frequencies and pass high frequencies, and band pass filters pass a certain band and block low and high frequencies. 
+	
+	These filters are made up of a combination of Resistors, Capacitors, and Inductors. A common design is an RL (Resistor and Inductor) or RC (Resistor and Capacitor) filter.
+	
+	When analyzing these circuits, we usually need to create a differential equation by using fourier transforms. It is useful to know information about inductors and capacitors:
+	\begin{align*}
+		\text{Capacitors} \qquad & I_C = C \frac{\mathrm d V}{\mathrm d t}\\
+		\text{Inductors} \qquad & V_L = L \frac{\mathrm d I}{\mathrm d t}
+	\end{align*}
+	
+	\begin{mdframed}
+		\textbf{Ex. } %from A7
+	\end{mdframed}
 	
 	\section{Bode Plot}
+	This is a way to graphically represent fourier transforms. If we want to plot $x(t)$, we can actually plot $20\log_{10} |X(\jmath \omega)|$ and we will get a straight line equation.
+	
+	Here we have the x axis being $10^t$ so $1, 10, 100, 1000, ...$
+	
+	The y axis would be in decibals (dB) linearly so $..., -20, -10, 0, 10, 20, ...$
+	
+	Here knowing the log properties are very useful such as:
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			$\log_a (xy) = \log_a x + \log_a y$ & $\log_a$ $\left(\frac{x}{y}\right)$ = $\log_a x - \log_a y$ \\
+			\hline
+			$\log 1 = 0$ & $\log_a (x^{}n) = n \log_a (x)$ \\
+			\hline
+			$\log_a\left(\frac{1}{x}\right) = -\log_a (x)$ &  \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	When finding bode plots, we want to get the equation into the form of:
+	\begin{align*}
+		&\frac{\jmath\omega}{n} + 1 &\text{OR}  &&\frac{1}{\frac{\jmath\omega}{n}+1}
+	\end{align*}
+	Then on the x axis, we have the values of n. This is where it changes. If we have the first form above, it is a positive increasing form, and the second form is a negative decreasing form. This can more easily be seen in the example below. There is math that shows this, but it is complicated. 
+	
+	\begin{mdframed}
+		\textbf{Ex.} Find the bode plot of the following: %from A7 about bode plot
+		\begin{align*}
+			\frac{250}{(\jmath\omega)^2 + 50.5\jmath\omega + 25}
+		\end{align*}
+		I start by modifying the equation to be in the correct form. I can factor the denominator and then break up into two parts. Then I can apply log rules. 
+		\begin{align*}
+			&\implies \frac{250}{1} \cdot \frac{1}{\frac{\jmath\omega}{1}+50}\cdot\frac{1}{\frac{\jmath\omega}{1}+0.5} = \frac{250}{50\cdot0.5} \cdot \frac{1}{\frac{\jmath\omega}{50}+1}\cdot\frac{1}{\frac{\jmath\omega}{0.5}+1} \\
+			&= 10\cdot \frac{1}{\frac{\jmath\omega}{50}+1}\cdot\frac{1}{\frac{\jmath\omega}{0.5}+1}\\
+			\text{Applying Log} &\implies 20\log(10) + 20\log(\frac{1}{\frac{\jmath\omega}{50}+1}) + 20\log(\frac{1}{\frac{\jmath\omega}{0.5}+1}) \\
+			&= 20 + 20\log(\frac{1}{\frac{\jmath\omega}{50}+1}) + 20\log(\frac{1}{\frac{\jmath\omega}{0.5}+1})
+		\end{align*}
+		We see that both of these slopes will be decreasing due to it being a fraction. 
+		
+		We see that before 0.5, we will have a constant of 20 dB. After 0.5, but before 50, we have slope of -20dB. After 50, we add on a slope of -20dB to get -40dB. We get a graph of the similar form as below. This is not to scale.
+		
+		\begin{center}
+			\includegraphics[width=0.4\linewidth]{"bode ex"}
+		\end{center}
+		
+	\end{mdframed}
+	
+	\subsection{Damping}
+	This is a value that describes how systems respond to being disturbed. Lower values mean it oscillates for a long time and returns to equilibrium slowly, $1$ means it returns to equilibrium quickly, and higher values mean it does not oscillate and returns to equilibrium slowly. 
+	\begin{itemize}
+		\item $\zeta < 1$: Underdamped
+		\item $\zeta = 1$: Critically Damped
+		\item $\zeta > 1$: Overdamped
+	\end{itemize}
+	
+	These damping values can be found from the equation of the impulse response of a system in the frequency domain. Specifically the coefficients for the $Y(\jmath\omega)$, $Y(\jmath\omega)\jmath \omega$, and $Y(\jmath\omega)(\jmath\omega)^2$ terms.
+	\begin{align}\label{eq:damping}
+		H(\jmath\omega) = \frac{\omega^2}{(\jmath\omega_n)^2 + 2w_n \zeta (\jmath\omega) + \omega_n^2}
+	\end{align}	
+	$\omega_n$ and $\zeta$ are just resistance, inductance, and capacitance:
+	\begin{align*}
+		&\zeta = \frac{R}{2\omega_n L} = \frac{R}{2\sqrt{\frac{L}{C}}} & \omega_n = \frac{1}{\sqrt{LC}}
+	\end{align*}
+	
+	\begin{mdframed}
+		\textbf{Ex. }Find the damping of this system: %from A7 about damping
+		\begin{align*}
+			5\frac{\mathrm d ^2 y(t)}{\mathrm d t^2} + 4\frac{\mathrm d y(t)}{\mathrm d t} + 5y(t) = 7x(t)
+		\end{align*}
+		I will use equation \ref{eq:damping} to solve. 
+		\begin{align*}
+			5(\jmath\omega)^2 Y(\jmath\omega) + 4\jmath\omega Y(\jmath\omega) + 5Y(\jmath\omega) &= 7X(\jmath\omega)\\
+			\implies Y(\jmath\omega)\left[5(\jmath\omega)^2 + 4(\jmath\omega) + 5\right] &= 7X(\jmath\omega)\\
+			\implies H(\jmath\omega) = \frac{Y(\jmath\omega)}{X(\jmath\omega)} &= \frac{7}{5(\jmath\omega)^2 + 4(\jmath\omega) + 5}
+		\end{align*}
+		Then to get it in the correct form, I will make it so the numerator $\omega_n^2$ is the same as the last term on the denominator $\omega_n^2$. 
+		\begin{align*}
+			\implies \frac{7}{5}\frac{1}{(\jmath\omega)^2 + \frac{4}{5}(\jmath\omega) + 1}
+		\end{align*}
+		And now it is in the right form, so I can solve for $\omega_n$ and then $\zeta$. 
+		\begin{align*}
+			\omega_n^2 &= 1 \implies w_n = 1\\
+			2\omega_n\zeta &= \frac{4}{5} \implies \zeta = \frac{\frac{4}{5}}{2\omega_n} = \frac{\frac{4}{5}}{2} = \frac{4}{10} = \frac{2}{5}
+		\end{align*}
+		Therefore since $\zeta < 1$ it is underdamped. 
+	\end{mdframed}
 	
 	\section{Sampling}
 	
