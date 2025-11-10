@@ -621,7 +621,7 @@
 	
 	
 	\begin{mdframed}
-		\textbf{Ex. } 
+		\textbf{Ex. } %quiz 8 question here\texttt{} 
 	\end{mdframed}
 	
 	\section{Filters}
@@ -636,7 +636,26 @@
 	\end{align*}
 	
 	\begin{mdframed}
-		\textbf{Ex. } %from A7
+		\textbf{Ex. } Using the following circuit, find the differential equation relating $x$ and $y$.  %from A7
+		\begin{center}
+			\includegraphics[width=0.5\linewidth]{"images/filter ex"}
+		\end{center}
+		
+		I start with a KVL:
+		\begin{align*}
+			x(t) = 1^\Omega I + 1^H \frac{\mathrm d I}{\mathrm d t} + y(t)
+		\end{align*}
+		Then I need to find what $I$ is in relation to $y$ or $x$. I can get this relation using the capacitor equation noting that the voltage over the cap is just $y$. 
+		\begin{align*}
+			I_C = C \frac{\mathrm d V}{\mathrm d t} = 1\cdot \frac{\mathrm d y(t)}{\mathrm d t} = \frac{\mathrm d y(t)}{\mathrm d t}
+		\end{align*}
+		To do this easily I can go into the frequency domain. I can then just sub this $I_C$ as $I$ into the main KVL equation in the frequency domain.
+		\begin{align*}
+			I_C &= \frac{\mathrm d Y(\jmath\omega)}{\mathrm d t} = \jmath\omega Y(\jmath\omega)\\
+			X(\jmath\omega) &= \jmath\omega Y(\jmath\omega) + \frac{\mathrm d \jmath\omega Y(\jmath\omega)}{\mathrm d t} + Y(\jmath\omega) = \jmath\omega Y(\jmath\omega) + (\jmath\omega)^2 Y(\jmath\omega) + Y(\jmath\omega)
+		\end{align*}
+		I can then easily find the frequency response of this, and calculate the output $Y(\jmath\omega)$ and then get $y(t)$ given some $x(t)$. 
+		
 	\end{mdframed}
 	
 	\section{Bode Plot}
@@ -697,7 +716,7 @@
 	
 	These damping values can be found from the equation of the impulse response of a system in the frequency domain. Specifically the coefficients for the $Y(\jmath\omega)$, $Y(\jmath\omega)\jmath \omega$, and $Y(\jmath\omega)(\jmath\omega)^2$ terms.
 	\begin{align}\label{eq:damping}
-		H(\jmath\omega) = \frac{\omega^2}{(\jmath\omega_n)^2 + 2w_n \zeta (\jmath\omega) + \omega_n^2}
+		H(\jmath\omega) = \frac{\omega_n^2}{(\jmath\omega_n)^2 + 2w_n \zeta (\jmath\omega) + \omega_n^2}
 	\end{align}	
 	$\omega_n$ and $\zeta$ are just resistance, inductance, and capacitance:
 	\begin{align*}
