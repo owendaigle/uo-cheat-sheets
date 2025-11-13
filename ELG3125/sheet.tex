@@ -747,8 +747,38 @@
 	\end{mdframed}
 	
 	\section{Sampling}
+	Sampling is how we convert a continuous signal to a discrete signal. We sample using a large impulse train.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\linewidth]{images/sampling}
+		\label{fig:sampling}
+	\end{figure}
+	When we sample a signal, we will multiply the signal $x(t)$ by the impulse train $p(t)$. If we go into the frequency domain, we will get the convolution $X_p(\jmath\omega) = X(\jmath\omega) * P(\jmath\omega)$. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{images/sampling1}
+		\label{fig:sampling1}
+	\end{figure}
+	If we want to get the original signal $X(\jmath\omega)$ back from the sampled one $X_p(\jmath\omega)$, then we just need to use a bandpass filter over the middle repetition of the sampled signal.
+	
+	A problem can occur if the sampling frequency is too low which would cause the period in the time domain to increase. Because of math, the period in the frequency domain would then decrease which would cause overlap preventing us from recovering the original signal. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{images/sampling2}
+		\label{fig:sampling2}
+	\end{figure}
+	We say that the angular frequency (period in frequency domain) needs to be greater than the highest frequency we are using. 
+	\begin{align*}
+		\omega_s > 2\omega_M \text { where } \omega_s = \frac{2\pi}{T}\\
+		\text{We call $2\omega_M$ the Nyquist rate}
+	\end{align*}
+	
+	
+	
 	
 	\section{Laplace Transformations}
+	
+	\section{Z Transform}
 	
 	\newpage 
 	\section{Appendix}
