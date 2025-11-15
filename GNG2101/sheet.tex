@@ -58,10 +58,79 @@
 	\section{Economics}
 	
 	\subsection{Cost Classifications}
+	When running a business, we can classify costs as either \textbf{variable} or \textbf{fixed} (or \textbf{semi variable}). Then we can also classify them as \textbf{direct} or \textbf{indirect}.
+	
+	Indirect vs Direct is whether it directly relates to a specific project or not. If it does relate to a specific project, then it is a direct cost. Otherwise, it is an indirect cost. 
+	
+	Variable vs Fixed is whether the cost scales with output or not. For example, the cost of gas for heating a factory is the same whether we are making 1 item a day, or 1000 items per day. However the cost of materials for 1 item is a lot cheaper than 1000 items. 
 	
 	\subsection{Fundamental Concepts}
+	We have two main types of economics. \textbf{Macroeconomics} deals with a national economy, and everything within a country. \textbf{Microeconomics} deals with \textit{one} person, group, or company. We just focus on this one entities economics. 
+	
+	Money is not static with respect to time, it has a time value. A certain amount of money now is worth less in a year because of \textbf{interest}. We have compound interest, or simple interest. They can be calculated as follows:
+	\begin{align*}
+		\text{Simple: }(1+i\cdot a)\cdot C_0\\
+		\text{Compound: }C_0\cdot\left(1+\frac{i}{n}\right)^{n\times a}
+	\end{align*}
+	where $C_0$ is the principle amount, $i$ is the annual interest rate, $a$ is the number of years, and $n$ is the number of interest periods/payments per year. 
+	
+	Due to interest, we can calculate the \textbf{Net Present Value (NPV)} of money at a certain time. This is useful since it allows us to account for time when comparing different income opportunities. For example, getting paid 100\$ now, or 110\$ in 6 months. We can evaluate which one is worth more right now by accounting for the interest we would make on the 100\$ over 6 months. 
+	\begin{align*}
+		PV = \sum \frac{FV}{(1+\frac{i}{n})^{n\times a}} \qquad \text{OR} \qquad FV = \sum PV(1+i)^n
+	\end{align*}
+	where $PV$ is the present value, $FV$ is the future value, and the denominator is just the interest calculation.
+	
+	Depreciation means that new things are worth more than old things. This is especially true with large machines used in business. We use the \textbf{straight line depreciation} equation to calculate the cost of an equipment over time.
+	\begin{align*}
+		D_L = \frac{\text{Equipment Cost}}{\text{Useful Life}}
+	\end{align*}
+	
+	\subsection{Economic Decision Making}
+	
+	To make economic decisions, we have a few different ways.
+	\begin{itemize}
+		\item Break Even Analysis
+		\item Sensitivity Analysis
+		\item Return on Investment (ROI) and Simple Payback Period
+		\item Cost/Benefit Trade-off Analysis
+	\end{itemize}
+	
+	If we are deciding on whether or not to make or buy a certain product, often the cost to make the product will be less for large quantities of the project, but more for just one product. For example, repairing a mobile phone vs paying someone to do so. If I repair a phone, I need to buy a few hundred dollars of equipment and then I can do the repair for cheap. If I pay someone, I might only pay them 100\$ though. If I repair 10 phones, it would be either 1000\$, or if I do it myself, a few hundred in equipment and then small material fees. 
+	
+	\textbf{Break even analysis} is the point at which the cost to buy equals the cost to make, or the cost to produce equals the revenue. This is a number. Going to the phone example, if we spend 300\$ on tools, and 50\$ per phone if I do it, vs 100\$ if a shop does it, then at 6 phones, if I do it I spend 600\$, vs the shop charges 600\$. We consider the break even point 6 phones. 
+	
+	\textbf{Sensitivity analysis} allows us to see the profitability of a certain project in different situations based on varying different variables. So we could say "What if we spend 20\% more on development?" or "What if we take an extra week to deploy?" or "What if we sell it for 2\$ cheaper?". We could see the impact on the profit for each of these situations. 
+	
+	\textbf{Return on Investment (ROI)} is calculated using:
+	\begin{align*}
+		ROI = \frac{\text{Net Profit}}{\text{Value of Investment}} \times 100\%
+	\end{align*}
+	Note that we need to account for the time value of money in this calculation. 
+	
+	The \textbf{simple payback period} is the amount of time it takes to recover the initial investment. This does not take into account the time value of money. 
+	\begin{align*}
+		n_{tot} = \frac{\text{Value of Investment}}{\text{Net profit per period}}
+	\end{align*}
+	
+	\textbf{Cost/benefit trade off analysis} sows is the advantages and disadvantages on both sides. 
+	\begin{align*}
+		BCR\text{ (Benefit Cost Ratio)} = \frac{\text{PV of Benefits}}{\text{PV of Costs}}
+	\end{align*}
+	
 	
 	\subsection{Financial Statements}
+	There are three types of financial statements:
+	\begin{itemize}
+		\item Balance Sheets (Snapshot of the financial condition at a \textit{certain time})
+		\item Cash flow statement (Cash in and Cash out over a \textit{period of time})
+		\item Income Statement (Changes in wealth over a \textit{period of time})
+	\end{itemize}
+	
+	For the \textbf{balance sheet}, we just show the equity which is just the assets - liabilities. Assets include current assets, cash, inventory, long term assets, and depreciation (negative asset). The liabilities are accounts payable, and borrowing. The net worth is the equity (assets - liabilities).
+	
+	The \textbf{cash flow statement} shows the cash in (operations, sales, tax received, borrowing, investments) and the cash out (spending, operation expenditures, bill payments, tax out, asset purchasing, debt paying). We get the net cash flow which is the cash in - cash out.
+	
+	The \textbf{income statement} (profit/loss statement) shows the sales, and expenses to get the profit/loss. We take the sales, and subtract the cost of goods sold and operating expenses. This is the\textbf{ operating income} (Earnings Before Interest [EBI]). Then once we factor in all interest (a cost to what we are borrowing) we can get the \textbf{Earnings Before Taxes (EBT)}. The \textbf{Net Income} taxes into account income tax.
 	
 	\section{Appendix}
 	
