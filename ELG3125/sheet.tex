@@ -659,7 +659,7 @@
 	\end{mdframed}
 	
 	\section{Bode Plot}
-	This is a way to graphically represent fourier transforms. If we want to plot $x(t)$, we can actually plot $20\log_{10} |X(\jmath \omega)|$ and we will get a straight line equation.
+	This is a way to graphically represent fourier transforms. If we want to plot $x(t)$, we can actually plot $20\log_{10} |X(\jmath \omega)|$ and we will get a straight line equation. This is for the magnitude
 	
 	Here we have the x axis being $10^t$ so $1, 10, 100, 1000, ...$
 	
@@ -678,14 +678,14 @@
 		\end{tabular}
 	\end{center}
 	
-	When finding bode plots, we want to get the equation into the form of:
+	When finding magnitude bode plots, we want to get the equation into the form of:
 	\begin{align*}
 		&\frac{\jmath\omega}{n} + 1 &\text{OR}  &&\frac{1}{\frac{\jmath\omega}{n}+1}
 	\end{align*}
 	Then on the x axis, we have the values of n. This is where it changes. If we have the first form above, it is a positive increasing form, and the second form is a negative decreasing form. This can more easily be seen in the example below. There is math that shows this, but it is complicated. 
 	
 	\begin{mdframed}
-		\textbf{Ex.} Find the bode plot of the following: %from A7 about bode plot
+		\textbf{Ex.} Find the magnitude bode plot of the following: %from A7 about bode plot
 		\begin{align*}
 			\frac{250}{(\jmath\omega)^2 + 50.5\jmath\omega + 25}
 		\end{align*}
@@ -701,8 +701,22 @@
 		We see that before 0.5, we will have a constant of 20 dB. After 0.5, but before 50, we have slope of -20dB. After 50, we add on a slope of -20dB to get -40dB. We get a graph of the similar form as below. This is not to scale.
 		
 		\begin{center}
-			\includegraphics[width=0.4\linewidth]{"bode ex"}
+			\includegraphics[width=0.4\linewidth]{"images/bode ex"}
 		\end{center}
+		
+	\end{mdframed}
+	
+	To get the phase bode plots, we simply use the fact that a term in the numerator gives a positive 45 degree slope, and on in the denomonator gives a -45 degree slope. We approximate by extending this slope one decade before and after the actual given time. 
+	
+	If we have a second order term, we simply change the slope to 90 degrees or -90 degrees. 
+	
+	We do this for each term and then add the terms up. 
+	
+	\begin{mdframed}
+		\textbf{Ex. }
+		
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/phase bode plot ex"}
 		
 	\end{mdframed}
 	
@@ -773,10 +787,8 @@
 		\text{We call $2\omega_M$ the Nyquist rate}
 	\end{align*}
 	
-	
-	
-	
 	\section{Laplace Transformations}
+	Laplace transformations are similar to fourier transformations in how they work. But rather than converting to from $x(t)$ to $X(\jmath\omega)$, we go to $X(s)$ where $s = \sigma + \jmath\omega$. So it has both a real \textbf{and} complex component. This allows it to work for some cases where the standard fourier component would not work. But we do also need to define the bounds for each transformation.
 	
 	\section{Z Transform}
 	
