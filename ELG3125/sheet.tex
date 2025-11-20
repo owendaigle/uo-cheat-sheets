@@ -787,8 +787,74 @@
 		\text{We call $2\omega_M$ the Nyquist rate}
 	\end{align*}
 	
+	A useful fact to know that helps solve these problems is that when dealing with the convolution, specifically in the frequency domain $Z(\jmath\omega) = X(\jmath\omega) * Y(\jmath\omega)$, if the two functions have maximum frequencies of $\omega_X$ and $\omega_Y$ respectively, then the max frequency of $Z$ is $\omega_Z = \omega_X + \omega_Y$.
+	
+	\begin{mdframed}
+		\textbf{Ex. }We have a differential equation modeling an LTI system shown below. Find $y_c(t)$, and then find the impulse response $h[n]$ if $w[n] = \delta[n]$. 
+		
+		\centering
+		
+		\includegraphics[width=0.7\linewidth]{images/sampling_ex}
+		
+		\raggedright
+		\begin{align*}
+			\frac{\mathrm d y_c(t)}{\mathrm d t} + y_c(t) = \delta(t)
+		\end{align*}
+		
+		We start by finding what $y_c(t)$ is. We can do this by putting the DE into the frequency domain, which allows us to get rid of the derivative. Then we can simply isolate for $y$, and the put back into time domain. 
+		\begin{align*}
+			&\implies \jmath\omega Y(\jmath\omega) +Y(\jmath\omega) = 1\\
+			&\implies Y(\jmath\omega)\left[\jmath\omega+1\right] = 1\\
+			&\implies Y(\jmath\omega) = \frac{1}{\jmath\omega+1}\\
+			&\implies y(t) = e^{-t} u(t)\\
+			&\implies y[n] = e^{-nT} u[n]
+		\end{align*}
+		Now we have it in discrete time. We now need to find out the response function. We can do this by converting to frequency domain. We consider the $e^{-T}$ as a coefficient which allows us to use this transform.
+		\begin{align*}
+			Y(e^{\jmath\omega}) &= \frac{1}{1-e^{-T}e^{-\jmath\omega}}\\
+			H(e^{\jmath\omega}) &= \frac{W(e^{\jmath\omega})}{Y(e^{\jmath\omega})} = \frac{1}{\frac{1}{1-e^{-T}e^{-\jmath\omega}}} = 1-e^{-T}e^{-\jmath\omega}\\
+			h[n] &= \delta[n] - e^{-T} \delta[n-1]
+		\end{align*}
+		The reason we get the $\delta[n-1]$ is because of the property of $x[n-n_0] \Longleftrightarrow e^{\jmath\omega n_0} X(e^{\jmath\omega})$ and we consider $X(e^{\jmath\omega})$ to be the invisible $1$ coefficient. 
+	\end{mdframed}
+	
+	\begin{mdframed}
+		\textbf{Ex. } Find the Nyquist rate of $x(t) = \left(\frac{\sin(4000\pi t)}{\pi t}\right)^2$.
+		
+		To get the nyquist rate, I need to know the maximum frequency. So I need to put it into the frequency domain. I do not know a fourier transform for $x(t)$, but if I break it up into a product, I can transform each part, and multiplication becomes a convolution in frequency domain.
+		\begin{align*}
+			&x(t) = \left(\frac{\sin(4000\pi t)}{\pi t}\right) \left(\frac{\sin(4000\pi t)}{\pi t}\right) = x_1(t) \cdot x_1(t)\\
+			&X(\jmath\omega) = X_1(\jmath\omega) * X_1(\jmath\omega)
+		\end{align*}
+		Now I can fourier transform this into:
+		
+		\centering
+		\includegraphics[width=0.5\linewidth]{images/sampling_ex1}
+		
+		\raggedright
+		If I then convolve that with itself, I can get:
+		
+		\centering
+		\includegraphics[width=0.5\linewidth]{images/sampling_ex2}
+		
+		\raggedright
+		Here we see that the maximum frequency is doubled, so the nyquist rate is just the maximum frequency doubled. 
+		\begin{align*}
+			\omega_n = 2\omega_m = 2\cdot 8000\pi = 16000\pi
+		\end{align*}
+		
+	\end{mdframed}
+	
 	\section{Laplace Transformations}
 	Laplace transformations are similar to fourier transformations in how they work. But rather than converting to from $x(t)$ to $X(\jmath\omega)$, we go to $X(s)$ where $s = \sigma + \jmath\omega$. So it has both a real \textbf{and} complex component. This allows it to work for some cases where the standard fourier component would not work. But we do also need to define the bounds for each transformation.
+	
+	We have the following equation for the Laplace transform:
+	\begin{align*}
+		X(s) = X(\jmath\omega + \sigma)= \int^\infty_{-\infty} x(t) e^{-st}\mathrm d t = \int^\infty_{-\infty} x(t) e^{-(\jmath\omega +\sigma)t}\mathrm d t
+	\end{align*}
+	
+	We often display these transformations on the Cartesian plane with axis for $\mathfrak{Re}(s)$ and $\mathfrak{Im}(s)$ (Real and Imaginary parts of s). Here we have zeroes (points where numerator goes to 0) and poles (points where denominator goes to 0).
+	
 	
 	\section{Z Transform}
 	
