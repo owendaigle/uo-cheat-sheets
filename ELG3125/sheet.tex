@@ -850,10 +850,63 @@
 	
 	We have the following equation for the Laplace transform:
 	\begin{align*}
-		X(s) = X(\jmath\omega + \sigma)= \int^\infty_{-\infty} x(t) e^{-st}\mathrm d t = \int^\infty_{-\infty} x(t) e^{-(\jmath\omega +\sigma)t}\mathrm d t
+		&X(s) = X(\jmath\omega + \sigma)= \int^\infty_{-\infty} x(t) e^{-st}\mathrm d t = \int^\infty_{-\infty} x(t) e^{-(\jmath\omega +\sigma)t}\mathrm d t\\
+		& x(t) = \frac{1}{2\pi \jmath} \int^{\sigma + \jmath\infty}_{\sigma - \jmath\infty} X(s) e^{st} \mathrm d t
 	\end{align*}
 	
-	We often display these transformations on the Cartesian plane with axis for $\mathfrak{Re}(s)$ and $\mathfrak{Im}(s)$ (Real and Imaginary parts of s). Here we have zeroes (points where numerator goes to 0) and poles (points where denominator goes to 0).
+	We often display these transformations on the Cartesian plane with axis for $\mathfrak{Re}(s)$ and $\mathfrak{Im}(s)$ (Real and Imaginary parts of s). Here we have zeroes (points where numerator goes to 0), and poles (points where denominator goes to 0).
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\linewidth]{"images/poles and zeroes"}
+		\label{fig:poles-and-zeroes-}
+	\end{figure}
+	
+	Using this graph, we can tell if the function is causal and/or stable. If it is causal, then the ROC will be right sided and unbounded on that side (it will be $\Re\{s\} > a, a\in\mathbb{R}$). If it is stable, then the y axis ($\mathfrak{Im}$) axis will be contained in the ROC. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{"images/laplace causal stable"}
+
+		\label{fig:laplace-causal-stable}
+	\end{figure}
+	
+	
+	
+	We have a table of Laplace transforms as shown below:
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			$e^{-at}u(t) \longleftrightarrow \frac{1}{a+s}, \mathfrak{Re}\{s\} > -a$ &  $u(t) \longleftrightarrow \frac{1}{s}, \mathfrak{Re}\{s\} > 0$\\
+			\hline
+			$-e^{-at} u(-t) \longleftrightarrow \frac{1}{a+s}, \mathfrak{Re}\{s\}<-a$&  $\delta(t) \longleftrightarrow 1$\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	We have a table of laplace properties shown below:
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			Time Shifting & $x(t-t_0) \longleftrightarrow e^{-st_0} X(s)$  \\
+			\hline
+			S Domain Shifting & $e^{s_0 t}x(t) \longleftrightarrow X(s-s_0)$ \\
+			\hline
+			Time Scaling & $x(at) \longleftrightarrow \frac{1}{|a|} X\left(\frac{s}{a}\right)$ \\
+			\hline
+			Conjugation& $x^*(t) \longleftrightarrow X^*(s^*)$ \\
+			\hline
+			Convolution & $x_1(t) * x_2(t) \longleftrightarrow X_1(s) X_2(s)$ \\
+			\hline
+			Differentiation & $\frac{\mathrm d x(t)}{\mathrm d t} \longleftrightarrow sX(s)$\\
+			\hline
+			S Domain Differentiation & $-tx(t) \longleftrightarrow \frac{\mathrm d X(s)}{\mathrm d s}$\\
+			\hline
+			Integration & $\int_{-\infty} ^t x(\tau) \mathrm d \tau \longleftrightarrow \frac{1}{s} X)(s)$\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	
 	
 	
 	\section{Z Transform}
