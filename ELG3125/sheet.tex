@@ -466,6 +466,9 @@
 	
 	% MIDTERM MATERIAL ENDS HERE
 	\section{Fourier Transformations}
+	
+	Fourier Transforms is a very important concept in this class. It is used as the basis for the Laplace transform, and Z transform. 
+	
 	We can also represent non periodic (aperiodic) signals by sinusoids using Fourier Transformations.
 	
 	We do this by taking a periodic signal, and increasing the period to be very large. This makes it so each pulse of the periodic signal is infinitesimally far apart, which means it is basically a non periodic signal.
@@ -716,7 +719,7 @@
 		\textbf{Ex. }
 		
 		\centering
-		\includegraphics[width=0.7\linewidth]{"images/phase bode plot ex"}
+		wrong
 		
 	\end{mdframed}
 	
@@ -880,6 +883,8 @@
 			\hline
 			$-e^{-at} u(-t) \longleftrightarrow \frac{1}{a+s}, \mathfrak{Re}\{s\}<-a$&  $\delta(t) \longleftrightarrow 1$\\
 			\hline
+			$\cos(\omega_0 t)u(t) \longleftrightarrow \frac{s}{s^2 + \omega_0 ^2}, \mathfrak{Re}\{s\} > 0$& $\sin(\omega_0 t)u(t) \longleftrightarrow \frac{\omega_0}{s^2 + \omega_0 ^2}, \mathfrak{Re}\{s\} > 0$\\
+			\hline
 		\end{tabular}
 	\end{center}
 	
@@ -889,27 +894,118 @@
 			\hline
 			Time Shifting & $x(t-t_0) \longleftrightarrow e^{-st_0} X(s)$  \\
 			\hline
-			S Domain Shifting & $e^{s_0 t}x(t) \longleftrightarrow X(s-s_0)$ \\
+			Flipping & $x(-t) \longleftrightarrow X(-s)$, Inverses ROC\\
 			\hline
-			Time Scaling & $x(at) \longleftrightarrow \frac{1}{|a|} X\left(\frac{s}{a}\right)$ \\
+			S Domain Shifting & $e^{s_0 t}x(t) \longleftrightarrow X(s-s_0)$, ROC is shifted \\
+			\hline
+			Time Scaling & $x(at) \longleftrightarrow \frac{1}{|a|} X\left(\frac{s}{a}\right)$, ROC is scaled \\
 			\hline
 			Conjugation& $x^*(t) \longleftrightarrow X^*(s^*)$ \\
 			\hline
-			Convolution & $x_1(t) * x_2(t) \longleftrightarrow X_1(s) X_2(s)$ \\
+			Convolution & $x_1(t) * x_2(t) \longleftrightarrow X_1(s) X_2(s)$, ROC is union \\
 			\hline
 			Differentiation & $\frac{\mathrm d x(t)}{\mathrm d t} \longleftrightarrow sX(s)$\\
 			\hline
 			S Domain Differentiation & $-tx(t) \longleftrightarrow \frac{\mathrm d X(s)}{\mathrm d s}$\\
 			\hline
-			Integration & $\int_{-\infty} ^t x(\tau) \mathrm d \tau \longleftrightarrow \frac{1}{s} X)(s)$\\
+			Integration & $\int_{-\infty} ^t x(\tau) \mathrm d \tau \longleftrightarrow \frac{1}{s} X(s)$, ROC is $R_{X(s)} \cap \{\mathfrak{Re}\{s\}>0\}$\\
 			\hline
 		\end{tabular}
 	\end{center}
 	
+	\begin{mdframed}
+		\textbf{Ex. }Find $h(t)$ for this differential equation for all cases of the ROC. % do 9.31 from a9.pptx
+		\begin{align*}
+			\frac{\mathrm d^2 y(t) }{\mathrm d t^2} - \frac{\mathrm d y(t)}{\mathrm d t} - 2 y(t) = x(t)
+		\end{align*}
+		To do this, I need to get the ROC. This will be found by getting the poles and then finding possible ROCs. 
+		
+		I start with laplace transform.
+		\begin{align*}
+			X(s) &= s^2 Y(s) - sY(s) - 2Y(s)\\
+			\implies \frac{Y(s)}{X(s)} &= \frac{1}{s^2 - s - 2} = \frac{1}{(s-2)(s+1)}\\
+			\implies \frac{Y(s)}{X(s)} &= \frac{1}{(s-2)(s+1)} = \frac{A}{s-2} + \frac{B}{s+1} \qquad \text{Do partial fractions}\\
+			\implies 1 =& A(s+1) + B(s-2) \implies 0 = A + B, 1 = A - 2B \implies A = \frac{1}{3}, B = \frac{-1}{3}\\
+			\implies \frac{Y(s)}{X(s)} &= \frac{1/3}{s-2} - \frac{1/3}{s+1}
+		\end{align*}
+		So now I have two poles of $2$ and $-1$ and therefore 3 possible ROCs. 
+		
+		\centering
+		\includegraphics[width=0.4\linewidth]{"images/Laplace ex ROCs"}
 	
-	
+		\raggedright
+		We need to find the equation for each ROC. We use the property that $e^{-at}u(t) \longleftrightarrow \frac{1}{a+s}, \mathfrak{Re}\{s\} > -a$ and $-e^{-at} u(-t) \longleftrightarrow \frac{1}{a+s}, \mathfrak{Re}\{s\}<-a$ are the same, except their ROC is slightly different. 
+		\begin{align*}
+			&(1) \qquad a < -1\\
+			&(2) \qquad-1 < a < 2\\
+			&(3) \qquad a > 2
+		\end{align*}
+		Now I can actually get the equations for these.
+		\begin{align*}
+			&(1) \qquad h(t) = \frac{1}{3} \left(-e^{2t}u(-t) - (-)e^{-t} u(-t)\right)\\
+			&(2) \qquad h(t) = \frac{1}{3} \left(-e^{2t}u(-t) - e^{-t} u(t)\right)\\
+			&(3) \qquad h(t) = \frac{1}{3} \left(e^{2t}u(t) - e^{-t} u(t)\right)
+		\end{align*}
+		We can also say which ROCs are causal, and stable through the properties, or through logic of $h(t)$.
+		\begin{align*}
+			&(1) \qquad \text{NOT causal, NOT stable}\\
+			&(2) \qquad \text{NOT causal, stable}\\
+			&(3) \qquad \text{causal, NOT stable}
+		\end{align*}
+	\end{mdframed}
 	
 	\section{Z Transform}
+	The Z transform is basically the Laplace transform but in discrete time. Rather than using $X(s)$ with $s=\sigma+\jmath\omega$, we have $X(z)$ where $z=re^{\jmath\omega}$ (similar to the discrete fourier transform of $e^{\jmath\omega}$).
+	
+	By definition, we have it as:
+	\begin{align*}
+		&X(z) = \sum^\infty_{k=-\infty} x[n] z^{-n} & \text{Z Transform}\\
+		&x[n] = \frac{1}{2\pi\jmath}\oint X(z)z^{n-1}\mathrm d z & \text{Inverse Z Transform}
+	\end{align*}
+	
+	We can create the Zero Pole plot as well, and this allows us to see if it is stable and or causal. We however use circles rather than lines (like laplace). If the outside of the circle to the bounds is the ROC, then it is causal. If the unit circle (radius of 1) is in the ROC, then it is stable. 
+	
+	In the below figure, the first image has the ROC inside the pole (so it does not extend to the bounds), and the unit circle is in the ROC. For the second the ROC extends to the bounds but does not include the unit circle, and the third also extends to the bounds and includes the ROC.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{"images/z stable causal"}
+		\label{fig:z-stable-causal}
+	\end{figure}
+	
+	We have a stock list of z transforms, just like the fourier transforms and laplace transforms. 
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			$a^nu[n] \longleftrightarrow \frac{1}{1-az^{-1}}, \qquad |z| > |a|$& $-a^nu[-n-1] \longleftrightarrow \frac{1}{1-az^{-1}}, \qquad |z| < |a|$ \\
+			\hline
+			$u[n] \longleftrightarrow \frac{1}{1-z^{-1}}, \qquad |z| > 1$&  \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	We also have a list of properties of z transforms just like fourier transforms and laplace transforms. 
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			Time Shifting & $x[n-n_0] \longleftrightarrow z^{-n_0} X(z)$ \\
+			\hline
+			Scaling & $z^n_0x[n] \longleftrightarrow X\left(\frac{z}{z_0}\right)$, new ROC is $|z_0|R$\\
+			\hline
+			Time Reversal & $z[-n] \longleftrightarrow X\left(\frac{1}{z}\right)$, new ROC is $\frac{1}{R}$ \\
+			\hline
+			Conjugation & $x^*[n] \longleftrightarrow X^*(z^*)$  \\
+			\hline
+			Convolution & $x_1[n] * x_2[n] \longleftrightarrow X_1(z) X_2(z)$, new ROC is union \\
+			\hline
+			Differentiation & $nx[n] \longleftrightarrow -z\frac{\mathrm d X(z)}{\mathrm d z}$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	\begin{mdframed}
+		\textbf{Ex. }
+	\end{mdframed}
+	
 	
 	\newpage 
 	\section{Appendix}
