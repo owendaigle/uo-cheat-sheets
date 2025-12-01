@@ -36,16 +36,108 @@
 		\Large\textbf{GNG 2101 Summary Sheet} \\
 		\vspace{0.5em}
 	\end{center}	
+	\tableofcontents
+	\newpage
 
 	\section{Design For X}
+	Functional requirements define what a product should do. DFX (Design for $X$) allows us to ensure the product meets the certain requirements called $X$. 
+	
+	Non functional requirements are about How the product does what we want it do do such as the speed, and quality. 
+	
+	DFX allows us to focus on specific goals for the product, one at a time. We want to have discussions about "How do we incorporate $X$?". Each $X$ has specific design standards and rules that help to incorporate this $X$. 
+	
+	Some examples are:
+	\begin{itemize}
+		\item Design for Accessibility
+		\item Design for Reliability
+		\item Design for Testability
+		\item Design for Repairability
+		\item Design for Compliance
+		\item Design for Sustainability
+		\item Design for Maintainability
+	\end{itemize}
 	
 	\subsection{Compliance}
+	Compliance constraints are stuff such as health and safety regulations, environmental regulations, quality codes, and standards.
+	
+	Often devices need to be able to use generic designs such as USB which means they need to comply with these preexisting standards. These standards are usually explained in technical documents. 
+	
+	Government regulations for environment, and health/safety are also critical to avoid fines. 
 	
 	\subsection{Sustainability}
+	\subsubsection{Triple Bottom Line}
+	Sustainability is a concept that depends on people, profit, and the planet. We need a product to satisfy all three of these concepts for it to be able to be sustainable which is challenging. So we need a balance between all three of these items. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\linewidth]{"images/triple bottom line"}
+		\caption{Triple Bottom Line Graphic}
+		\label{fig:triple-bottom-line}
+	\end{figure}
+	
+	
+	\subsubsection{Life Cycle Assessment}
+	This is a way to determine the impact of a certain device over its life cycle from when it is created in the factory (or before), to when it goes into the landfill (or potentially after). We analyze the inputs, outputs, and potential environmental impacts of the product over its lifetime. 
+	
+	We start by determining the frame of the LCA analysis, we can either do:
+	\begin{itemize}
+		\item Cradle to Grave - From raw materials to end of life
+		\item Cradle to Gate - From raw materials to gate of manufacturing facility (before transportation to consumer)
+		\item Cradle to Cradle - From raw materials, to end of life, and then it is recycled into new raw materials
+	\end{itemize}
+	
+	We have a bunch of stages in the LCA analysis such as:
+	\begin{itemize}
+		\item Raw materials acquisition
+		\item Materials manufacture
+		\item Product manufacture
+		\item Product use / Consumption
+		\item Disposing of product (recycling, or dump)
+	\end{itemize}
+	
+	\subsubsection{Normalization}
+	This is a way to calculate greenhouse gas emissions using a standard metric. This allows us to fairly compare products to other products to see which products create the least emissions. 
 	
 	\subsection{Manufacturability}
 	
 	\section{Concept Development Process}
+	We have a few different design processes such as:
+	\begin{itemize}
+		\item Waterfall - Sequential process
+		\item Agile - Iteratively create a prototype, get feedback, then find solution, and repeat
+		\item Spiral - Similar to agile method with different prototypes solving iterative problems, but we add risk analysis
+		\item Co-Evolution - Represents evolution of problem space, and solution space, the problem and solution evolve together, useful for ill defined problems
+		\item Iterative - build $\to$ test $\to$ refine $\to$ repeat
+	\end{itemize}
+	
+	For all of the design methods, to manage the project we have 4 main points:
+	\begin{itemize}
+		\item Plan - Is the plan well laid out
+		\item Processes - Are the processes well defined
+		\item People - Do we have a good team
+		\item Power - Distribution of authority
+	\end{itemize}
+	We can use a GANTT chart to manage the project, this breaks up the project up into multiple sub-tasks, with estimated completion times, and dependencies identified. 
+	
+	For the Iterative Engineering Design Process (IEDP), we first generate solutions, then check if these solutions satisfy the DFX. If so, we prototype and see if the solution works, if it does not, we go back to the start (generate solutions).
+	
+	When coming up with the solutions, we need to generate a large amount of them. Then we score these solutions using a decision matrix that contains different factors.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c||c|c|}
+			\hline
+			\textbf{Criteria} & \textbf{Weight} & \textbf{Car A} & \textbf{Car B} \\
+			\hline
+			Cost & 0.5 & 8 & 3 \\
+			\hline
+			Reliability & 0.4 & 3 & 10 \\
+			\hline
+			Features & 0.1 & 4 & 6 \\
+			\hline \hline
+			Total & 1 & 4+0.4+1.2=5.6 & 1.5+4+0.6=6.1 \\
+			\hline
+		\end{tabular}
+		\caption{Decision Matrix Example}
+	\end{table}
 	
 	\section{Prototyping}
 	
