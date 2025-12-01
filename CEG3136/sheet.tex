@@ -54,6 +54,9 @@
 		\vspace{0.5em}
 	\end{center}	
 	
+	\tableofcontents
+	\newpage
+	
 	\section{Data Representation}
 	One \textbf{Byte} is defined as 8 bits. In 32 bit architecture, one \textbf{Word} is 32 bits, and therefore a half word is 16 bits, and a double word is 64 bits. 
 	
@@ -577,9 +580,175 @@ ENDP
 	
 	It needs to save \verb*|xPSR|, \verb*|PC|, \verb*|LR|, \verb*|R12|, \verb*|R3|, \verb*|R2|, \verb*|R1|, and \verb*|R0| . Therefore it can use any of those registers to store data. Any other registers that are used must be returned to their original state. 
 	
+	
+	\section{FPU}
+	The Floating Point Unit (FPU) greatly improves efficiency when dealing with floats over software floating point calculations. These FPUs are however quite large and expensive to implement, so they are not found on all systems. 
+	
+	By default, this FPU is disabled due to power usage. It can easily be enabled. 
+	
+	The FPU coprocessor has its own bank of general purpose registers, and special purpose registers labeled as:
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			s1 & s0 \\
+			\hline
+			s3 & s2 \\
+			\hline
+			s5 & s4 \\
+			\hline
+			... & ... \\
+			\hline
+			s31 & s30 \\
+			\hline
+			FPCAR &  \\
+			\hline
+			FPSCR &  \\
+			\hline
+			FPCCR &  \\
+			\hline
+		\end{tabular}
+	\end{center}
+	If we are operating with doubles instead of floats, then we use two of those registers to hold a double. So \verb*|d0| would use \verb*|s1| and \verb*|s0|. We can copy to and from the \verb*|s| registers to the \verb*|r| registers. 
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			d0[0] & d0[1] \\
+			\hline
+			d1[0] & d1[1] \\
+			\hline
+			d2[0] & d2[1] \\
+			\hline
+			... & ... \\
+			\hline
+			d14[0] & d14[1] \\
+			\hline
+			d15[0] & d15[1] \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	We have similar instructions to the regular CPU, but for the FPU they are prefixed with \verb*|V|. So \verb*|LDR| becomes \verb*|VLDR|. There are even a few advanced functions not present in the standard CPU such as \verb*|VSQRT|.
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Standard} & \textbf{FPU} \\
+			\hline
+			LDR & VLDR \\
+			\hline
+			STR & VSTR \\
+			\hline
+			MOV & VMOV \\
+			\hline
+			ADD & VADD \\
+			\hline
+			MLA & VMLA \\
+			\hline
+			CMP & VCMP \\
+			\hline
+			N/A & VABS \\
+			\hline
+			N/A & VSQRT \\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	We often suffix the commands with something like \verb*|F32|/\verb*|F64| or \verb*|U32|/\verb*|S32|. These signify float/double, and unsigned/signed. They are appended to the instruction like \verb*|VLDR.F32.S32|. These are used to convert from one format to another. 
+	
+	\section{GPIO}
+	To access our GPIO devices, we use memory mapped IO. This is where a section of the memory addresses are mapped to the IO device such as LED and speaker. All the bits we access through software are found in these registers such as the clock enable, GPIO port enable, GPIO mode, and so on.
+	
+	The GPIO speed can be configured where a higher speed is faster, but uses more power and has more noise. 
+	
+	The GPIO pin can be set up in different modes such as input, output, analog, or alternate function. 
+	
+	The GPIO pin can be either in open drain, or pull push mode. This changes how the physical transistors are set up. We also have a pull up or pull down resistor that can also be enabled/disabled. 
+	
+	We have a certain number of GPIO devices, each device has a certain number of pins. So we could have 8 devices with 16 pins each for a total of 128 inputs/outputs. 
+	
+	\subsection{Debouncing}
+	Debouncing is needed for any sort of input switch. If we do not have debouncing, then the hardware will detect multiple presses per single button press, which is not what we want. We can either debounce using hardware with an RC circuit (or an SR latch and dual throw switch if we are fancy), or through software with a delay.
+	
+	\subsection{Interrupts}
+	An interrupt is an external signal sent into the CPU for processing. So when a button is pressed, or motion is detected on a motion detector, an interrupt will be generated. 
+	
+	\section{Timers}
+	Timers generate interrupts at a fixed interval. This is what the SYSTICK driver does, it generates an interrupt every say 1ms. SYSTICK is a hardware component in ARM CORTEX M. 
+	
+	We have a reload value stored in a register (\verb*|ARR|). This is the starting value that the counter starts up, and then counts down to 0 when it creates the interrupt. 
+	
+	We also have a current value register to get the current value of the counter. This needs to be cleared on startup before running a timer since it has a random value. 
+	
+	We also often have some other timers that are independent of the processor. These are useful for peripheral devices. They can either operate in \textbf{capture} mode, or \textbf{compare} mode (useful for PWM, 1 if below Comp value, 0 if above). Capture will record the time when events occur, and compare will trigger events at specific times. 
+	
+	When counting, we can either use down counting, up counting, or center counting. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.99\linewidth]{"images/timer counting"}
+		\label{fig:timer-counting}
+	\end{figure}
+	
+	We can also change the repetitions. This allows us to determine the number of reloads between events. This uses the repetition counter register (\verb*|RCR|). This is done using an input prescaler which is basically another timer. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.99\linewidth]{images/RCR}
+		\caption{}
+		\label{fig:rcr}
+	\end{figure}
+	
+	\section{Direct Memory Access (DMA)}
+	By default, when we copy from a peripheral to memory, we need to go through the CPU. This is inefficient, the DMA lets us directly go from the peripheral to the memory. This is better since it uses much less CPU. We have a seperate DMA controller that can initialise the transfers. The data can either flow through the DMA, or directly fly by to the memory (does not directly go through DMA).
+	
+	\section{DAC and ADC (Analog Interfacing)}
+	When interfacing with analogue devices, we need to either convert a digital signal to analogue, or convert an analogue signal to digital, depending on whether or not it is an output or input. 
+	
+	\subsection{DAC}
+	For the digital to analog converter, we have a certain number of bits which gives the range of analog values. 
+	
+	The DAC can be implemented in a few ways such as a string of resisters with switches acting as a voltage divider, or as a combination of resistors with switches (same idea, but we use combinations of resistors for more possible outputs with less resistors), and we can also use PWM with a filter. 
+	
+	\subsection{ADC}
+	When converting from analog to digital, we need to sample at a certain frequency, and each sample again has a bit depth (resolution). The sampling rate that we need to reconstruct the analog signal is called the Nyquist rate which is twice the max frequency of the signal. 
+	
+	One way to do this is to use Successive Approximations (SAR). This basically uses a comparator to test all the digital values compared to the raw analog signal using a binary search. 
+	
+	\begin{mdframed}
+		\textbf{Ex. } We have a 12 bit ADC, where it takes 4 cycles to sample the signal. What is the total sampling time?
+		
+		For the total sampling time, we need to account for the time to sample the signal, and then the time to determine the actual signal using the SAR. Since this is a binary search, it will take at most 12 cycles. 
+		\begin{align*}
+			T = 4 + 12 = 16 \text{ cycles}
+		\end{align*}
+	\end{mdframed}
+	
+	\section{Serial Communications}
+	
+	\subsection{I2C}
+	I2C is a 2 wire communication standard. It has a data line (SDA), and a clock line (SCL). It is relatively low speed. Both wires use open drain drivers with a pull up resistor (so are logic 1 by default).
+	\begin{itemize}
+		\item START is when SDA has falling edge when SCL is HI
+		\item STOP is when SDA has rising edge when SCL is HI
+		\item DATA can only change when SCL is LO
+	\end{itemize}
+	We have a target, which can be 7 or 10 bits, and then we have the data. If we have more than 1 controller, then the arbitration works by each controller checking SDA. If SDA is LO when it is driving SDA HI, then that controller backs off and waits. This works since SDA is pulled up to HI. 
+	
+	\subsection{SPI}
+	SPI (Serial Peripheral Interface) is a full duplex connection. It has the following wires:
+	\begin{itemize}
+		\item SCLK - Clock
+		\item $\overline {SS}$ - Peripheral Select ($n$ SS lines for $n$ slaves) [Active LO]
+		\item MOSI - Master Out, Slave In
+		\item MISO - Master In, Slave Out
+	\end{itemize}
+	
+	\subsection{UART}
+	
+	\subsection{USB}
+	
+	\section{The Bus (Bus Interfaces)}
+	
 	\newpage 
 	\section{Appendix}
-	\includepdf[pages=-]{arm_reference_sheet.pdf}
+	\includepdf[pages=-]{arm_reference_sheetv2.pdf}
 	
 	
 	
