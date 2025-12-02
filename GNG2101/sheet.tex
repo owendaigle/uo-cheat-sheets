@@ -98,6 +98,203 @@
 	This is a way to calculate greenhouse gas emissions using a standard metric. This allows us to fairly compare products to other products to see which products create the least emissions. 
 	
 	\subsection{Manufacturability}
+	This is about designing products that can efficiently (and actually) be manufactured. We have to know actually how to make each part of the product, such as what machine will make the part, and how it will be made. 
+	
+	We need to make some sort of sketch of the product and its parts with dimensions such as a CAD model.
+	
+	A few points to keep in mind when designing for manufacturability are:
+	\begin{itemize}
+		\item Avoid customization to make the process easier, use already existing products if possible.
+		\item Reduce the number of components as much as possible
+		\item Use processes that are faster for prototyping
+		\item Select the correct tool for the job
+	\end{itemize}
+	
+	Below is a bunch of tools with what they \textbf{should}, and \textbf{should not} be used for:
+	
+	\begin{table}[H]
+		\centering
+		\caption{3D Printer}
+		\begin{tabular}{p{0.45\textwidth} | p{0.45\textwidth}}
+			\textbf{YES} & \textbf{NO} \\
+			\hline
+			\begin{itemize}
+				\item Complex geometries
+				\item Minimal Supports
+				\item Small Parts
+				\item Brackets and Adapters
+			\end{itemize}
+			&
+			\begin{itemize}
+				\item Flat Items
+				\item Threads
+				\item Weight Bearing parts
+				\item Waterproof parts
+			\end{itemize}
+		\end{tabular}
+		
+	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Laser Cutter}
+		\begin{tabular}{p{0.45\textwidth} | p{0.45\textwidth}}
+			\textbf{YES} & \textbf{NO} \\
+			\hline
+			\begin{itemize}
+				\item Flat cuts
+				\item Enclosures
+				\item Templates
+			\end{itemize}
+			&
+			\begin{itemize}
+				\item Round Materials
+				\item Structural Parts
+				\item Parts that need to be screwed into
+				\item Thick materials
+			\end{itemize}
+		\end{tabular}
+		
+	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Arduino}
+		\begin{tabular}{p{0.45\textwidth} | p{0.45\textwidth}}
+			\textbf{YES} & \textbf{NO} \\
+			\hline
+			\begin{itemize}
+				\item Low power low voltage circuits
+			\end{itemize}
+			&
+			\begin{itemize}
+				\item High power circuits
+				\item Circuits that don't need code, only power
+			\end{itemize}
+		\end{tabular}
+		
+	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Drill Press}
+		\begin{tabular}{p{0.45\textwidth} | p{0.45\textwidth}}
+			\textbf{YES} & \textbf{NO} \\
+			\hline
+			\begin{itemize}
+				\item Circular Straight holes
+			\end{itemize}
+			&
+			\begin{itemize}
+				\item Precise hole position
+				\item Not all the way through a hole
+				\item Large holes, or Square holes
+			\end{itemize}
+		\end{tabular}
+		
+	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Mill}
+		\begin{tabular}{p{0.45\textwidth} | p{0.45\textwidth}}
+			\textbf{YES} & \textbf{NO} \\
+			\hline
+			\begin{itemize}
+				\item Metals and Plastics
+				\item Slots and Holes
+				\item Holes not all the way through
+				\item Flat sides
+				\item Precise Machining 
+			\end{itemize}
+			&
+			\begin{itemize}
+				\item Circular Geometry
+				\item Don't use wood
+				\item Sharp Inner corners
+			\end{itemize}
+		\end{tabular}
+		
+	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Lathe}
+		\begin{tabular}{p{0.45\textwidth} | p{0.45\textwidth}}
+			\textbf{YES} & \textbf{NO} \\
+			\hline
+			\begin{itemize}
+				\item Coaxial Geometry
+			\end{itemize}
+			&
+			\begin{itemize}
+				\item Square Parts
+				\item Long parts
+				\item Don't use wood or 3D printed parts
+			\end{itemize}
+		\end{tabular}
+		
+	\end{table}
+	
+	\FloatBarrier
+	
+	\subsection{Ethics}
+	Ethics are the duty of us (the engineer) to society as a whole.
+	
+	We definitely want to do good work, and maximize benefits and minimize harm. We also want to respect people, and treat them fairly. We do this by using a lot of different ethical lenses. 
+	
+	These are ways of thinking to guide us to evaluate a decision from different perspectives. 
+	
+	We have four lenses:
+	\begin{enumerate}
+		\item Utilitarian
+		\item Rights
+		\item Common Good
+		\item Virtues
+		\item Equity
+	\end{enumerate}
+	\subsubsection{Utilitarian}
+	For the utilitarian lens, we need to consider the overall happiness or welfare the action will bring about. 
+	
+	We could say that minimizing costs of a product would increase overall happiness since more people could benefit from the product. 
+	
+	We could also say that having good customer service would increase overall happiness.
+	
+	\subsubsection{Rights}
+	For the rights lens, we want to ensure that people's rights are upheld. This includes but is not limited to:
+	\begin{itemize}
+		\item Right to life
+		\item Right to liberty
+		\item Right to privacy
+	\end{itemize}
+	
+	We could say that reducing the environmental impact of a product would uphold the rights of future generations to a clean environment.
+	
+	We could say that having good data protection measures in software upholds the users rights to privacy. 
+	
+	\subsubsection{Common Good}
+	The common good lens is about emphasizing the well being of a community as a whole such as having an accessible health care system, having world peace, and having a just legal system. 
+	
+	We could say that designing for accessibility would be for the common good since it benefits the community as a whole.
+	
+	\subsubsection{Virtues}
+	A virtue is a character trait that is considered to be morally good. It is a behavior that is right, and avoids being wrong. 
+	
+	Virtue ethics asks the question of "Who do I want to be? What choices do I want to make?".
+	
+	We could say that adding accurate and not misleading product descriptions would be good from the virtue lens because it is showing the character trait of honesty. 
+	
+	We could also say that designing for accessibility is good in the virtue lens since we are showing the character trait of fairness. 
+	
+	\subsubsection{Equity}
+	Equity means that everyone gets their due. It does not mean that everyone is equal, but everyone gets what they need to be successful. For example, someone who is poor might get a lot of government assistance and food, while someone who is rich would not get any of that extra help since they are already doing well. 
+	
+	The equity lens is about ensuring the appropriate distribution of benefits and burdens. 
+	
+	We could say that adding a discount for low income families would be good in the equity lens since it helps give a better distribution of benefits. 
+	
+	We could also say that fair labour practices are good in the equity lens since it gives the correct and fair benefits to workers. 
+	
 	
 	\section{Concept Development Process}
 	We have a few different design processes such as:
@@ -120,7 +317,7 @@
 	
 	For the Iterative Engineering Design Process (IEDP), we first generate solutions, then check if these solutions satisfy the DFX. If so, we prototype and see if the solution works, if it does not, we go back to the start (generate solutions).
 	
-	When coming up with the solutions, we need to generate a large amount of them. Then we score these solutions using a decision matrix that contains different factors.
+	When coming up with the solutions, we need to generate a large amount of them. First we remove all concepts that are not feasible (do not meet needs, or are physically impossible). Then we score these solutions using a decision matrix that contains different factors. Finally we test. 
 	\begin{table}[H]
 		\centering
 		\begin{tabular}{|c|c||c|c|}
@@ -139,13 +336,99 @@
 		\caption{Decision Matrix Example}
 	\end{table}
 	
-	\section{Prototyping}
+	\subsection{Bias and Concept Generation}
+	We have a lot of cognitive biasses that can affect our decision process. We need to be aware of these biasses.
+	\begin{itemize}
+		\item Anchoring Bias - Relying on first piece of information
+		\item Blind Spot Bias - Failing to recognize bias in yourself
+		\item Confirmation bias - Only trusting information that confirms my beliefs
+		\item Negativity bias - Only focusing on negative events
+		\item Outcome bias - Only judging based on outcome
+	\end{itemize}
+	We can try to overcome this bias by using concept generation (creative thinking) strategies.
+	\begin{itemize}
+		\item Sketching 
+		\item Lateral Thinking - Thinking outside the box
+			\subitem How would we deal with this in a different time period?
+			\subitem How would we deal with it in a different country?
+			\subitem How would we deal with it as a different gender or age?
+			\subitem How would we deal with it as someone else?
+		\item Evolution - Find and review existing products
+		\item Synthesis - Combine two products into one
+		\item SCAMPER - Substitute Combine Adapt Modify Put to another use Eliminate Reverse
+		\item Morphological Analysis - 
+			\subitem Identify Problem and Separate Variables
+			\subitem List many variations for each variable
+			\subitem Randomly select lots of variations
+			\subitem Find a good variation to make a whole
+	\end{itemize}
+	
+	\section{Prototyping, Testing, and Iteration}
+	A prototype is an early model of a product built to test a concept or process in order to learn something for the final product. 
+	
+	Since the prototype tests \textbf{a} concept, we almost always need more than one prototype to test multiple concepts. 
+	
+	We have different levels of prototype fidelity, we can have a low quality low fidelity prototype, medium fidelity, or high fidelity. We also need to come up with a plan to test this prototype. 
+	
+	When coming up with a prototype plan, we need:
+	\begin{itemize}
+		\item Prototype Purpose
+		\item Prototype Fidelity
+		\item Built Plan
+		\item Test Plan
+	\end{itemize}
+	
+	Note that these prototypes and tests do not have to be physical, they can be done in software and/or using calculations.
 	
 	\section{Teamwork}
+	Productivity is maximized when the task requirements, team dynamics, and individual situations align well. In practice, this is very hard to achieve. 
 	
-	\section{Ethics}
+	Throughout a project, a team has a bunch of stages that it will go through:
+	\begin{enumerate}
+		\item Forming - Start of team, introductions
+		\item Storming - Team conflict and problems
+		\item Norming - Reconciling the conflict
+		\item Performing - Doing the project well
+		\item Adjourning - Wrapping up the project
+	\end{enumerate}
+	
+	To determine how well a team is working together, we use the CARE model:
+	\begin{itemize}
+		\item Communicate - How well the team shares information, and manages conflict, are roles well defined
+		\item Adapt - How well the team manages changing conditions
+		\item Relate - How well the team trusts each other to get the work done, and other interpersonal factors
+		\item Educate - How well the team learns, reflects, and evolves
+	\end{itemize}
+	
+	One of the major factors we can see here, is how well the team manages conflict. So we need to know of ways that are used to manage this conflict, and come to a solution that is acceptable for everyone on the team. 
+	
+	Something to note is that not all conflict is bad, some is either good, or will resolve itself. Some conflict will promote better solutions, but it needs to be kept at a reasonable level. However, both sides need to be thinking rationally, not emotionally (want to find the best solution, not want to win).
+	\begin{itemize}
+		\item Dominating
+		\item Integrating (Collaborating)
+		\item Accommodating
+		\item Avoiding
+		\item Compromising
+	\end{itemize}
 	
 	\section{Intellectual Property}
+	Intellectual Property is any knowledge or expression created using the brain. We need to know about different ways to protect this IP. 
+	
+	The way we protect it depends on the medium of the knowledge. 
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|p{0.22\textwidth}||p{0.22\textwidth}|p{0.22\textwidth}|p{0.22\textwidth}|}
+			\hline
+			& \textbf{Patents} & \textbf{Copyrights} & \textbf{Trademarks} \\
+			\hline\hline
+			Term & Up to 20 years & 50 or 70 years & 10 years, renewable \\
+			\hline
+			What is protected & Useful, non-obvious inventions & Art, software, websites, etc. & Designs, shapes, logos, etc. \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
 	
 	\section{Economics}
 	

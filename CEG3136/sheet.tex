@@ -740,11 +740,77 @@ ENDP
 		\item MISO - Master In, Slave Out
 	\end{itemize}
 	
+	We have some parameters for the SPI clock such as CPHA [phase] (0 uses first edge of clock, 1 uses second edge) and CPOL [polarity] (0 has idle low clk, 1 has idle high clk).
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/cpol cpha spi"}
+		\caption{CPOL vs CPHA}
+		\label{fig:cpol-cpha-spi}
+	\end{figure}
+	
+	
 	\subsection{UART}
+	UART is a very widely used protocol to transfer data asynchronously (without a clock wire). It uses only two wires, Tx (transmit) and Rx (receive).
+	
+	The data frame is idle HI, and contains a start bit followed by a certain number of data bits (usually 8), optionally a parity bit, and then a stop bit.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/uart data stream"}
+		\caption{UART Bit Stream}
+		\label{fig:uart-data-stream}
+	\end{figure}
+	
+	Since UART is asynchronous, the receiver and transmitter must each know the clock rate (to within 10\% error). This is known as the BAUD rate (bits per second).
+	
+	The receiver typically oversamples the signal to get each pulse in the middle (to account for error). It is often 8x or 16x oversampling.
+	
+	When the receiver receives a byte, and puts it in the register, it sends an interrupt. Then upon reading from that register, the interrupt is cleared and it can be populated with the next received byte. 
+	
+	There are a few protocols to send this bit stream such as RS-232 where Logic 1 is +5V to +15V, and Logic 0 is -5V to -15V. 
+	 
 	
 	\subsection{USB}
+	USB is a much more complicated protocol which is not covered in depth in this course. USB has a Data + and Data -. These form a differential pair. This is the only wire we care about. 
+	
+	We use a Non Return to Zero Inverted scheme for the bitstream. This is where Logic 0 is represented by a change in voltage, and Logic 1 by the same voltage. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/usb nzri"}
+		\caption{USB NZRI Bit Stream}
+		\label{fig:usb-nzri}
+	\end{figure}
+	In terms of actually framing the data, it is very complicated, where there are multiple layers. 
+	
 	
 	\section{The Bus (Bus Interfaces)}
+	The BUS is basically a huge set of wires that everything is connected to. This include the CPU, MEMORY, GPIO, SPI, I2C, TIMER, ADC, DAC, RTC, and so on. 
+	
+	We have two main architectures for the bus and how it connects to the rest of the system. Von-Neumann means that the instructions and data share memory, and therefore share a bus interface. In a Harvard architecture, the instruction memory is seperate from the data memory, and there are two seperate bus interfaces. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/bus architectures"}
+		\caption{Von Neumann vs Harvard Architecture}
+		\label{fig:bus-architectures}
+	\end{figure}
+	We usually use a matrix to connect all the master devices to the slave devices. This matrix is good because multiple devices can communicate at once if they are different masters and different slaves.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.4\linewidth]{"images/bus matrix"}
+		\caption{Bus Matrix Example}
+		\label{fig:bus-matrix}
+	\end{figure}
+	
+	We have a bunch of different bus architectures used in ARM such as:
+	\begin{itemize}
+		\item Advanced Peripheral Bus (APB)
+		\item Advanced System Bus (ASB)
+		\item Advanced High-performance Bus (AHB)
+		\item Advanced Extensible Interface (AXI)
+	\end{itemize}
+	
+	Typically we use APB or AHB. APB is lower power, and simpler, while AHB is higher performance partially because it is pipelined. 
+	
+	
 	
 	\newpage 
 	\section{Appendix}
