@@ -9,6 +9,8 @@
 % frames with display breaks
 \usepackage{mdframed}
 \allowdisplaybreaks
+\usepackage{listings}
+\usepackage{pdfpages}
 
 % change spacing
 \usepackage{setspace}
@@ -28,6 +30,21 @@
 \fancyhead{} \fancyhead[C]{CEG 3155 Summary Sheet} \fancyhead[L]{CEG3155} \fancyhead[R]{Owen Daigle}
 \fancyfoot{} \fancyfoot[C]{\thepage}
 
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+	backgroundcolor=\color{white},   % choose the background color
+	basicstyle=\small,        % size of fonts used for the code
+	breaklines=true,                 % automatic line breaking only at whitespace
+	captionpos=b,                    % sets the caption-position to bottom
+	commentstyle=\color{mygreen},    % comment style
+	escapeinside={<@}{@>},			 % Escapes these chars
+	keywordstyle=\color{blue},       % keyword style
+	stringstyle=\color{mymauve},     % string literal style
+}
+
 
 \begin{document}
 	
@@ -38,14 +55,40 @@
 	\tableofcontents
 	\newpage
 
-	Well this course is so unreasonable its ridiculous. Who knows what will get done. I have a lot of words I want to say to the administration of this course, but I will hold back. One thing is for certain, despite what they claim, uOttawa does not care about the health at all of their students. They expect students to dedicate their whole life to school, not sleep well, not eat well, and really sacrifice their whole health. Many people can deal with this, but some people cannot. This is not right for some people to feel like they are out of options and have to end everything because of the actions of the university. 
+%	Well this course is so unreasonable its ridiculous. Who knows what will get done. I have a lot of words I want to say to the administration of this course, but I will hold back. One thing is for certain, despite what they claim, uOttawa does not care about the health at all of their students. They expect students to dedicate their whole life to school, not sleep well, not eat well, and really sacrifice their whole health. Many people can deal with this, but some people cannot. This is not right for some people to feel like they are out of options and have to end everything because of the actions of the university. 
 	
 	Basically so far it is about asm design, and some fsm design. :-/
 	
-	Also, this course has a lot of processes that in my opinion are quite hard to explain. They need to be done to understand them. So I don't think putting them here would really help me learn. But hey, I'll see.
+	Also, this course has a lot of processes that in my opinion are quite hard to explain. They need to be done to understand them. So I don't think putting them here would really help me learn. I will just put a very high level description of what was done. 
 	
 	\section{Miscellaneous Topics}
 	Really just a review of ITI1100 and CEG2136
+	
+	Some concepts that are assumed to be known for the other sections are:
+	\begin{itemize}
+		\item K Maps
+		\item Function Minimization
+		\item Multiple Output circuits (if $n$ outputs, then do $n$ k maps)
+		\item Don't Cares
+	\end{itemize}
+	
+	\subsection{Big K maps}
+	For K maps, if we want to do a K map for a 5 variable function, say $x_4x_3x_2x_1x_0$, we can always fix one variable at 1 and then subsequently 0, say $x_4$, and then solve two k maps one of which with $x_4 = 0$ and one with $x_4 = 1$. Then we get an equation like the following that can be simplified down potentially.
+	\begin{align*}
+		f = x_4(...) + \overline{x_4}(...)
+	\end{align*}
+	If the K map is bigger, we often either have to rely on some hacky ways, or we simply cannot solve it using k maps and need to use computers.
+	
+	\subsection{Multi Level Synthesis}
+	FPGAs often only have a certain number of inputs to each gate. They may only have AND2 and not AND4 gates. If we need to have 4 inputs into an AND gate, then we need to break it up into multiple levels. In the below example we break 1 AND4 into 3 AND2:
+	\begin{align*}
+		(x_1 x_2 x_3 x_4) + x_0 \equiv ((x_1 x_2) (x_3 x_4)) + x_0
+	\end{align*}
+	
+	We can also decompose functions into multiple sub functions to make it simpler. 
+	\begin{align*}
+		f = (x_1x_2) + (x_3x_4) \equiv f=g+h \text{ where } g=x_1x_2, h=x_3x_4
+	\end{align*}
 	
 	\section{VHDL}
 	VHDL is a hardware description language. It is used to model hardware. 
@@ -53,6 +96,87 @@
 	We can built at multiple levels such as the structural level, and the behaviour level. The behavioural level is very high level and uses \verb*|if/else|, and \verb*|while| loops. It is easy to program, but it is not very efficient when it compiles it to the actual gates to be used in hardware. 
 	
 	At the structural level, we only use basic \verb*|AND| gates, \verb*|OR| gates, \verb*|NOT| gates, \verb*|XOR| gates, etc. We connect the wires between gates. We can create \textbf{components} which have inputs and outputs, and are also made up of gates (behaviourally coded, or structurally coded). 
+	
+	We have two main parts of the vhdl file, the entity (inputs and outputs) and the behaviour (what it actually does).
+	\begin{lstlisting}[language=vhdl]
+LIBRARY ieee; -- allows us to use STD_LOGIC and other stuff
+USE ieee.std_logic_1164.ALL; -- see above note
+
+ENTITY name IS 
+	PORT (
+		X, Y, Z: IN STD_LOGIC; -- 3, 1 bit inputs
+		A: IN STD_LOGIC_VECTOR(7 DOWNTO 0); -- 8 bit input
+		B, C: OUT STD_LOGIC -- 1 bit output
+		);
+END name;
+
+ARCHITECTURE arch_name OF name IS
+BEGIN
+	-- actual behaviour is modeled here
+	B <= X OR Y; -- B is X or Y
+	C <= Y AND Z;
+END ARCHITECTURE arch_name;
+	\end{lstlisting}
+	
+	We could also do it in behavioural
+	\begin{lstlisting}[language=vhdl]
+ARCHITECTURE arch2 OF name IS
+BEGIN
+	-- actual behaviour is modeled here
+	test : PROCESS IS 
+	BEGIN
+		if X='1' then
+			C <= Y;
+	END PROCESS test;
+END ARCHITECTURE arch2;
+	\end{lstlisting}
+	
+	We use the keyword \verb*|SIGNAL| to define internal connections, we use \verb*|COMPONENT| for already declared entity/architecture instances, and we use \verb*|PORT MAP| for a component to connect signals to ports. 
+	\begin{lstlisting}[language=vhdl]
+...
+ARCHITECTURE struct OF name IS
+	COMPONENT d_latch -- define what the port map of d_latch is. This has an ENTITY/ARCHITECTURE pair somewhere else
+		port(d, clk: IN STD_LOGIC; q: OUT STD_LOGIC);
+	END COMPONENT;
+	
+	SIGNAL int_clk, d0, q0: STD_LOGIC; --this is just an internal signal not mapped to outputs or inputs
+	
+BEGIN
+	bit0: ENTITY work.d_latch(name)
+		PORT MAP (
+			CLK => int_clk,
+			d => d0,
+			q => q0
+		);
+END ARCHITECTURE struct;
+...
+	\end{lstlisting}
+	
+	We typically design a testbench for each vhdl file that we make. These testbenches run through tests to ensure the component works fine. 
+	\begin{lstlisting}[language=vhdl]
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+ENTITY name IS
+-- blank on purpose since no inputs or outputs in a testbench
+END ENTITY name;
+
+ARCHITECTURE test OF name IS
+	signal sigs: STD_LOGIC;
+BEGIN
+	dut : ENTITY work.name(main)
+	PORT MAP (
+		--- a => a
+		);
+	
+	test_process : PROCESS IS
+	BEGIN
+		--- test code here
+		
+		WAIT;
+	END PROCESS test_process;
+END ARCHITECTURE test;
+	\end{lstlisting}
 	
 	VHDL is quite a powerful and complicated language, but is better explained through examples. 
 	
@@ -63,15 +187,145 @@
 	
 	The datapath is where the actual data goes. It goes in, comes out, and takes in all the control signals. 
 	
+	To do this, we need to know Register Transfer Language (RTL). This is a language that literally symbolizes data going into and out of registers. 
+	\begin{table}
+		\centering
+		\begin{tabular}{|c|p{0.3\textwidth}||c|p{0.3\textwidth}|}
+			\hline
+			\textbf{Notation}& \textbf{Intended Operation}& \textbf{Notation}&\textbf{Intended Operation}\\
+			\hline\hline
+			$X \leftarrow Y$& Transfer from Y into X & $X \leftarrow M[1234] $& Set X to memory at $1234$ \\
+			\hline
+			$X \leftarrow 0$& Clear X & $X \leftarrow Y \lor Z$ & Put Y OR Z (bitwise) into X \\
+			\hline
+			$X++$& Increment X & $X \leftarrow Y+Z$ & Add Y and Z and put into X \\
+			\hline
+		\end{tabular}
+		\caption{RTL Summary}
+	\end{table}
+	
+	We have five major steps for the ASM process:
+	\begin{enumerate}
+		\item Create an algorithm using pseudocode to describe the operation of the device
+		\item Convert the pseudocode into an ASM chart using RTL
+		\item Design the datapath based on the ASM chart
+		\item Create a detailed ASM chart based on the datapath (convert RTL to actual signals that need to be active at each stage)
+		\item Design control path using detailed ASM chart (We use 1 Flip Flop per state that we need)
+	\end{enumerate}
+	
+	This looks complicated, but in practice it is actually quite simple. 
+	
 	\section{Arithmetic}
+	A lot of this is review of previous courses. 
+	
+	To recap, we store negative numbers in the twos complement form. We can then (for addition and subtraction) treat them the same as any other positive number. 
+	
+	We have overflow and carry. These happen when we end up with too many bits. If we are working with signed numbers, then we only pay attention to the overflow bit. If we are working with unsigned numbers, then we pay attention to only the carry bit. 
+	
+	\subsection{Carry Lookahead Adder}
+	The standard adder works very well, but if we need to do like a 32 bit adder, then we need to wait for the first adder to generate a carry to do the second, and then that carry to do the third, and so on until the 32nd has to wait for the 31st to finish to get its carry.
+	
+	A Carry Lookahead Adder basically uses math to tell us that we can find all the carrys quite early on. We just need to do some combinatorial logic, and then we have all the inputs we require for all the 32 adders to be able to calculate simultaneously. 
+	
+	Basically, we end up with a much faster adder, but it uses up much more space and power due to the additional gates for the carry calculating logic. 
+	
+	\subsection{Multiplication}
+	Usually multiplication is just implemented using shifting and the adder. We can however make a more complicated and efficient circuit, but just like the carry lookahead adder they use more space and power. 
+	
+	Dividing is also typically done using shifting and the adder. 
+	
+	\subsection{Floating Point Arithmetic}
+	This is best shown with an example.
+	\begin{mdframed}[]
+		\textbf{Ex. } Express $(36.5625)_{10}$ as a 32 bit floating point number using the IEEE standard.
+		
+		The value in binary is $100100.1001$ and normalized is $1.001001001 \times 2^5$.
+		
+		\begin{enumerate}[noitemsep]
+			\item Sign: 0
+			\item Exponent: 5+127 = 132 = 10000100 
+			\item Mantissa: 00100100100000000000000
+		\end{enumerate}
+		
+		So the 32 bit number is: 0 10000100 00100100100000000000000 (without the spaces ofc)
+	\end{mdframed}
 	
 	\section{FSM Design}
-	Finite State Machine is a method to take a design with a finite number of states and turn it into a circuit. 
+	Finite State Machine is a method to take a design with a finite number of states and turn it into a circuit. It is very similar to ASM, but it works better for small scale circuits, and falls flat with more complex ones. 
+	
+	FSM has 8 steps:
+	\begin{enumerate}
+		\item Obtain problem specification
+		\item Create a state diagram 
+		\item Create a state table
+		\item Minimize the number of states if possible
+		\item Choose a state assignment for the states
+		\item Create a transition table 
+		\item Get the design equations using k maps and the transition table
+		\item Implement the circuit using the equations from the previous step as the flip flop inputs
+	\end{enumerate}
+	
+	\subsection{Mealy vs Moore}
+	When designing these circuits, we should know the difference between a mealy and a moor machine. 
+	
+	A Mealy machine has outputs that depend on the current state, and the input variables. These machines have very fast response times since they can quickly change output right when the input changes. 
+	
+	Moore machines have outputs that \textbf{only} depend on the current state. These machines are simpler, but they have slightly slower response times, since if the inputs change, they have to wait for the next clock cycle to change state and then finally change output. 
+	
+	\subsection{State Minimization}
+	To minimize states, we use the class equivalence method.
+	\begin{enumerate}
+		\item Divide all states based on output
+		\item For each state in a grouping, for the next states, if they all go to the same output GREAT, if not, divide based on output
+		\item Repeat Step 2 for each grouping
+		\item Once nothing changes, stop. 
+	\end{enumerate}
+	
+	We can have don't cares in the state outputs, but we need to assume they are either all 1, or all 0. This is just for the algorithm to work. We can try each and see which gives a smaller circuit. 
+	
+	\subsection{State Assignment}
+	There are often better and worse ways to assign values to each state. This is a simple way to do this that may give a slightly better state assignment. 
+	
+	We make groupings of states for Rule 1, Rule 2, and Rule 3.
+	\begin{enumerate}
+		\item Two or more current states have the same next state for a given input combination
+		\item For any current state, and two adjacent input combinations, take the two next states.
+		\item Two or more current states that generate the same output for a given output. This should only be applied on \textbf{either} 0 or 1, not both
+	\end{enumerate}
+	Then we need to make as many of these states as possible (with priority to Rule 1 over Rule 2/3, and Rule 2 over Rule 3) in a K map. This is a decent state assignment.
 	
 	\section{Asynchronous Circuit Design}
+	Asynchronous circuits are very efficient since they do not have a clock. They do not need to wait for the next clock edge to move on, they just move on when they are ready. But the big problem is that only one bit can change at a time or bad stuff will happen. 
+	
+	Race conditions, encoding, and communication are just a few of the challenges with asynchronous design. So usually we stick to synchronous for simplicity and reliability. 
+	
+	When we have the state table, we add a new mechanism to this table. If we are in say state A, and we go to state A for input 00, then we say that state A is stable for 00. We denote this with a circle on the transition table. 
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c||c|c|c|c|}
+			\hline
+			& \multicolumn{4}{c|}{Next State} \\
+			\hline
+			Present State & 00 & 01 & 10 & 11 \\
+			\hline\hline
+			A & (A) & (A) & B & (A) \\
+			\hline
+			B & (B) & A & (B) & A \\
+			\hline
+		\end{tabular}
+		\caption{Asynchronous State Table Example}
+	\end{table}
 	
 	\subsection{State Reduction}
 	We can either use the standard state equivalence method, or use the new state fusion method. 
+	
+	The state fusion method says that two states can potentially be combined if for each input combination \textbf{one} of the following is true:
+	\begin{enumerate}
+		\item Both states have the same successor
+		\item Both states are stable
+		\item The successor of \textbf{one state} is undefined
+	\end{enumerate}
+	Then we create a diagram of all the states, and then we can combine the ones that are adjacent \textbf{and} form a closed loop. Also, note that each state can only be in ONE loop (obviously). 
 	
 	\subsection{State Assignment}
 	When assigning states, we cannot have any states where going from one state to the other more than one bit changes. So we could not for example go from \verb*|000| to \verb*|110|. We could however go from \verb*|000| to \verb*|010| to \verb*|110|.
@@ -93,11 +347,32 @@
 	\section{Implementation Technologies}
 	There were many different ways of implementing circuits before today's FPGAs. 
 	
+	\subsection{Programmable Logic Array (PLA)}
+	This is basically an AND plane and an OR plane. This lets us implement any SOP form functions. We use eFuses to enable and disable connections on these AND planes and OR planes. 
+	
+	\subsection{Programmable Array Logic (PAL)}
+	These are similar to PLAs, but they get rid of the programmable OR plane, and make that fixed, but they keep the AND plane. This makes the product much cheaper to make. 
+	
+	\subsection{Simple Programmable Logic Device (SPLD)}
+	This is a more advanced PAL where the outputs from the OR gates can be sent through a flip flop, or kept in there regular form. 
+	
+	\subsection{Complex Programmable Logic Device (CPLD)}
+	This is a device that contains a lot of PALs per device to make it more efficient. Each block contains something like 16 macrocell, where each macrocell contains lots of OR gates, XOR gate, D Flip Flop, and a MUX. Wires allow us to connect these blocks together. 
+	
+	\subsection{Field Programmable Gate Array (FPGA)}
+	FPGAs are very large in scale, and they typically use Look Up Tables (LUTs) which are basically truth tables, rather than any actual gates for the combinatorial circuits. These LUTs are buffered by an optional flip flop, and all these modules are connected together with optional connections in a matrix. 
+	
+	\subsection{Application Specific Integrated Circuit (ASIC)}
+	These are much more powerful and bigger than FPGAs, and they are custom chips. They are custom, and usually require very large and expensive orders to make. 
+	
 	\section{Interfaces and Controllers}
+	Not on exam
 	
 	\section{Processor Design}
+	Not on exam
 	
 	\section{Digital Testing}
+	Not on exam
 	
 	\section{Appendix}
 	
