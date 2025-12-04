@@ -523,6 +523,12 @@
 		\sum_{k=-\infty}^{\infty}\delta(t - kT) \Longleftrightarrow \frac{2\pi}{T} \sum_{k=-\infty}^{\infty} \delta\left(\omega - \frac{2\pi k}{T_0}\right) \\
 		
 		\hline
+		
+		
+		te^{-at}u(t) \Longleftrightarrow \jmath \frac{\mathrm d }{\mathrm d \omega} \left[\frac{1}{a+\jmath\omega}\right]&\\
+		
+		\hline
+		
 	\end{array}
 	\]
 	
@@ -554,18 +560,36 @@
 	
 	
 	\begin{mdframed}
-		\textbf{Ex. } %ex
+		\textbf{Ex. } We have the following equation. Get $y(t)$ 
+		
+		\begin{align*}
+			H(\jmath\omega) = \frac{\jmath\omega + 2}{(\jmath\omega+1)(\jmath\omega+3)} \qquad x(t) = e^{-t}u(t)
+		\end{align*}
+		We start by converting $x(t)$ to $X(\jmath\omega)$, and then we can use the convolution property of $Y(\jmath\omega) = H(\jmath\omega)X(\jmath\omega)$.
+		\begin{align*}
+			X(\jmath\omega) &= \frac{1}{\jmath\omega+1}\\
+			Y(\jmath\omega) &= \left[\frac{\jmath\omega + 2}{(\jmath\omega+1)(\jmath\omega+3)}\right] \cdot \frac{1}{\jmath\omega+1}\\
+			&= \frac{\jmath\omega+2}{(\jmath\omega+1)^2(\jmath\omega+3)}\\
+			& \text{Use partial fractions}\\
+			&=\frac{1/4}{\jmath\omega + 1} + \frac{1/2}{(\jmath\omega+1)^2} + \frac{1/4}{\jmath\omega+3}\\
+			&\text{Now I can put all three terms into the time domain using the FT pair}\\
+			y(t)&=u(t)\left[\frac{1}{4} e^{-t} + \frac{1}{2} te^{-t} - \frac{1}{4} e^{-3t}\right]
+		\end{align*}
 	\end{mdframed}
 	
 	
 	\begin{mdframed}
-		\textbf{Ex. } %ex
+		\textbf{Ex. } Get the frequency response $H(\jmath\omega)$ of the following:
+		\begin{align*}
+			\frac{\mathrm d ^2 y(t)}{\mathrm d t^2} +4 \frac{\mathrm d y(t)}{\mathrm d t} + 3y(t) = \frac{\mathrm d x(t)}{\mathrm d t} + 2x(t)
+		\end{align*}
+		I will simply convert to frequency domain, and then use the convolution property.
+		\begin{align*}
+			&(\jmath\omega)^2Y(\jmath\omega) + 4(\jmath\omega)Y(\jmath\omega) + 3Y(\jmath\omega) = (\jmath\omega)X(\jmath\omega) + 2X(\jmath\omega)\\
+			\implies & \frac{Y(\jmath\omega)}{X(\jmath\omega)} = H(\jmath\omega) =  \frac{\jmath\omega+2}{(\jmath\omega)^2+4\jmath\omega+3}
+		\end{align*}
 	\end{mdframed}
 	
-	
-	\begin{mdframed}
-		\textbf{Ex. } %ex
-	\end{mdframed}
 	
 	
 	\section{Discrete Time Fourier Transformation}
@@ -626,7 +650,22 @@
 	
 	
 	\begin{mdframed}
-		\textbf{Ex. } %quiz 8 question here\texttt{} 
+		\textbf{Ex. } We have $x[n] = \left(\frac{1}{2}\right)^n u[n]$ and $y[n]=\left(\frac{1}{2}\right)^nu[n] + \frac{1}{2} \left(\frac{1}{4}\right)^nu[n]$. Find the impulse response.
+		
+		I find the impulse response by knowing that in the frequency domain $H(e^{\jmath\omega})=\frac{Y(e^{\jmath\omega})}{X(e^{\jmath\omega})}$.
+		\begin{align*}
+			H(e^{\jmath\omega}) &= \left[\frac{1}{1-\frac{1}{2}e^{-\jmath\omega}}\cdot \frac{1}{2}\cdot\frac{1}{1-\frac{1}{4}e^{-\jmath\omega}}\right]\cdot \left(1-\frac{1}{2}e^{-\jmath\omega}\right)\\
+			&= ... = \frac{3}{2}\frac{1}{1-\frac{1}{4}e^{-\jmath\omega}}-\frac{1}{2}\frac{e^{-\jmath\omega}}{1-\frac{1}{4}e^{-\jmath\omega}}\\
+			& \text{Use FT for the first part, time shift property for second}\\
+			\implies h(t)&= \frac{3}{2}\left(\frac{1}{4}\right)^nu[n] - \frac{1}{2}\left(\frac{1}{4}\right)^{n-1}u[n-1]
+		\end{align*}
+		I can also find the difference equation if I want by going back to $H(e^{\jmath\omega})$ and getting all $Y$ on one side, and $X$ on the other, and then going to time domain. 
+		\begin{align*}
+			H(e^{\jmath\omega}) = \frac{Y(e^{\jmath\omega})}{X(e^{\jmath\omega})}&= \frac{3}{2}\frac{1}{1-\frac{1}{4}e^{-\jmath\omega}}-\frac{1}{2}\frac{e^{-\jmath\omega}}{1-\frac{1}{4}e^{-\jmath\omega}}=\frac{3-e^{-\jmath\omega}}{2-\frac{1}{2}e^{-\jmath\omega}}\\
+			\implies X(e^{\jmath\omega})\left(3-e^{-\jmath\omega}\right) &= Y(e^{\jmath\omega})\left(2-\frac{1}{2}e^{-\jmath\omega}\right)\\
+			&\text{Now convert to time domain}\\
+			3x[n] - x[n-1] &= 2y[n] - \frac{1}{2}y[n-1]
+		\end{align*}
 	\end{mdframed}
 	
 	\section{Filters}
@@ -718,10 +757,21 @@
 	We do this for each term and then add the terms up. 
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. } Find the bode plot for the following:
+		\begin{align*}
+			H(\jmath\omega) = 10\times (10\jmath\omega+1)\times\frac{1}{\left(\jmath\omega\right)^2+\jmath\omega+1}\times\left(\frac{\jmath\omega}{10}+1\right)\times \frac{1}{\frac{\jmath\omega}{100}+1}
+		\end{align*}
 		
 		\centering
-		wrong
+		\includegraphics[width=0.7\linewidth]{"images/bode ex phase"}
+		
+		\raggedright
+		
+		We started by plotting the phase graph for each of the 4 terms (ignore the constant term). We plot a 45 degree slope for the first order, and 90 degree for second order. 
+		
+		The slope is plotted 1 decade before and after the point. So for the first term at $10^-1$, it goes from $10^{-2}$ to $10^0$. 
+		
+		Then we sum up all these slopes to get the final result (in Black). 
 		
 	\end{mdframed}
 	
@@ -1005,11 +1055,21 @@
 	\end{center}
 	
 	\begin{mdframed}
-		\textbf{Ex. }
+		\textbf{Ex. } Find $H(z)$ for the following:
+		
+		\begin{align*}
+			y[n] - \frac{3}{2} y[n-1] + \frac{1}{2} y[n-1] = x[n]
+		\end{align*}
+		This is very simple, just use the time shifting property. 
+		\begin{align*}
+			\implies& Y(z) - \frac{3}{2} z^{-1} Y(z) + \frac{1}{2}z^{-2} Y(z) = X(z)\\
+			\implies& H(z) = \frac{Y(z)}{X(z)} = \frac{1}{\frac{1}{2}z^{-2} - \frac{3}{2}z^{-1} + 1}
+		\end{align*}
 	\end{mdframed}
 	
 	
 	\newpage 
 	\section{Appendix}
-	\includepdf[pages=-]{Formula-Sheets}
+	\includepdf[pages=-]{elg3125_other_formulas_2025}
+	\includepdf[pages=-]{elg3125_transform_tables_2025}
 \end{document}

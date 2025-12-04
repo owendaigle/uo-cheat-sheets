@@ -580,7 +580,17 @@ ENDP
 	
 	It needs to save \verb*|xPSR|, \verb*|PC|, \verb*|LR|, \verb*|R12|, \verb*|R3|, \verb*|R2|, \verb*|R1|, and \verb*|R0| . Therefore it can use any of those registers to store data. Any other registers that are used must be returned to their original state. 
 	
+	Note that we use the \verb*|LR| to indicate the stack pointer, so we need to preserve it to \verb*|BX LR| at the end of the ISR.
 	
+	To enable the interrupt, we need to do:
+	\begin{enumerate}
+		\item Program peripheral control register to allow it to generate interrupts
+		\item Program NVIC (Nested Vector Interrupt Controller) to accept interrupts
+	\end{enumerate}
+	
+	NVIC lets us enable or disable interrupts to the peripherals. Each interrupt in the NVIC has its own priority set. There is the subpriority (order in which the interrupts get run), and preemption priority (higher preemption priorities can interrupt other interrupts). 
+	
+	We can clear an interrupt by writing 1 to the correct register. 
 	\section{FPU}
 	The Floating Point Unit (FPU) greatly improves efficiency when dealing with floats over software floating point calculations. These FPUs are however quite large and expensive to implement, so they are not found on all systems. 
 	
@@ -665,6 +675,11 @@ ENDP
 	
 	We have a certain number of GPIO devices, each device has a certain number of pins. So we could have 8 devices with 16 pins each for a total of 128 inputs/outputs. 
 	
+	\subsection{Pin Output/Input modes}
+	For output pins, we can either have the pin in PUSH/PULL mode, or OPEN DRAIN mode. If it is in PUSH/PULL, the pin can either be driven HI, or LO. If it is in OPEN DRAIN mode, then the PMOS is disabled, and we can only drive LO. If we do not drive LO, then the pin will be floating. 
+	
+	For input pins, we can either use a pull up or pull down resistor. If we use pull up, then the line is by default at HI. If we use pull down, then the line is by default at LO. 
+	
 	\subsection{Debouncing}
 	Debouncing is needed for any sort of input switch. If we do not have debouncing, then the hardware will detect multiple presses per single button press, which is not what we want. We can either debounce using hardware with an RC circuit (or an SR latch and dual throw switch if we are fancy), or through software with a delay.
 	
@@ -695,8 +710,13 @@ ENDP
 		\label{fig:rcr}
 	\end{figure}
 	
+	\subsection{Systick}
+	This is the build in timer that generates interrupts at a fixed interval. We can enable it by enabling the systick interrupt (found in \verb*|SysTick->CTRL|), enabling the systick clock source, and enabling the actual systick. We also have to convigure the NVIC to actually make the interrupt. 
+	
 	\section{Direct Memory Access (DMA)}
 	By default, when we copy from a peripheral to memory, we need to go through the CPU. This is inefficient, the DMA lets us directly go from the peripheral to the memory. This is better since it uses much less CPU. We have a seperate DMA controller that can initialise the transfers. The data can either flow through the DMA, or directly fly by to the memory (does not directly go through DMA).
+	
+	DMA has less CPU overhead compared to traditional memory access, and it is faster. 
 	
 	\section{DAC and ADC (Analog Interfacing)}
 	When interfacing with analogue devices, we need to either convert a digital signal to analogue, or convert an analogue signal to digital, depending on whether or not it is an output or input. 
@@ -706,13 +726,19 @@ ENDP
 	
 	The DAC can be implemented in a few ways such as a string of resisters with switches acting as a voltage divider, or as a combination of resistors with switches (same idea, but we use combinations of resistors for more possible outputs with less resistors), and we can also use PWM with a filter. 
 	
+	\begin{mdframed}
+		\textbf{Ex. } How many resistors are required for a simple 6 bit string DAC?
+		
+		This is just a list of resistors that act as a voltage divider, and we can turn on any one resistor. We need 63 resistors to give 64 options since $64=2^6$.
+	\end{mdframed}
+	
 	\subsection{ADC}
 	When converting from analog to digital, we need to sample at a certain frequency, and each sample again has a bit depth (resolution). The sampling rate that we need to reconstruct the analog signal is called the Nyquist rate which is twice the max frequency of the signal. 
 	
 	One way to do this is to use Successive Approximations (SAR). This basically uses a comparator to test all the digital values compared to the raw analog signal using a binary search. 
 	
 	\begin{mdframed}
-		\textbf{Ex. } We have a 12 bit ADC, where it takes 4 cycles to sample the signal. What is the total sampling time?
+		\textbf{Ex. } We have a 12 bit SAR ADC, where it takes 4 cycles to sample the signal. What is the total sampling time?
 		
 		For the total sampling time, we need to account for the time to sample the signal, and then the time to determine the actual signal using the SAR. Since this is a binary search, it will take at most 12 cycles. 
 		\begin{align*}
@@ -765,6 +791,8 @@ ENDP
 	The receiver typically oversamples the signal to get each pulse in the middle (to account for error). It is often 8x or 16x oversampling.
 	
 	When the receiver receives a byte, and puts it in the register, it sends an interrupt. Then upon reading from that register, the interrupt is cleared and it can be populated with the next received byte. 
+	
+	UART is transmitted LSB first. 
 	
 	There are a few protocols to send this bit stream such as RS-232 where Logic 1 is +5V to +15V, and Logic 0 is -5V to -15V. 
 	 
