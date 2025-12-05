@@ -389,16 +389,216 @@ END ARCHITECTURE test;
 	Then we create a diagram of all the states, and then we can combine the ones that are adjacent \textbf{and} form a closed loop. Also, note that each state can only be in ONE loop (obviously). 
 	
 	\begin{mdframed}
-		\textbf{Ex. } 
+		\textbf{Ex. } We want to minimize the following machine:
+		
+		\centering
+		\begin{tabular}{|c||c|c|c|c||c|}
+			\hline
+			Present & \multicolumn{4}{c|}{Next State} & Output \\
+			\hline
+			State & 00 & 01 & 10 & 11 & z \\
+			\hline\hline
+			A & (A) & F & C & - & 0 \\
+			\hline
+			B & A & (B) & - & H & 1 \\
+			\hline
+			C & G & - & (C) & D & 0 \\
+			\hline
+			D & - & F & - & (D) & 1 \\
+			\hline
+			E & G & - & (E) & D & 1 \\
+			\hline
+			F & - & (F) & - & K & 0 \\
+			\hline
+			G & (G) & B & J & - & 0 \\
+			\hline
+			H & - & L & E & (H) & 1 \\
+			\hline
+			J & G & - & (J) & - & 0 \\
+			\hline
+			K & - & B & E & (K) & 1 \\
+			\hline
+			L & A & (L) & - & K & 1 \\
+			\hline
+		\end{tabular}
+		
+		\raggedright
+		First use the state equivalence method on all these states: We get that \verb*|BL| and \verb*|HK| can be combined. 
+		
+		\centering
+		\begin{tabular}{|c||c|c|c|c||c|}
+			\hline
+			Present & \multicolumn{4}{c|}{Next State} & Output \\
+			\hline
+			State & 00 & 01 & 10 & 11 & z \\
+			\hline\hline
+			A & (A) & F & C & - & 0 \\
+			\hline
+			B & A & (B) & - & H & 1 \\
+			\hline
+			C & G & - & (C) & D & 0 \\
+			\hline
+			D & - & F & - & (D) & 1 \\
+			\hline
+			E & G & - & (E) & D & 1 \\
+			\hline
+			F & - & (F) & - & H & 0 \\
+			\hline
+			G & (G) & B & J & - & 0 \\
+			\hline
+			H & - & B & E & (H) & 1 \\
+			\hline
+			J & G & - & (J) & - & 0 \\
+			\hline
+		\end{tabular}
+		
+		\raggedright
+		Now I need to apply the three rules for state fusion. 
+		
+		I see that: \texttt{(A,F), (B,H), (F,J), (C,J), (G,J), (D,E)}
+		
+		Now I need to create the diagram. There are not really any closed loops in the traditional sense, but any two pair is a closed loop for sure. So we choose \texttt{BH, AF, JG, DE}, but we could just as easily pick \texttt{BH, AF, JC, DE}.
+		
+		\centering
+		\includegraphics[width=0.6\linewidth]{images/fusion}
+		
+		\raggedright
+		And now we reduce the table again:
+		
+		\centering
+		\begin{tabular}{|c||c|c|c|c||c|}
+			\hline
+			Present & \multicolumn{4}{c|}{Next State} & Output \\
+			\hline
+			State & 00 & 01 & 10 & 11 & z \\
+			\hline\hline
+			A & (A) & (A) & C & B & 0 \\
+			\hline
+			B & A & (B) & D & (B) & 1 \\
+			\hline
+			C & G & - & (C) & D & 0 \\
+			\hline
+			D & G & A & (D) & (D) & 1 \\
+			\hline
+			G & (G) & B & (G) & - & 0 \\
+			\hline
+		\end{tabular}
+		
+		\raggedright
+		Note that a lot of the undefined states now become defined. If we have two states, one is undefined and one is defined that are fused, then the undefined becomes the defined. 
+		
+		We can then do state fusion again. Here we will find that \texttt{CG} are compatible, so we can fuse those. 
+		
+			\centering
+		\begin{tabular}{|c||c|c|c|c||c|}
+			\hline
+			Present & \multicolumn{4}{c|}{Next State} & Output \\
+			\hline
+			State & 00 & 01 & 10 & 11 & z \\
+			\hline\hline
+			A & (A) & (A) & C & B & 0 \\
+			\hline
+			B & A & (B) & D & (B) & 1 \\
+			\hline
+			C & (C) & B & (C) & D & 0 \\
+			\hline
+			D & C & A & (D) & (D) & 1 \\
+			\hline
+		\end{tabular}
 	\end{mdframed}
 	
 	\subsection{State Assignment}
 	When assigning states, we cannot have any states where going from one state to the other more than one bit changes. So we could not for example go from \verb*|000| to \verb*|110|. We could however go from \verb*|000| to \verb*|010| to \verb*|110|.
 	
-	To easily do this, we create a transition diagram. Here we do not want to have any diagonals. If we have a diagonal we either have to eliminate it (by going along a different path) or add more states to account for it. 
+	To easily do this, we start by numbering all the stable states with a unique number, and then using those numbers on other states in the same column. Then, we create a transition diagram using those numbers as the transitions. Here we do not want to have any diagonals. If we have a diagonal we either have to eliminate it (by going along a different path) or add more states to account for it. 
+	
+	Finally, once we have an acceptable state diagram we assign states so that each adjacent state only has 1 bit changing. 
 	
 	\begin{mdframed}
-		\textbf{Ex. } %assigment 4 question 2a
+		\textbf{Ex. } Find a state assignment for the following table:
+		
+		\centering
+		\begin{tabular}{|c||c|c|c|c||c|c|c|c|}
+			\hline
+			Present State & \multicolumn{4}{c|}{Next State} & \multicolumn{4}{c|}{Output z}  \\
+			\hline
+			& 00 & 01 & 10 & 11 & 00 & 01 & 10 & 11 \\
+			\hline\hline
+			A & (A) & B & D & (A) & 0 & - & 1 & 1 \\
+			\hline
+			B & C & (B) & (B) & D & 0 & 1 & 0 & 0 \\
+			\hline
+			C & (C) & (C) & B & A & 0 & 1 & 0 & 1 \\
+			\hline
+			D & A & C & (D) & (D) & - & - & 1 & 0 \\
+			\hline
+		\end{tabular}
+		
+		\raggedright
+		I need to go through the table and assign states.
+		
+		\centering
+		\begin{tabular}{|c||c|c|c|c||c|c|c|c|}
+			\hline
+			Present State & \multicolumn{4}{c|}{Next State} & \multicolumn{4}{c|}{Output z}  \\
+			\hline
+			& 00 & 01 & 10 & 11 & 00 & 01 & 10 & 11 \\
+			\hline\hline
+			A & (1) & 3 & 7 & (2) & 0 & - & 1 & 1 \\
+			\hline
+			B & 5 & (3) & (4) & 8 & 0 & 1 & 0 & 0 \\
+			\hline
+			C & (5) & (6) & 4 & 2 & 0 & 1 & 0 & 1 \\
+			\hline
+			D & 1 & 6 & (7) & (8) & - & - & 1 & 0 \\
+			\hline
+		\end{tabular}
+		
+		\raggedright
+		Now I go ahead and create the transition diagram.
+		
+		\centering
+		\includegraphics[width=0.4\linewidth]{"images/transition diagram"}
+		
+		\raggedright
+		I see that I cannot eliminate any of the diagonals by going on a different path.
+		
+		Note that \textit{if} I had for example the $2$ transition on the AB and BC transition, then I could eliminate the AC transition by first going from AB, then BC. 
+		
+		So I need to add more states. I will add a state E, F, and G. Then I will assign states to the state diagram where each state is only 
+		
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/transition diagram1"}
+		
+		\raggedright
+		Now I can apply those 3 new states to get the new state table:
+		
+		\centering
+		\begin{tabular}{|c||c|c|c|c||c|c|c|c|}
+			\hline
+			Present State & \multicolumn{4}{c|}{Next State} & \multicolumn{4}{c|}{Output z}  \\
+			\hline
+			& 00 & 01 & 10 & 11 & 00 & 01 & 10 & 11 \\
+			\hline\hline
+			A & (A) & B & D & (A) & 0 & - & 1 & 1 \\
+			\hline
+			B & G & (B) & (B) & F & 0 & 1 & 0 & 0 \\
+			\hline
+			C & (C) & (C) & G & A & 0 & 1 & 0 & 1 \\
+			\hline
+			D & A & E & (D) & (D) & - & - & 1 & 0 \\
+			\hline
+			E & - & C & - & - & - & 1 & - & - \\
+			\hline
+			F &-&-&-&D&-&-&-&0\\
+			\hline
+			G &C&-&B&-&0&-&0&-\\
+			\hline
+		\end{tabular}
+		
+		\raggedright
+		Note that for these extra states, we also have to apply the outputs. If we go from 0$\to$0, we have 0. 1$\to$1 we have 1, or 0$\to$1 / 1$\to$0, does not matter. 
+		
 	\end{mdframed}
 	
 	\subsection{Hazards}
