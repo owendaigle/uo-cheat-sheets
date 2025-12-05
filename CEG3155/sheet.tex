@@ -48,10 +48,17 @@
 
 \begin{document}
 	
+	\vspace*{5em}
+	\thispagestyle{empty}
 	\begin{center}
+		\vspace{2em}
 		\Large\textbf{CEG 3155 Summary Sheet} \\
-		\vspace{0.5em}
+		\vspace{2em}
+		\small{Fall 2025} \\
+		\small{University of Ottawa} \\
+		\small{Owen Daigle}
 	\end{center}	
+	\newpage
 	\tableofcontents
 	\newpage
 
@@ -215,6 +222,10 @@ END ARCHITECTURE test;
 	
 	This looks complicated, but in practice it is actually quite simple. 
 	
+	\begin{mdframed}
+		\textbf{Ex.} Example found in Appendix \ref{appendix:asm}.
+	\end{mdframed}
+	
 	\section{Arithmetic}
 	A lot of this is review of previous courses. 
 	
@@ -265,6 +276,10 @@ END ARCHITECTURE test;
 		\item Implement the circuit using the equations from the previous step as the flip flop inputs
 	\end{enumerate}
 	
+	\begin{mdframed}
+		\textbf{Ex.} Example found in Appendix \ref{appendix:fsm}.
+	\end{mdframed}
+	
 	\subsection{Mealy vs Moore}
 	When designing these circuits, we should know the difference between a mealy and a moor machine. 
 	
@@ -283,6 +298,10 @@ END ARCHITECTURE test;
 	
 	We can have don't cares in the state outputs, but we need to assume they are either all 1, or all 0. This is just for the algorithm to work. We can try each and see which gives a smaller circuit. 
 	
+	\begin{mdframed}
+		\textbf{Ex. }A quick example is found in Appendix \ref{appendix:fsm}.
+	\end{mdframed}
+	
 	\subsection{State Assignment}
 	There are often better and worse ways to assign values to each state. This is a simple way to do this that may give a slightly better state assignment. 
 	
@@ -293,6 +312,48 @@ END ARCHITECTURE test;
 		\item Two or more current states that generate the same output for a given output. This should only be applied on \textbf{either} 0 or 1, not both
 	\end{enumerate}
 	Then we need to make as many of these states as possible (with priority to Rule 1 over Rule 2/3, and Rule 2 over Rule 3) in a K map. This is a decent state assignment.
+	
+	\begin{mdframed}
+		\textbf{Ex. } Find an efficient state assignment for this machine.
+		
+		\centering
+		\begin{tabular}{|c||c|c|c|}
+			\hline
+			Present State & \multicolumn{2}{c|}{Next State} & Out \\
+			\hline
+			& x=0 & x=1 &  \\
+			\hline	\hline
+			A & B & A & 0 \\
+			\hline
+			B & A & C & 1 \\
+			\hline
+			C & D & A & 0 \\
+			\hline
+			D & D & E & 1 \\
+			\hline
+			E & C & D & 1 \\
+			\hline
+		\end{tabular}
+		
+		\raggedright
+		We need to apply the three rules.
+		
+		\textbf{Rule 1}: \texttt{(C,D), (A,C)}
+		
+		\textbf{Rule 2}: \texttt{(A,B), (A,C), (A,D), (D,E), (C,D)}
+		
+		\textbf{Rule 3}: Select 1 - \texttt{(B,D,E)}
+		
+		Now I need to make a k map and put these together so definitely Rule 1 are together, probably Rule 2, and if possible Rule 3. 
+		
+		\centering 
+		\includegraphics[width=0.4\linewidth]{"images/state assignment ex"}
+		
+		\raggedright
+		
+		So this means that we have the state assignments of: \texttt{A: 000, B: 100, C: 001, D: 101, E: 111}.
+		
+	\end{mdframed}
 	
 	\section{Asynchronous Circuit Design}
 	Asynchronous circuits are very efficient since they do not have a clock. They do not need to wait for the next clock edge to move on, they just move on when they are ready. But the big problem is that only one bit can change at a time or bad stuff will happen. 
@@ -327,21 +388,45 @@ END ARCHITECTURE test;
 	\end{enumerate}
 	Then we create a diagram of all the states, and then we can combine the ones that are adjacent \textbf{and} form a closed loop. Also, note that each state can only be in ONE loop (obviously). 
 	
+	\begin{mdframed}
+		\textbf{Ex. } 
+	\end{mdframed}
+	
 	\subsection{State Assignment}
 	When assigning states, we cannot have any states where going from one state to the other more than one bit changes. So we could not for example go from \verb*|000| to \verb*|110|. We could however go from \verb*|000| to \verb*|010| to \verb*|110|.
 	
 	To easily do this, we create a transition diagram. Here we do not want to have any diagonals. If we have a diagonal we either have to eliminate it (by going along a different path) or add more states to account for it. 
 	
+	\begin{mdframed}
+		\textbf{Ex. } %assigment 4 question 2a
+	\end{mdframed}
+	
 	\subsection{Hazards}
 	Static hazards are when a signal briefly changes values and then goes back to the original value. Dynamic hazards are when a signal switches a few times before settling on a new value. 
 	
-	We want to avoid both types of hazards. We can do this by trying to include more implicants in the K maps, and by using circuits with only two levels of gates. 
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.7\linewidth]{images/hazards}
 		\caption{Hazard Types}
 		\label{fig:hazards}
 	\end{figure}
+	
+	We want to avoid both types of hazards. We can do this by trying to include more implicants in the K maps, and by using circuits with only two levels of gates. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/static hazards}
+		\caption{Avoiding Static Hazards}
+		\label{fig:hazards_sta}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/dynamic hazards}
+		\caption{Avoiding Dynamic Hazards}
+		\label{fig:hazards_dyn}
+	\end{figure}
+	
 	
 	
 	\section{Implementation Technologies}
@@ -376,6 +461,132 @@ END ARCHITECTURE test;
 	
 	\section{Appendix}
 	
+	\subsection{ASM Design Example} \label{appendix:asm}
+	In this example I will come up with an ASM design for a weird light controller. The problem description is below:
 	
+	\texttt{Design a light display controller that adheres to the following pseudocode. There will be 8 lights, and two switches. The left switch causes the LEDs to go from right to left, and the right switch causes the LEDs to go from left to right. If both are combined, then both lights are combined. }
+	
+	\begin{lstlisting}
+DISPLAY <- 00000000; LMASK <- 00000001; RMASK <- 10000000;
+if (LEFT and RIGHT)
+	DISPLAY <- LMASK OR RMASK;
+	LMASK <- LMASK << 1;
+	RMASK <- RMASK >> 1;
+else if (LEFT)
+	DISPLAY <- LMASK;
+	LMASK <- LMASK << 1;
+else if (RIGHT)
+	DISPLAY <- RMASK;
+	RMASK <- RMASK >> 1;
+else
+	DISPLAY <- 00000000;
+	\end{lstlisting}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.61\linewidth]{images/asm ex 1}
+		\caption{ASM Chart}
+		\label{fig:asm_ex_1}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.65\linewidth]{images/asm ex 2}
+		\caption{Datapath}
+		\label{fig:asm_ex_2}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.65\linewidth]{images/asm ex 3}
+		\caption{Detailed ASM Chart}
+		\label{fig:asm_ex_3}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.65\linewidth]{images/asm ex 4}
+		\caption{Control Path}
+		\label{fig:asm_ex_4}
+	\end{figure}
+	
+	\subsection{FSM Design Example} \label{appendix:fsm}
+	
+	In this example I will come up with an FSM design for a traffic light controller for two streets. 
+	
+	\texttt{Here we have two traffic lights, Main (M) and Side (S). By default the Main is Green (MG) and second is red (SR). When a car comes onto the side street sensor, then upon the timer going off, M goes to Y, and SR still. Then MR SG, then after a set time MR SY, followed by MG SR again until the timer goes off again. Then it repeats checking the sensor. }
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{"images/state diagram"}
+		\caption{FSM State Diagram}
+		\label{fig:state-diagram}
+	\end{figure}
+	
+	Note that \verb*|T| is the timer, \verb*|S| is the sensor, \verb*|RESETY|, \verb*|RESETM|, \verb*|RESETS| represent resetting the timer for Yellow, Main light, and Secondary light respectively. Resetting involves loading the timer at the specified value such as Yellow which is hardcoded, or the main or side timer which is brought in as an input. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/state table"}
+		\caption{FSM State Table}
+		\label{fig:state-table}
+	\end{figure}
+	
+	When minimizing, I end up finding that it cannot be minimized after applying the minimization algorithm. 
+	\begin{align*}
+		(ABCD) M_2=1 &\implies (AB)(CD)\\
+		(AB) T=1,S=0 &\implies (AD) \text{ Since in different partitions A and B are distinct}\\
+		(CD) T=1, S=0 &\implies (DA) \text{ Since in different partitions, C and D are distinct}\\
+		& (A)(B)(C)(D)
+	\end{align*}
+	
+	Now I can assign states:
+	\begin{align*}
+		A = 00\\
+		B = 01\\
+		C = 11\\
+		D = 10
+	\end{align*}
+	
+	Now I can make the state transition table (Figure \ref{fig:state-transition-table}). I will use 8 k maps for this to get the output equations, and next state equations. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{"images/state transition table"}
+		\caption{FSM State Transition Table}
+		\label{fig:state-transition-table}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{"images/k maps 1"}
+		\caption{FSM K Maps 1}
+		\label{fig:k-maps-1}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{"images/k maps 2"}
+		\caption{FSM K Maps 2}
+		\label{fig:k-maps-2}
+	\end{figure}
+	
+	I also need the actual timer input since this will be different depending on which state we are in (as shown in Figure \ref{fig:state-diagram}).
+	\begin{align*}
+		RM &= (\overline P_1\overline P_0\cdot \overline S) + (P_1 \overline P_0 \cdot S) \text{ State A with sensor or State state D without}\\
+		RS &= (\overline P_1 P_0) \text{ State B}\\
+		RY &= (\overline P_1\overline P_0\cdot S) + (P_1 P_0) \text{ State A with sensor or State state C}
+	\end{align*}
+	
+	Putting these into an equation with the actual starting inputs for the Main, Side, and Yellow timer (\verb*|MSC|, \verb*|SSC|, \verb*|YELLOWC|) in a MUX type circuit we get:
+	\begin{align*}
+		TIMER\_INPUT = (YELLOWC \cdot RY) + (MSC \cdot RM) + (SSC \cdot RS)
+	\end{align*}
+	The load input to the counter can be given by simply \verb*|T|. This is because we only want it to load whenever the timer expires. Due to the \verb*|TIMER_INPUT| equation being the input to the timer, we will always have the correct timer input sitting at the counter input.
+	
+	The final circuit is found in Figure \ref{fig:circuit}. This circuit is technically not complete as it does not have the \verb*|OR| and \verb*|AND| gates for the traffic light outputs (\verb*|M2|, \verb*|M_1|, ..., \verb*|S1|, \verb*|S0|) but the idea makes sense. We just create that combinatorial logic going into the corresponding input (of state flip flops) or output (for both traffic lights). The timer input is from the above combinatorial equation of \verb*|TIMER_INPUT|.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{images/circuit}
+		\caption{FSM Generated Circuit}
+		\label{fig:circuit}
+	\end{figure}
 	
 \end{document}
