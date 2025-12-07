@@ -429,6 +429,47 @@
 		\end{tabular}
 	\end{center}
 	
+	We can also load just a byte, or halfword using the suffix \verb*|B| or \verb*|H| to get \verb*|LDRB| and \verb*|LDRH|. Note that \verb*|LDRSB| extends the sign, and \verb*|LDRB| extends with zeros. 
+	
+	\subsubsection{LD and STR Multiple Registers}
+	
+	We use the instructions \verb*|LDM| and \verb*|STM| to store or load multiple registers. We append this with a list of registers such as \verb*|LDM__ {R1,R2,R5,R3}|. We also have an identifier as shown in the below table. Loads occur in ascending register order, and stores occur in descending register order. 
+	
+	The modes are:
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			IA & Increment After \\
+			\hline
+			IB & Increment Before \\
+			\hline
+			DA & Decrement After \\
+			\hline
+			DB & Decrement Before \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\begin{mdframed}
+		\textbf{Ex. } We have the following memory, and then \verb*|STMIB R4 {R5, R6, R7}| is run. What are the three resulting memory stores?
+		\begin{verbatim}
+			R4: 0x20000080
+			R5: 0x55555555
+			R6: 0x66666666
+			R7: 0x77777777
+		\end{verbatim}
+		We are storing multiple registers, increasing before mode. Since we are storing, we store in descending register order. 
+		
+		It will therefore be storing starting in \verb*|0x20000080+4|, then \verb*|0x20000080+8|, and finally \verb*|0x20000080+C|. The values will be \verb*|R7|, \verb*|R6|, and then \verb*|R5|.
+		
+		\begin{verbatim}
+			0x2000 0084: 0x7777 7777
+			0x2000 0088: 0x6666 6666
+			0x2000 008C: 0x5555 5555
+		\end{verbatim}
+	\end{mdframed}
+	
 	\subsection{Endianess}
 	Endianess means within a 32 bit word (or any multi byte data structure) do we start the LSB at the low address (little endian) or high address (big endian)?
 	
@@ -438,6 +479,36 @@
 		\caption{Endianess}
 		\label{fig:endian}
 	\end{figure}
+	
+	\begin{mdframed}
+		\textbf{Ex. } If we have the memory and instructions below with a \textit{little endian system}, where does \verb*|0x33| end up?
+		\begin{verbatim}
+			R0: 0x20004400
+			R1: 0x11223344
+			STR R1, [R0, #4]!
+		\end{verbatim}
+		
+		Running the \verb*|STR| instruction, we take \verb*|R1| and put it in memory at \verb*|R0+4|. In terms of how it gets put, this depends on the endianess. 
+		
+		Since it is little endian, then the lowest memory address has the LSB (\verb*|0x44|). 
+		
+		\centering
+		\begin{tabular}{|c|c|c|}
+			\hline
+			& ... & ... \\
+			\hline
+			LO & 0x20004404 & 0x44 \\
+			\hline
+			& 0x20004405 & 0x33 \\
+			\hline
+			& 0x20004406 & 0x22 \\
+			\hline
+			HI & 0x20004407 & 0x11 \\
+			\hline
+			& ... & ... \\
+			\hline
+		\end{tabular}
+	\end{mdframed}
 	
 	\subsection{Control Flow Instructions}
 	We have 4 variations of the branch command. These will branch to either a label, or an address. 
@@ -515,13 +586,29 @@ ADDEQ ...
 	\section{Subroutines}
 	The link register \verb*|LR| contains the return address of the subroutine. This is copied back to the PC when the subroutine is finished. 
 	
-	In ARM, we store any parameters in registers R0 through R3. Any additional parameters need to be put on the stack. Also, if the parameters are larger than 32 bits, they can take up more than one register (a 128 bit parameter would take up R0, R1, R2, R3).
+	In ARM, we store any parameters in registers R0 through R3. Any additional parameters need to be put on the stack. Also, if the parameters are larger than 32 bits, they can take up more than one register (a 128 bit parameter would take up R0, R1, R2, R3, and a 64 bit parameter would take up either R0 and R1, or R2 and R3).
 	
 	It returns the return value in R0.
 	
 	Registers R0 through R3 can be freely changed by the subroutine, as well as R12 and R14 (LR). In other words, the calling function cannot expect them to keep the same data when the subroutine returns. The opposite is true with registers R4 to R11 where they must be preserved. If the subroutine changes anything in those registers, it must return them to the previous value before returning. 
 	
 	We use \verb*|BL| or \verb*|BLX| to call a subroutine. 
+	
+	\begin{mdframed}
+		\textbf{Ex. } We have the following function signature:
+		
+		\texttt{uint64\_t dog(uint16\_t cat, uint64\_t horse, uint32\_t pig);}
+		
+		These parameters will go into:
+		\begin{verbatim}
+			 R0   : cat
+			 R2   : horse pt 1 			-- doubles must be either R0 R1, or R2 R3
+			 R3   : horse pt 2 			-- 2 parts since double
+			[SP]  : pig 										-- since no space left in R0-R3
+		\end{verbatim}
+		
+		The return parameter will be in \verb*|R0| and \verb*|R1| since it is a double. 
+	\end{mdframed}
 	
 	\subsection{Stack}
 	The ARM stack uses a full descending stack. This means that the stack pointer points to the top piece of data on the stack. The stack also grows down to memory address 0 as items are pushed to it. 
@@ -577,6 +664,80 @@ ENDP
 	Typically, C will set up data so every word starts at an even multiple of 4 bits address. This is for efficiency. Same idea with half words, but every 2 bits. C does this by padding extra space. We can use the \verb*|__packed| keyword in c to not pad the extra space. But this can cause weird behavior. 
 	
 	If we want to mix C and assembly, we can do this. In assembly, we call a C function using the \verb*|import| keyword, and export a function to C using the \verb*|export| keyword. Similarly, in C we can import something from assembly using the \verb*|extern| keyword. This can work with data as well as functions. 
+	
+	By default, every variable in C is exported to the whole system by the linker. If we use the \verb*|static| keyword, then it will only be accessible in the entirety of the one C file. 
+	
+	\begin{mdframed}
+		\textbf{Ex.} What would the memory look like with something like this if we use packed, or unpacked?
+		
+		\begin{verbatim}
+			typedef struct {
+				uint8_t   id;
+				char     *name;
+				uint16_t  x_loc;
+				uint16_t  y_loc;
+				uint16_t  z_loc;
+				uint32_t  score;
+				uint8_t   color;
+				uint8_t   icon;
+			} Player_t;
+		\end{verbatim}
+		
+		\centering
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Packed }& \textbf{Unpacked} \\
+			\hline\hline
+			id & id  \\
+			\hline
+			char & 0  \\
+			\hline
+			char & 0 \\
+			\hline
+			char & 0 \\
+			\hline
+			char & char \\
+			\hline
+			x\_loc & char \\
+			\hline
+			x\_loc & char \\
+			\hline
+			y\_loc & char \\
+			\hline
+			y\_loc & x\_loc \\
+			\hline
+			z\_loc & x\_loc \\
+			\hline
+			z\_loc & y\_loc \\
+			\hline
+			score & y\_loc \\
+			\hline
+			score & z\_loc \\
+			\hline
+			score & z\_loc \\
+			\hline
+			score & 0 \\
+			\hline
+			colour & 0 \\
+			\hline
+			icon & score \\
+			\hline
+			& score \\
+			\hline
+			& score \\
+			\hline
+			& score \\
+			\hline
+			& colour \\
+			\hline
+			& icon \\
+			\hline
+			& 0 \\
+			\hline
+			& 0 \\
+			\hline
+		\end{tabular}
+	\end{mdframed}
 	
 	\subsection{Volatile Datatypes}
 	The \verb|volatile| keyword means each time we use a variable, we need to import it from memory into a register. This is useful when an external event may change memory at any point. In this case, we need to ensure that we don't use an old version of the variable.
@@ -677,14 +838,14 @@ ENDP
 	
 	The GPIO pin can be set up in different modes such as input, output, analog, or alternate function. 
 	
-	The GPIO pin can be either in open drain, or pull push mode. This changes how the physical transistors are set up. We also have a pull up or pull down resistor that can also be enabled/disabled. 
+	The GPIO pin can be either in open drain, or pull push mode. This changes how the physical transistors are set up. Open drain disables the PMOS so it cannot drive HI at all. It can only drive LOW or floating. We also have a pull up or pull down resistor that can also be enabled/disabled. 
 	
 	We have a certain number of GPIO devices, each device has a certain number of pins. So we could have 8 devices with 16 pins each for a total of 128 inputs/outputs. 
 	
 	\subsection{Pin Output/Input modes}
 	For output pins, we can either have the pin in PUSH/PULL mode, or OPEN DRAIN mode. If it is in PUSH/PULL, the pin can either be driven HI, or LO. If it is in OPEN DRAIN mode, then the PMOS is disabled, and we can only drive LO. If we do not drive LO, then the pin will be floating. 
 	
-	For input pins, we can either use a pull up or pull down resistor. If we use pull up, then the line is by default at HI. If we use pull down, then the line is by default at LO. 
+	For input (and output) pins, we can either use a pull up or pull down resistor. If we use pull up, then the line is by default at HI. If we use pull down, then the line is by default at LO. 
 	
 	\subsection{Debouncing}
 	Debouncing is needed for any sort of input switch. If we do not have debouncing, then the hardware will detect multiple presses per single button press, which is not what we want. We can either debounce using hardware with an RC circuit (or an SR latch and dual throw switch if we are fancy), or through software with a delay.
@@ -699,7 +860,7 @@ ENDP
 	
 	We also have a current value register to get the current value of the counter. This needs to be cleared on startup before running a timer since it has a random value. 
 	
-	We also often have some other timers that are independent of the processor. These are useful for peripheral devices. They can either operate in \textbf{capture} mode, or \textbf{compare} mode (useful for PWM, 1 if below Comp value, 0 if above). Capture will record the time when events occur, and compare will trigger events at specific times. 
+	We also often have some other timers that are independent of the processor. These are useful for peripheral devices. They can either operate in \textbf{capture} mode, or \textbf{compare} mode (useful for PWM, 1 if below Comp value, 0 if above, [or opposite depending on PWM mode]). Capture will record the time when events occur, and compare will trigger events at specific times. 
 	
 	When counting, we can either use down counting, up counting, or center counting. 
 	\begin{figure}[H]
@@ -718,6 +879,14 @@ ENDP
 	
 	\subsection{Systick}
 	This is the build in timer that generates interrupts at a fixed interval. We can enable it by enabling the systick interrupt (found in \verb*|SysTick->CTRL|), enabling the systick clock source, and enabling the actual systick. We also have to convigure the NVIC to actually make the interrupt. 
+
+	\begin{mdframed}
+		\textbf{Ex. } If we have \verb*|SysTick_LOAD=499999|, and CPU Freq is 25 MHz, what is the period between two systick interrupts?
+		
+		To calculate this, I need to know that the SYSTICK counts down from 499999 to 0, and it takes that many clock cycles to do so. So the 25MHz clock cycles becomes 50. 
+		
+		Now we divide the 1s (Hz is cycles per 1s) by 50 to get 20ms. 
+	\end{mdframed}
 	
 	\section{Direct Memory Access (DMA)}
 	By default, when we copy from a peripheral to memory, we need to go through the CPU. This is inefficient, the DMA lets us directly go from the peripheral to the memory. This is better since it uses much less CPU. We have a seperate DMA controller that can initialise the transfers. The data can either flow through the DMA, or directly fly by to the memory (does not directly go through DMA).
@@ -815,6 +984,14 @@ ENDP
 	\end{figure}
 	In terms of actually framing the data, it is very complicated, where there are multiple layers. 
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\linewidth]{"images/usb layers"}
+		\caption{USB Layers Overview}
+		\label{fig:usb-layers}
+	\end{figure}
+	
+	
 	
 	\section{The Bus (Bus Interfaces)}
 	The BUS is basically a huge set of wires that everything is connected to. This include the CPU, MEMORY, GPIO, SPI, I2C, TIMER, ADC, DAC, RTC, and so on. 
@@ -848,6 +1025,27 @@ ENDP
 	
 	\newpage 
 	\section{Appendix}
+	\subsection{Bitfield Manipulation}
+	Some useful information is how to manipulate bits in a bitfield. 
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|c|c||c|}
+			\hline
+			\textbf{What} & \textbf{C like Code} & \textbf{Logic Operation} \\
+			\hline\hline
+			Set masked Bits & \texttt{data |= mask} & OR \\
+			\hline
+			Clear masked Bits & \texttt{data \&= \~{}mask} & Negated AND \\
+			\hline
+			Toggle masked Bits & \texttt{data \^{}= mask} & XOR \\
+			\hline
+			Test any bits for Non Zero & \texttt{data \& mask} & AND \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Reference Sheets}
 	\includepdf[pages=-]{arm_reference_sheetv2.pdf}
 	
 	
