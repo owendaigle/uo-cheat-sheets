@@ -175,6 +175,14 @@ BEGIN
 	PORT MAP (
 		--- a => a
 		);
+		
+	clk_process : PROCESS IS
+	BEGIN
+		-- pulses clk every 2ns,
+		-- assumes CLK is defined as input
+		-- will run in parallel with test_process
+		CLK <= '1'; WAIT FOR 1 NS; CLK <= '0'; WAIT FOR 1 NS;
+	END PROCESS clk_process;
 	
 	test_process : PROCESS IS
 	BEGIN
@@ -186,6 +194,13 @@ END ARCHITECTURE test;
 	\end{lstlisting}
 	
 	VHDL is quite a powerful and complicated language, but is better explained through examples. 
+	
+	\subsection{Other Languages}
+	Verilog is another popular hardware description language, as is SystemC. 
+	
+	Verilog is a simpler language which has simpler types. It is easier to use, but  may not have as efficient end designs. Verilog is also based on C so it is quite familiar. 
+	
+	SystemC is an extension of C++ that adds basic hardware modeling to the language. While it is not as efficient as verilog of vhdl, it integrates well with existing C++ code, especially non hardware code. 
 	
 	\section{ASM Design}
 	Algorithmic State Machine is a method to take a design and turn it into a circuit. We have two main parts, the datapath and the control path. The control path just simply takes in the inputs and states, and generates control signals for each state we are in. These signals are used by the datapath and the controlpath. 
@@ -653,13 +668,42 @@ END ARCHITECTURE test;
 	\section{Interfaces and Controllers}
 	Not on exam
 	
+	These are how we interface with the computer from the outside such as a keyboard/mouse, disks, and displays. 
+	
+	Most of this is done on a bus which allows us to easily add multiple devices to the bus. But there are bus access conflicts, and bandwidth issues since everything has to share the bus. 
+	
+	For busses, we have 3 main types:
+	\begin{itemize}
+		\item Processor Memory - Very fast and short
+		\item Backplane - Decently fast, and standardized (PCI, or ISA)
+		\item I/O - Slower, standardized, and lengthy (USB or SCSI)
+	\end{itemize}
+	
+	These busses can be either synchronous, or asynchronous. Synchronous busses must be short to avoid clock skew. This is used for processor memory busses. Most busses are asynchronous since these allow many devices, and can be large. They use handshakes to coordinate data transfers. 
+	
+	To arbiter the bus, we can either have a centralized arbitration (needs arbiter), daisy chain arbitration (position on bus determines priority), or distributed arbitration (all devices arbiter themselves).
+	
 	\section{Processor Design}
 	Not on exam
+	
+	We can either have a single cycle processor (all instructions take one long clock cycle) or a multi cycle processor (instructions take different number of shorter clock cycles). Multi cycle are more efficient since faster instructions spend less time doing nothing, but they are a lot more complicated. 
+	
+	We have RISC (Reduced Instruction set), or CISC (Complex Instruction set) architectures, RISC is lower power, but has a slower clock, while CISC is higher power and has a higher clock. CISC has more instructions, allowing us to do more with less memory. RISC has much less instructions which need more memory to store, but they are quicker (require less clock cycles). 
 	
 	\section{Digital Testing}
 	Not on exam
 	
-	\section{Appendix}
+	When getting circuits fabricated at the plant, sometimes faults occur in fabrication. We need to test for these faults and if one exists, the physical piece of hardware needs to be discarded. 
+	
+	To test circuits, we ideally want to test all the different input combinations and see if the resulting output is correct to ensure no wire is stuck at 1, or stuck at 0. 
+	
+	We can be smart and reduce the number of tests we need to run by testing out each wire that exists in the system, and we can often test more wires than the sum of multiple tests through combinations. We find the minimal test set to get the coverage that we want (ideally 100\% coverage). 
+	
+	Often we have built in tests (BIST or BILBO) to the circuits, so it does not have to be done with external equipment. These tests generate test vectors (vectors of all the inputs), send them into the circuit, and then verify the outputs. This is done by generating a signature which is checked to be valid. If invalid, the hardware has a fault. 
+	
+	\newpage
+	
+	\section{Appendix}  
 	
 	\subsection{ASM Design Example} \label{appendix:asm}
 	In this example I will come up with an ASM design for a weird light controller. The problem description is below:
